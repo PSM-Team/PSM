@@ -1,0 +1,19 @@
+
+extends ../../../templates/master.pug
+
+block content
+    h1.title PUP Student Market
+    hr
+    h3.title Register:
+    p Answer All Questions to Proceed
+    hr
+    form(method="POST" action="/register/test")
+      each question in questiontab
+        p #{question.strQuestion}
+        each choice in choicetab
+          if choice.intChQuestionID == question.intQuestionID
+            input(type="radio", name="choice"+choice.intChID, value=choice.strChoice)
+            |  #{choice.strChoice}
+            br
+        hr
+      input(type="submit" value="Submit")

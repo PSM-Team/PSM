@@ -1,41 +1,43 @@
 
 extends ../../../templates/master.pug
-
 block content
-    h1.title PUP Student Market
-    hr
-    h3.title Register:
-    p All fields are required in order to successfully register, unless stated optional
-    form(method="POST" action="/register")
-        .field
-            .control
-                input.input(type="text" placeholder="Student Number" name="studnum")
-        .field
-            .control
-                input.input(type="password" placeholder="Password" name="password")
-        .field
-            .control
-                input.input(type="password" placeholder="Confirm Password" name="confirm")
-        .field
-            .control
-                input.input(type="text" placeholder="Full Name (John S. Doe) " name="studname")
-        .field
-            .control
-                input.input(type="text" placeholder="Gender (M/F)" name="gender")
-        .field
-            .control
-                input.input(type="date" placeholder="Birthdate (YYYMMDD)" name="bday")
-        .field
-            .control
-                input.input(type="text" placeholder="Branch" name="branch")
-        .field
-            .control
-                input.input(type="email" placeholder="E-mail Address" name="email")
-        .field
-            .control
-                input.input(type="text" placeholder="Contact Info (Optional)" name="contact")
+    section.hero.is-black
+        .hero-body
+            h1.title PUP Student Market
+            hr
+            h3.title Register:
+            p All fields are required in order to successfully register, unless stated optional
+            form(method="POST" action="/register")
+                .field
+                    .control
+                        input.input(type="text" placeholder="Student Number" name="studnum")
+                .field
+                    .control
+                        input.input(type="password" placeholder="Password" name="password")
+                .field
+                    .control
+                        input.input(type="password" placeholder="Confirm Password" name="confirm")
+                .field
+                    .control
+                        input.input(type="text" placeholder="Full Name (John S. Doe) " name="studname")
+                .field
+                    .control
+                        input.input(type="text" placeholder="Gender (M/F)" name="gender")
+                .field
+                    .control
+                        input.input(type="date" placeholder="Birthdate (YYYMMDD)" name="bday")
+                .field
+                    .control
+                        input.input(type="text" placeholder="Branch" name="branch")
+                .field
+                    .control
+                        input.input(type="email" placeholder="E-mail Address" name="email")
+                .field
+                    .control
+                        input.input(type="text" placeholder="Contact Info (Optional)" name="contact")
 
-        input(type="submit" value="Register")
-        hr
-        a(class="button", href="/login") SIGN-IN
-        a(class="button", href="/register/test") NEXT
+                input.button.is-primary(type="submit" value="Register")
+                br
+                hr
+                a.button.is-primary.is-pulled-left(class="button", href="/login") SIGN-IN
+                a.button.is-primary.is-pulled-right(class="button", href="/register/test") NEXT

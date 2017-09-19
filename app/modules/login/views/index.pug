@@ -1,16 +1,45 @@
 extends ../../../templates/master.pug
-
 block content
-    h1.title PUP Student Market
-    hr
-    h3.title Sign In:
-    form(method="POST" action="/login")
-        .field
-            .control
-                input.input(type="text" placeholder="Student Number" name="studnum")
-        .field
-            .control
-                input.input(type="password" placeholder="Password" name="password")
-        input(type="submit" value="Sign-in")
-    hr
-    a(class="button", href="/register") REGISTER
+    section.hero.is-black
+        .hero-body
+            img.ui.image.is-pulled-right(style="width: 150px; height:150px;", src='/assets/images/pup_logo.png')
+            i.fa.fa-shopping-cart.fa-5x 
+                | PUP Student Market
+            br
+            br
+            br
+            br
+            br
+            hr
+            i.fa.fa-sign-in.fa-2x 
+                | Sign-in
+            br
+            br
+            form(method="POST" action="/login")
+                .field
+                    .control
+                        input.input(type="text" placeholder="Student Number" name="studnum")
+                .field
+                    .control
+                        input.input(type="password" placeholder="Password" name="password")
+                input.button.is-primary.is-pulled-left(type="submit" value="Sign-in")
+                br
+                hr
+            a.button.is-primary.is-pulled-left(class="button", href="/register") REGISTER
+
+
+
+            //- #carouselExampleSlidesOnly.carousel.slide.is-pulled-right(data-ride='carousel')
+            //-     .carousel-inner(role='listbox')
+            //-     .carousel-item.active
+            //-         img.d-block.img-fluid(src='', alt='First slide')     
+            //-     .carousel-item
+            //-         img.d-block.img-fluid(src='...', alt='Second slide')   
+            //-     .carousel-item
+            //-         img.d-block.img-fluid(src='...', alt='Third slide')
+
+            //- .ui.tiny.images
+            //-     img.ui.image.variables-80px(src='/assets/images/sunset.jpg')
+            //-     img.ui.image(src='/assets/images/surf.jpg')
+            //-     img.ui.image(src='/images/wireframe/image.png')
+            //-     img.ui.image(src='/images/wireframe/image.png')

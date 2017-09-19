@@ -12,7 +12,7 @@ block content
         p #{question.strQuestion}
         each choice in choicetab
           if choice.intChQuestionID == question.intQuestionID
-            input(type="radio", name="choice"+choice.intChID, value=choice.strChoice)
+            input(type="radio", name="choice"+question.itemnum, value=choice.intChID)
             |  #{choice.strChoice}
             br
         hr

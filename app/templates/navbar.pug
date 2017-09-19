@@ -4,33 +4,53 @@ html
 
         link(rel="stylesheet" href="/assets/bulma/bulma.css")
         link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css")
+        link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/button_categories.css")
+    section.hero.is-dark
+        .hero-body
+                div.navbar-brand
+                    a.button(href="/home") 
+                        i.fa.fa-shopping-cart.fa-3x
+                        | PUP STUDENT MARKET 
+                    |&nbsp;
+                    |&nbsp;
+                    div.navbar-brand
+                        a.button(href="/categories") 
+                            i.fa.fa-handshake-o.fa-2x
+                            |  SELL
+                    |&nbsp;
+                    |&nbsp;
+                    div.navbar-brand
+                        a.button(href="/profile")
+                            i.fa.fa-user.fa-2x
+                            | User
+                    |&nbsp;
+                    |&nbsp;
+                    div.navbar-brand.is-pulled-right
+                        .control
+                            input.input(type='text', placeholder='Find a repository')  
+                        .control
+                            a.button.is-info
+                                | Search
+                    |&nbsp;
+                    |&nbsp;
+                    div.navbar-end.hero.is-body
+                        div.navbar-item.has-dropdown.is-hoverable
+                            a.navbar-link: span.icon: i.fa.fa-cogs.fa-3x
+                            div.navbar-dropdown.is-right
+                                a.navbar-item(href="/home/rules") Rules
+                                a.navbar-item(href="/home/help") Help
+                                a.navbar-item(href="/home/contact_us") Contact Us
+                                a.navbar-item(href="/login") Log-Out
 
-    body
-        nav.navbar
-            div.navbar-brand
-                a.navbar-item(href="/home") PUP STUDENT MARKET
-            div.navbar-brand
-                a.navbar-item(href="/categories") Home
-            div.navbar-brand
-                a.navbar-item(href="/profile") Profile
-            div.navbar-item
-                form.navbar-form(role='search')
-                input.input(type='text', placeholder='Search', name='q')
-                button.btn.btn-default(type='submit')
-                    span.icon: i.fa.fa-search
-            
-            div.navbar-end
-                div.navbar-item.has-dropdown.is-hoverable
-                    a.navbar-link: span.icon: i.fa.fa-cogs
-                    div.navbar-dropdown.is-right
-                        a.navbar-item(href="/home/rules") Rules
-                        a.navbar-item(href="/home/help") Help
-                        a.navbar-item(href="/home/contact_us") Contact Us
-                        a.navbar-item(href="/login") Log-Out
+    div.container
+                    //- This part right here is the dynamic content. Once you extend
+                    //- this template, you can place anything here.
+                    
+                    // This comment marks the dynamic content
+    block content
+                    //- div.navbar-item
 
-        div.container
-            //- This part right here is the dynamic content. Once you extend
-            //- this template, you can place anything here.
-            
-            // This comment marks the dynamic content
-            block content
+                    //-     form.navbar-form(role='search')
+                    //-     input.input.prompt(type='text', placeholder='Search', name='q')
+                    //-     button.btn.btn-default(type='submit')
+                    //-         span.icon: i.fa.fa-search

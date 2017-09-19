@@ -3,6 +3,29 @@ extends ../../../templates/navbar.pug
 
 block content
     block body
-        h1.title PUP Student Market
-        hr
-        h3.title Welcom Home, User
+        p
+            h1.title PUP Student Market
+            hr
+            h3.title Welcome
+            a(class='button', style="height:150px; width:200px;", href='google.com')
+                i.fa.fa-book.fa-5x 
+                br
+                br
+                br
+                br
+                |Books 
+            a(class='button', style="height:150px; width:200px;", href='google.com') Foods
+                i.fa.fa-cutlery.fa-5x
+            br
+            a(class='button', style="height:150px; width:200px;", href='google.com') School Supplies
+                i.fa.fa-pencil.fa-5x
+            a(class='button', style="height:150px; width:200px;", href='google.com') Misc.
+                i.fa.fa-random.fa-5x
+        //- div.items
+        //-     a(class='button', href='google.com') Google
+        //-     a
+        //-         i.fa.fa-book.fa-5x
+            
+                a.navbar-item(href="/home") 
+                    i.fa.fa-shopping-cart.fa-2x
+                    | PUP STUDENT MARKET

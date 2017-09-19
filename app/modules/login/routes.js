@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     res.redirect('/login');
   }
   else{
-    db.query("SELECT * FROM tbluser WHERE strSNum= '"+req.body.studnum+"'", (err, results, fields) => {
+    db.query("SELECT * FROM tbluser WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
         if (err) console.log(err);
         if (!results[0]){
           res.redirect('/login');
@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
         else{
           if(req.body.password === results[0].strPassword)
           {
-            db.query("UPDATE tbluser SET boolLoggedin= '1' WHERE strSNum='"+req.body.studnum+"'", (err, results, fields) => {
+            db.query("UPDATE tbluser SET boolLoggedin= '1' WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
                 if (err){
                   console.log(err);
                   res.redirect('/login');

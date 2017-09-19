@@ -3,4 +3,7 @@ extends ../../../templates/master.pug
 block content
     h1.title PUP Student Market
     hr
-    h3.title Welcom Home, User
+    each user in usertab
+      h3.title Welcome Home, #{user.strName}
+    hr
+    a(href="/login") SIGN-OUT

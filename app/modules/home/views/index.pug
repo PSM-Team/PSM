@@ -1,7 +1,9 @@
 extends ../../../templates/navbar.pug
 
 block content
-    block body
-        br
-        each user in usertab
-          h3.title Welcom Home, #{user.strName}
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container(style='height:100%')
+          each user in usertab
+            h3.title Welcome to PUP Student Market, #{user.strName}
+            hr

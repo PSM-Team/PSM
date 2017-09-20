@@ -18,7 +18,7 @@ function fquestrand1(req, res, next){
       questArray = [];
       rand = [];
       if (err) console.log(err);
-      for(count=0;count<results1.length;count++){
+      for(count=0;count<10;count++){
         questArray[count] = results1[count].intQuestionID;
       }
       for(count=0;count<10;count++){
@@ -42,10 +42,11 @@ function fquestions(req, res, next){
     var db = require('../../lib/database')();
     db.query("SELECT * FROM tblquestions WHERE boolUsed= '1'", (err, results, fields) => {
       if (err) console.log(err);
-      for(count= 0;count<results.length;count++){
+      for(count= 0;count<10;count++){
         results[count].itemnum = count + 1;
       }
       req.questions = results;
+      console.log(results);
       return next();
     });
 }

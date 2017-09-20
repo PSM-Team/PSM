@@ -31,14 +31,14 @@ CREATE TABLE `tblanswers` (
   KEY `intAnswer_idx` (`intAnswer`),
   CONSTRAINT `intAnswer` FOREIGN KEY (`intAnswer`) REFERENCES `tblchoices` (`intChID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `strAnswerSNum` FOREIGN KEY (`strAnswerSNum`) REFERENCES `tbluser` (`strSNum`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblanswers`
 --
 
-INSERT INTO `tblanswers` VALUES (5,'1',86),(6,'1',6),(7,'1',26),(8,'1',65),(9,'1',24),(10,'1',33),(11,'1',51),(12,'1',53),(13,'1',46),(14,'1',61);
+INSERT INTO `tblanswers` VALUES (5,'1',86),(6,'1',6),(7,'1',26),(8,'1',65),(9,'1',24),(10,'1',33),(11,'1',51),(12,'1',53),(13,'1',46),(14,'1',61),(15,'2',90),(16,'2',11),(17,'2',63),(18,'2',60),(19,'2',24),(20,'2',74),(21,'2',37),(22,'2',69),(23,'2',46),(24,'2',79);
 
 --
 -- Table structure for table `tblcategories`
@@ -109,14 +109,14 @@ CREATE TABLE `tblitem` (
   CONSTRAINT `intItemCat` FOREIGN KEY (`intItemCat`) REFERENCES `tblcategories` (`intCatID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `intPictureID` FOREIGN KEY (`intPictureID`) REFERENCES `tblpicture` (`intItemID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `strItemSNum` FOREIGN KEY (`strItemSNum`) REFERENCES `tbluser` (`strSNum`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblitem`
 --
 
-INSERT INTO `tblitem` VALUES (1,'Database Vol 17',499.98,'2015-01216-MN-0','2017-09-20','DB Book for Students',0,'pass',NULL,1);
+INSERT INTO `tblitem` VALUES (1,'Database Vol 17',499.98,'2015-01216-MN-0','2017-09-20','DB Book for Students',0,'pass',NULL,1),(2,'Kyrie 3',10000,'1','2017-08-21','Kyrie Irving Shoes',0,'word',NULL,4),(3,'Cisco Codex',1500,'1','2017-08-27','Cisco Book for All',0,'cisco',NULL,1),(4,'Adprog',12,'1','2017-08-27','Adprog',0,'adp',NULL,1),(5,'TechDoc',12,'1','2017-08-27','TechDoc',0,'td',NULL,1),(6,'Management',12,'1','2017-08-27','Management',0,'mana',NULL,1);
 
 --
 -- Table structure for table `tblpicture`
@@ -158,7 +158,7 @@ CREATE TABLE `tblquestions` (
 -- Dumping data for table `tblquestions`
 --
 
-INSERT INTO `tblquestions` VALUES (1,'Where is the Obelisk located at?',0),(2,'How many wings does the main building have?',0),(3,'Who is the national hero that has a \"tahanan\" in our Sintang Paaralan?',0),(4,'Who is Ted Pylon?',0),(5,'Where is the UFO/Watertank located at in PUP?',0),(6,'The favorite mall of students when there are no professors',0),(7,'What does \"FEWA\" mean?',0),(8,'How many basketball courts does PUP Sta. Mesa have?',0),(9,'How many 7/11 branches are there near PUP Sta. Mesa?',0),(10,'What is the first name of PUP?',0),(11,'What year did PUP officially become a university?',0),(12,'What would you do if there is a shortage of chairs in your room?',0),(13,'Who is the \"Einstein\" of PUP Sta. Mesa?',0),(14,'Who is the current president of PUP?',0),(15,'How many characters does the student number have (excluding dashes)?',0),(16,'What is the real name of the event \"Kikiam run\"?',0),(17,'How many floors does the PUP main building have?',0),(18,'What does \"Virgin\" sell?',0),(19,'Currently, what does \"Intramuros\" behold inside?',0),(20,'Other than the FEWA, what is the other famous food from PUP?',0),(21,'Where is the most presentable comfort room located at in PUP Sta. Mesa?',0),(22,'How long do you have to wait until you could safely assume that your professor is absent?',0),(23,'What is the latest end of classes in PUP?',0),(24,'When you were a freshie, how long did the line go during registration?',0);
+INSERT INTO `tblquestions` VALUES (1,'Where is the Obelisk located at?',1),(2,'How many wings does the main building have?',1),(3,'Who is the national hero that has a \"tahanan\" in our Sintang Paaralan?',1),(4,'Who is Ted Pylon?',1),(5,'Where is the UFO/Watertank located at in PUP?',1),(6,'The favorite mall of students when there are no professors',1),(7,'What does \"FEWA\" mean?',1),(8,'How many basketball courts does PUP Sta. Mesa have?',1),(9,'How many 7/11 branches are there near PUP Sta. Mesa?',1),(10,'What is the first name of PUP?',1),(11,'What year did PUP officially become a university?',0),(12,'What would you do if there is a shortage of chairs in your room?',0),(13,'Who is the \"Einstein\" of PUP Sta. Mesa?',0),(14,'Who is the current president of PUP?',0),(15,'How many characters does the student number have (excluding dashes)?',0),(16,'What is the real name of the event \"Kikiam run\"?',0),(17,'How many floors does the PUP main building have?',0),(18,'What does \"Virgin\" sell?',0),(19,'Currently, what does \"Intramuros\" behold inside?',0),(20,'Other than the FEWA, what is the other famous food from PUP?',0),(21,'Where is the most presentable comfort room located at in PUP Sta. Mesa?',0),(22,'How long do you have to wait until you could safely assume that your professor is absent?',0),(23,'What is the latest end of classes in PUP?',0),(24,'When you were a freshie, how long did the line go during registration?',0);
 
 --
 -- Table structure for table `tbltransaction`
@@ -213,7 +213,7 @@ CREATE TABLE `tbluser` (
 -- Dumping data for table `tbluser`
 --
 
-INSERT INTO `tbluser` VALUES ('1','1','1','0001-01-01','1','1','1','1','unregistered',0,0,'normal',1),('200','John Doe','M','1999-04-24','Main','John@gmail.com','09236835707','12','verified',101,5,'normal',0),('201','Jane Doe','F','1999-05-07','Main','Jane@gmail.com','09236674044','13','verified',20,3,'normal',0),('2015-01216-MN-0','Jon Balmaceda','M','1999-04-24','Sta. Mesa','balmacedajonervin@gmail.com','09236835707','pass','unregistered',0,0,'normal',0);
+INSERT INTO `tbluser` VALUES ('1','1','1','0001-01-01','1','1','1','1','unregistered',0,0,'normal',0),('2','2','2','0002-02-22','2','2','2','2','unregistered',0,0,'normal',0),('200','John Doe','M','1999-04-24','Main','John@gmail.com','09236835707','12','verified',101,5,'normal',0),('201','Jane Doe','F','1999-05-07','Main','Jane@gmail.com','09236674044','13','verified',20,3,'normal',0),('2015-01216-MN-0','Jon Balmaceda','M','1999-04-24','Sta. Mesa','balmacedajonervin@gmail.com','09236835707','pass','unregistered',0,0,'normal',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

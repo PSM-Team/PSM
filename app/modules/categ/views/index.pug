@@ -1,0 +1,12 @@
+extends ../../../templates/navbar.pug
+
+
+block content
+    block body
+        br
+        h2.title CATEGORIES
+        hr
+        each cat in cattab
+          br
+          h3.title
+            a(href='/categories/'+ cat.strCatName) #{cat.strCatName}

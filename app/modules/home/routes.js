@@ -29,5 +29,4 @@ router.get('/rules', (req, res) => {
     res.render('home/views/rules');
 });
 
-
 exports.home= router;

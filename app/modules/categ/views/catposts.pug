@@ -1,0 +1,9 @@
+extends ../../../templates/navbar.pug
+
+
+block content
+    block body
+        br
+        each catname in catnametab
+          h2.title #{catname.strCatName}
+        hr

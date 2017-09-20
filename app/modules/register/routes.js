@@ -21,16 +21,17 @@ function fquestrand1(req, res, next){
       for(count=0;count<results1.length;count++){
         questArray[count] = results1[count].intQuestionID;
       }
-      for(count=0;count<2;count++){
+      for(count=0;count<10;count++){
         rand[count]= questArray[Math.floor(Math.random()*questArray.length)]
         questArray.splice(questArray.indexOf(rand[count]),1);
       }
+      console.log(rand);
       return next();
     });
 }
 function fquestrand2(req, res, next){
     var db = require('../../lib/database')();
-    for(count=0;count<2;count++){
+    for(count=0;count<10;count++){
       db.query("UPDATE tblquestions SET boolUsed= '1' WHERE intQuestionID= ? ",[rand[count]], (err, results2, fields) => {
         if (err) console.log(err);
         return next();
@@ -122,10 +123,10 @@ router.post('/',auth, (req, res) => {
 });
 router.post('/test', (req, res) => {
     var db = require('../../lib/database')();
-    var choice = [ req.body.choice1, req.body.choice2];
+    var choice = [ req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6, req.body.choice7, req.body.choice8, req.body.choice9, req.body.choice10,];
     db.query("INSERT INTO tbluser (strSNum, strName, strGender, datBirthday, strBranch, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType, boolLoggedin) VALUES (?,?,?,?,?,?,?,?,'unregistered','0','0','normal','0')",[tempRegister.studnum,tempRegister.studname,tempRegister.gender,tempRegister.bday,tempRegister.branch,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
         if (err) console.log(err);
-        for(count=0;count<2;count++){
+        for(count=0;count<10;count++){
           db.query("INSERT INTO tblanswers (strAnswerSNum, intAnswer) VALUES (?,?)",[tempRegister.studnum, choice[count]], (err, results, fields) => {
             if (err) console.log(err);
           });

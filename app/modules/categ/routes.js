@@ -10,22 +10,30 @@ function fcat(req,res,next){
     });
 }
 function fcatname(req, res, next){
-    var db = require('../../lib/database')();
-    db.query("SELECT strCatName FROM tblcategories WHERE strCatName= ?",[req.params.catname], function (err, results, fields) {
-        if (err) return res.send(err);
-        req.catname = results;
-        return next();
-    });
-  }
+  var db = require('../../lib/database')();
+  db.query("SELECT strCatName FROM tblcategories WHERE strCatName= ?",[req.params.catname], function (err, results, fields) {
+      if (err) return res.send(err);
+      req.catname = results;
+      return next();
+  });
+}
+function fitem(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? ORDER BY datPostDate",[req.params.catname], function (err, results, fields) {
+      if (err) return res.send(err);
+      req.item = results;
+      return next();
+  });
+}
 
 function render(req,res){
     res.render('categ/views/index', { cattab: req.cat });
 }
 function catrender(req,res){
-    res.render('categ/views/catposts', {catnametab: req.catname});
+    res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item});
 }
 
 router.get('/', fcat, render);
-router.get('/:catname', fcatname, catrender);
+router.get('/:catname', fcatname, fitem, catrender);
 
 exports.categories= router;

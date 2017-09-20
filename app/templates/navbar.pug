@@ -1,0 +1,33 @@
+html
+    head
+        title PUP Student Market
+
+        link(rel="stylesheet" href="/assets/bulma/bulma.css")
+        link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css")
+
+    body
+        nav.navbar
+            div.navbar-brand
+                a.navbar-item(href="/home") PUP STUDENT MARKET
+            div.navbar-brand
+                a.navbar-item(href="/categories") Categories
+            div.navbar-brand
+                a.navbar-item(href="/profile") Profile
+            div.navbar-item
+                form.navbar-form(role='search')
+                input.input(type='text', placeholder='Search', name='q')
+                button.btn.btn-default(type='submit')
+                    span.icon: i.fa.fa-search
+
+            div.navbar-end
+                div.navbar-item.has-dropdown.is-hoverable
+                    a.navbar-link: span.icon: i.fa.fa-cogs
+                    div.navbar-dropdown.is-right
+                        a.navbar-item(href="/home/rules") Rules
+                        a.navbar-item(href="/home/help") Help
+                        a.navbar-item(href="/home/contact_us") Contact Us
+                        a.navbar-item(href="/login") Log-Out
+        section.hero.is-primary.is-bold
+          .hero-body
+              div.container(style='height:200%')
+                  block content

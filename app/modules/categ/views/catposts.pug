@@ -8,7 +8,9 @@ block content
             h2.title #{catname.strCatName}
           hr
           each item in itemtab
-            h3.title #{item.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp Php #{item.fltItemPrice}
+            h3.title
+              |
+              a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp Php #{item.fltItemPrice}
             p Seller: #{item.strItemSNum}
-            p Seller: #{item.datPostDate}
+            p Date: #{item.date}
             hr

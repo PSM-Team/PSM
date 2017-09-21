@@ -1,0 +1,14 @@
+extends ../../../templates/navbar.pug
+
+block content
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container
+          each catname in catnametab
+            h2.title #{catname.strCatName}
+          hr
+          each item in itemtab
+            h3.title #{item.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp Php #{item.fltItemPrice}
+            p Seller: #{item.strItemSNum}
+            p Seller: #{item.datPostDate}
+            hr

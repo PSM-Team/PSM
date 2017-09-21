@@ -1,5 +1,7 @@
-
 extends ../../../templates/navbar.pug
 
 block content
-    a.button.is-primary.is-pulled-left(class="button", href="/profile/editprofile") Edit Profile
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container(style='height:100%')
+          a(class="button", href="/profile/editprofile") Edit Profile

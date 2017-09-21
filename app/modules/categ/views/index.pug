@@ -1,0 +1,13 @@
+extends ../../../templates/navbar.pug
+
+block content
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container(style='height:100%')
+          block body
+              h2.title CATEGORIES
+              hr
+              each cat in cattab
+                br
+                h3.title
+                  a(href='/categories/'+ cat.strCatName) #{cat.strCatName}

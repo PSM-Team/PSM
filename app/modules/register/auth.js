@@ -1,25 +1,9 @@
 
 module.exports= (req,res,next)=>{
 var db = require('../../lib/database')();
-if (req.body.studnum === ""){
+if (req.body.studnum === "" || req.body.studname === "" || req.body.gender === "" || req.body.bday === "" || req.body.branch === "" || req.body.email === ""){
   res.render('register/views/invalidpages/blank');
 }
-else if (req.body.studname === ""){
-  res.render('register/views/invalidpages/blank');
-}
-else if (req.body.gender === ""){
-  res.render('register/views/invalidpages/blank');
-}
-else if (req.body.bday === ""){
-  res.render('register/views/invalidpages/blank');
-}
-else if (req.body.branch === ""){
-  rres.render('register/views/invalidpages/blank');
-}
-else if (req.body.email === ""){
-  res.render('register/views/invalidpages/blank');
-}
-
 else{
   db.query("SELECT strSNum FROM tbluser WHERE strSNum='"+req.body.studnum+"'", (err, results, fields) => {
       if (err) console.log(err);

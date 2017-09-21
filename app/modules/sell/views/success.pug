@@ -1,0 +1,16 @@
+extends ../../../templates/navbar.pug
+
+block content
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container(style='height:100%')
+          h2.title Item Successfully Posted
+          hr
+          each post in posttab
+            .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/categories/' +post.strCatName +'/' +post.intItemID) VIEW POST
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/sell') SELL ANOTHER ITEM
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/home') HOME

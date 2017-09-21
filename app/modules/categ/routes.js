@@ -19,7 +19,7 @@ function fcatname(req, res, next){
 }
 function fitem(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? ORDER BY datPostDate DESC",[req.params.catname], function (err, results, fields) {
+  db.query("SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? ORDER BY intItemID DESC",[req.params.catname], function (err, results, fields) {
       if (err) return res.send(err);
       var tempdate = [];
       for(count=0;count<results.length;count++){
@@ -27,12 +27,13 @@ function fitem(req, res, next){
         results[count].date= tempdate[count].toDateString("en-US").slice(4, 15);
       }
       req.item = results;
+      console.log(results);
       return next();
   });
 }
 function fpost(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? AND intItemID = ?",[ req.params.catname, req.params.postid], (err, results, fields) => {
+  db.query("SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? AND intItemID = ? ) AS T INNER JOIN tbluser ON strItemSNum= strSNum ",[ req.params.catname, req.params.postid], (err, results, fields) => {
       if (err) console.log(err);
       var tempdate = [];
       for(count=0;count<results.length;count++){

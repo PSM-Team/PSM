@@ -13,19 +13,25 @@ html
                 a.navbar-item(href="/categories") Categories
             div.navbar-brand
                 a.navbar-item(href="/profile") Profile
-            div.navbar-item
-                form.navbar-form(role='search')
-                input.input(type='text', placeholder='Search', name='q')
-                button.btn.btn-default(type='submit')
-                    span.icon: i.fa.fa-search
+            div.navbar-brand
+                a.navbar-item(href="/sell") Sell Item
+
 
             div.navbar-end
+                div.navbar-item
+                    form.navbar-form(role='search')
+                    input.input(type='text', placeholder='Search', name='q')
+                    button.btn.btn-default(type='submit')
+                        span.icon: i.fa.fa-search
                 div.navbar-item.has-dropdown.is-hoverable
-                    a.navbar-link: span.icon: i.fa.fa-cogs
+                    a.navbar-item
+                      i.fa.fa-cogs
+                      | &nbsp Settings
+                      b &nbsp V
+                      | &nbsp
                     div.navbar-dropdown.is-right
                         a.navbar-item(href="/home/rules") Rules
                         a.navbar-item(href="/home/help") Help
                         a.navbar-item(href="/home/contact_us") Contact Us
                         a.navbar-item(href="/login") Log-Out
         block content
-        

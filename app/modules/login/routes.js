@@ -12,10 +12,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   var db = require('../../lib/database')();
-  if(req.body.studnum === ""){
-    res.render('login/views/invalidpages/blank');
-  }
-  else if(req.body.password === ""){
+  if(req.body.studnum === "" || req.body.password === ""){
     res.render('login/views/invalidpages/blank');
   }
   else{

@@ -12,18 +12,17 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   var db = require('../../lib/database')();
-  if(req.body.username === ""){
-    res.redirect('/login');
+  if(req.body.studnum === ""){
+    res.render('login/views/invalidpages/blank');
   }
-
   else if(req.body.password === ""){
-    res.redirect('/login');
+    res.render('login/views/invalidpages/blank');
   }
   else{
     db.query("SELECT * FROM tbluser WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
         if (err) console.log(err);
         if (!results[0]){
-          res.redirect('/login');
+          res.render('login/views/invalidpages/incorrect');
         }
         else{
           if(req.body.password === results[0].strPassword)
@@ -31,13 +30,12 @@ router.post('/', (req, res) => {
             db.query("UPDATE tbluser SET boolLoggedin= '1' WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
                 if (err){
                   console.log(err);
-                  res.redirect('/login');
                   }
                 res.redirect('/home');
               });
           }
           else{
-              res.redirect('/login');
+              res.render('login/views/invalidpages/incorrect');
           }
         }
 

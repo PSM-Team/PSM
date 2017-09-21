@@ -1,4 +1,4 @@
-extends ../../../templates/master.pug
+extends ../../../../templates/master.pug
 
 block content
   section.hero.is-info.is-bold
@@ -9,6 +9,11 @@ block content
               h1.title PUP Student Market
           hr
           h3.title Register:
+          section.hero.is-danger.is-bold
+            .hero-body
+              h1.title Submission Failed
+              h1.subtitle - Fill in all fields to continue
+          br
           p Answer All Questions to Proceed
           hr
           form(method="POST" action="/register/test")

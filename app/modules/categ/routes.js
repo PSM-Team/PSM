@@ -30,6 +30,19 @@ function fitem(req, res, next){
       return next();
   });
 }
+function fpost(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? AND intItemID = ?",[ req.params.catname, req.params.postid], (err, results, fields) => {
+      if (err) console.log(err);
+      var tempdate = [];
+      for(count=0;count<results.length;count++){
+        tempdate[count] = results[count].datPostDate;
+        results[count].date= tempdate[count].toDateString("en-US").slice(4, 15);
+      }
+      req.post = results;
+      return next();
+    });
+}
 
 function render(req,res){
     res.render('categ/views/index', { cattab: req.cat });
@@ -37,8 +50,12 @@ function render(req,res){
 function catrender(req,res){
     res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item});
 }
+function postrender(req,res){
+    res.render('categ/views/post',{ posttab: req.post });
+}
 
 router.get('/', fcat, render);
 router.get('/:catname', fcatname, fitem, catrender);
+router.get('/:catname/:postid', fpost, postrender);
 
 exports.categories= router;

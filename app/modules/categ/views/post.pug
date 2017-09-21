@@ -1,0 +1,24 @@
+extends ../../../templates/navbar.pug
+
+block content
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container(style='height:100%')
+          each post in posttab
+            h2.title
+              |
+              a(href='/categories/' + post.strCatName) #{post.strCatName}
+            hr
+            h3.title #{post.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp
+            p Price:
+            p Php #{post.fltItemPrice}
+            br
+            p Seller:
+            p #{post.strItemSNum}
+            br
+            p Date:
+            p #{post.date}
+            br
+            p Item Description:
+            p - #{post.txtItemDesc}
+            hr

@@ -1,32 +1,33 @@
 var express = require('express');
+var flog = require( './loggedin');
 var router = express.Router();
 
-function fuser(req, res, next){
-    var db = require('../../lib/database')();
-    db.query("SELECT * FROM tbluser WHERE boolLoggedin= '1'", function (err, results, fields) {
-        if (err) return res.send(err);
-        if (!results[0]){
-          res.render('home/views/invalid');
-        }
-        req.user = results;
-        return next();
-    });
-  }
-
 function render(req,res){
+  if(req.valid==1)
     res.render('home/views/index', { usertab: req.user});
+  else
+    res.render('login/views/invalid');
 }
 
-router.get('/', fuser, render);
+router.get('/', flog, render);
 
-router.get('/contact_us', (req, res) => {
-    res.render('home/views/contact_us');
+router.get('/contact_us', flog, (req, res) => {
+    if(req.valid==1)
+      res.render('home/views/contact_us');
+    else
+      res.render('login/views/invalid');
 });
-router.get('/help', (req, res) => {
-    res.render('home/views/help');
+router.get('/help', flog, (req, res) => {
+    if(req.valid==1)
+      res.render('home/views/help');
+    else
+      res.render('login/views/invalid');
 });
-router.get('/rules', (req, res) => {
-    res.render('home/views/rules');
+router.get('/rules', flog, (req, res) => {
+    if(req.valid==1)
+      res.render('home/views/rules');
+    else
+      res.render('login/views/invalid');
 });
 
 exports.home= router;

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var flog = require( '../home/loggedin');
 
 function fcat(req,res,next){
   var db = require('../../lib/database')();
@@ -46,17 +47,26 @@ function fpost(req, res, next){
 }
 
 function render(req,res){
+  if(req.valid==1)
     res.render('categ/views/index', { cattab: req.cat });
+  else
+    res.render('login/views/invalid');
 }
 function catrender(req,res){
+  if(req.valid==1)
     res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item});
+  else
+    res.render('login/views/invalid');
 }
 function postrender(req,res){
+  if(req.valid==1)
     res.render('categ/views/post',{ posttab: req.post });
+  else
+    res.render('login/views/invalid');
 }
 
-router.get('/', fcat, render);
-router.get('/:catname', fcatname, fitem, catrender);
-router.get('/:catname/:postid', fpost, postrender);
+router.get('/', flog, fcat, render);
+router.get('/:catname', flog, fcatname, fitem, catrender);
+router.get('/:catname/:postid', flog, fpost, postrender);
 
 exports.categories= router;

@@ -3,10 +3,7 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
     var db = require('../../lib/database')();
-    db.query("UPDATE tbluser SET boolLoggedin= '0' WHERE boolLoggedin!= '0'", (err, results, fields) => {
-        if (err)
-          console.log(err);
-      });
+    req.session.user = '';
     res.render('login/views/index');
 });
 
@@ -22,12 +19,10 @@ router.post('/', (req, res) => {
           res.render('login/views/invalidpages/incorrect');
         }
         else{
-          if(req.body.password === results[0].strPassword)
-          {
-            db.query("UPDATE tbluser SET boolLoggedin= '1' WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
-                if (err){
-                  console.log(err);
-                  }
+          if(req.body.password === results[0].strPassword){
+            db.query("SELECT strSNum FROM tbluser WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
+                if (err) console.log(err);
+                req.session.user = results[0].strSNum;
                 res.redirect('/home');
               });
           }

@@ -11,21 +11,24 @@ block content
             br
             br
             hr
-            i.fa.fa-sign-in.fa-2x 
-                | Sign-in
-            br
-            br
-            form(method="POST" action="/login")
-                .field
-                    .control
-                        input.input(type="text" placeholder="Student Number" name="studnum")
-                .field
-                    .control
-                        input.input(type="password" placeholder="Password" name="password")
-                input.button.is-primary.is-pulled-left(type="submit" value="Sign-in")
-                br
-                hr
-            a.button.is-primary.is-pulled-left(class="button", href="/register") REGISTER
+            section.hero.is-primary.is-bold
+                .hero-body
+                    div.container(style='height:10%')
+                        i.fa.fa-sign-in.fa-2x 
+                            | Sign-in
+                        br
+                        br
+                        form(method="POST" action="/login")
+                            .field
+                                .control
+                                    input.input(type="text" placeholder="Student Number" name="studnum")
+                            .field
+                                .control
+                                    input.input(type="password" placeholder="Password" name="password")
+                            input.button.is-pulled-left(type="submit" value="Sign-in")
+                            br
+                            hr
+                        a.button.is-pulled-left(class="button", href="/register") REGISTER
 
 
 

@@ -2,35 +2,36 @@
 extends ../../../templates/navbar.pug
 
 block content
-    h1.title PUP Student Market
-    hr
-    h3.title Choose an Item to sell:
-          hr
-    form.form-horizontal(role='form', method='POST', action='sell', enctype='multipart/form-data')
-        .form-group
-            label.col-md-3.control-label(for='mob_no') Item Picture
-                .col-sm-9
-                  input.form-control(type='file', name='uploaded_image', accept='')
-        br
-        .field
-            .control
-                input.input(type="text" placeholder="Item Name " name="itemname")
-        .field
-            .control
-                input.input(type="number" placeholder="P0.00" name="price")
-        .field
-            .control
-                input.input(type="text" placeholder="Item Description " name="itemdesc")
-        .field
-            .control
-                input.input(type="text" placeholder="Item Name " name="itemname")
-        .field
-            .control
-                input.input(type="password" placeholder="Old Password" name="password")
+ section.hero.is-primary.is-bold
+        .hero-body
+            div.container(style='height:100%')
+                h3.title Post an Item to Sell
+                    hr
+                form.form-horizontal(role='form', method='POST', action='sell', enctype='multipart/form-data')
+                    .form-group
+                        label.col-md-3.control-label(for='mob_no') Item Picture
+                            .col-sm-9
+                            input.form-control(type='file', name='uploaded_image', accept='')
+                    br
+                    .field
+                        .control
+                            input.input(type="text" placeholder="Item Name" name="itemname")
+                    .field
+                        .control
+                            input.input(type="number" placeholder="P0.00" name="price")
+                    .field
+                        .control
+                            input.input(type="text" placeholder="Item Description" name="itemdesc")
+                    .field
+                        .control
+                            input.input(type="text" placeholder="Item Name" name="itemname")
+                    .field
+                        .control
+                            input.input(type="password" placeholder="Item Password" name="password")
 
 
-        input(type="submit" value="Save")
-        hr
-        a(class="button", href="/profile") Back
+                    input(type="submit" value="Sell")
+                    hr
+                    a(class="button", href="/home") Back
 
 

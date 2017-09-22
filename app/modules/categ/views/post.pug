@@ -1,0 +1,34 @@
+extends ../../../templates/navbar.pug
+
+block content
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container
+          each post in posttab
+            h2.title
+              |
+              a(href='/categories/' + post.strCatName) #{post.strCatName}
+            hr
+            h3.title #{post.strItemTitle}
+            p Price :
+            p &nbsp Php #{post.fltItemPrice}
+            br
+            p Seller :
+            p &nbsp #{post.strName} ( #{post.strItemSNum} )
+            p &nbsp Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
+            br
+            p Date :
+            p &nbsp #{post.date}
+            br
+            p Item Description :
+            p - #{post.txtItemDesc}
+            br
+            p Contact Information:
+            p &nbsp Email : #{post.strEmail}
+            p &nbsp Others : #{post.txtContact}
+            hr
+            .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/order') BUY
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName) BACK

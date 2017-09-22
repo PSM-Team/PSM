@@ -87,7 +87,7 @@ function randredirect(req,res){
 function CHrender(req,res){
     if (registerOn == 1){
 
-      res.render('register/views/questions', { questiontab: req.questions , choicetab: req.choices,  });
+      res.render('register/views/questions', { questiontab: req.questions , choicetab: req.choices });
     }
     else{
       res.render('register/views/regoff');
@@ -109,7 +109,7 @@ router.get('/rand', flog, fcleanse, fquestrand1, fquestrand2, randredirect);
 router.get('/test', flog, fquestions, fchoices, CHrender);
 router.get('/fin', flog, fcleanse, FINrender);
 
-router.post('/',auth, (req, res) => {
+router.post('/', auth, (req, res) => {
     var db = require('../../lib/database')();
     if(req.body.password === req.body.confirm && req.body.password != ""){
     tempRegister.studnum = req.body.studnum;
@@ -124,16 +124,16 @@ router.post('/',auth, (req, res) => {
     res.redirect('/register/rand');
     }
     else{
-      res.redirect('/register');
+      res.render('register/views/invalidpages/notmatch');
     }
 });
-router.post('/test', (req, res) => {
+router.post('/test', fquestions, fchoices, (req, res) => {
     var db = require('../../lib/database')();
     var choice = [ req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6, req.body.choice7, req.body.choice8, req.body.choice9, req.body.choice10,];
     console.log(req.body);
     if(!req.body.choice1 || !req.body.choice2 || !req.body.choice3 || !req.body.choice4 || !req.body.choice5 || !req.body.choice6 || !req.body.choice7 || !req.body.choice8 || !req.body.choice9 || !req.body.choice10 ){
       console.log("You must answer ALL QUESTIONS!");
-      res.redirect('/register/test');
+      res.render('register/views/invalidpages/blankquest',{ questiontab: req.questions , choicetab: req.choices });
     }
     else{
       db.query("INSERT INTO tbluser (strSNum, strName, strGender, datBirthday, strBranch, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType, boolLoggedin) VALUES (?,?,?,?,?,?,?,?,'unregistered','0','0','normal','0')",[tempRegister.studnum,tempRegister.studname,tempRegister.gender,tempRegister.bday,tempRegister.branch,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {

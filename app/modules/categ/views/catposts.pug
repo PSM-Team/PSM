@@ -6,9 +6,12 @@ block content
         div.container
           each catname in catnametab
             h2.title #{catname.strCatName}
+            h2.subtitle &nbspClick an Item Title to view it's Details
           hr
           each item in itemtab
-            h3.title #{item.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp Php #{item.fltItemPrice}
+            h3.title
+              |
+              a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp Php #{item.fltItemPrice}
             p Seller: #{item.strItemSNum}
-            p Seller: #{item.datPostDate}
+            p Date: #{item.date}
             hr

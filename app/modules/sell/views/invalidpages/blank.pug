@@ -1,4 +1,4 @@
-extends ../../../templates/navbar.pug
+extends ../../../../templates/navbar.pug
 
 block content
   section.hero.is-primary.is-bold
@@ -6,6 +6,11 @@ block content
         div.container(style='height:100%')
           h3.title Sell an Item:
           h3.subtitle &nbspAll fields are required
+          section.hero.is-danger.is-bold
+            .hero-body
+              h1.title Submission Failed
+              h1.subtitle - Fill in all fields to Post an item
+          br
           form(method="POST" action="/sell")
               .field
                   .control

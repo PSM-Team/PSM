@@ -3,7 +3,18 @@ extends ../../../templates/navbar.pug
 block content
   section.hero.is-primary.is-bold
     .hero-body
-        div.container(style='height:100%')
+        div.container
           each user in usertab
             h3.title Welcome to PUP Student Market, #{user.strName}
+            hr
+          each item in itemtab
+            h3.title
+              |
+              a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
+            h3.subtitle &nbsp#{item.strCatName}
+            p
+              |
+              b Price: Php #{item.price}
+            p Seller: #{item.strName} ( #{item.strItemSNum} )
+            p Date: #{item.date}
             hr

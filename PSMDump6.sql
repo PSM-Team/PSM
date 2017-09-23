@@ -167,21 +167,25 @@ DROP TABLE IF EXISTS `tbltransaction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbltransaction` (
-  `intTransID` int(11) NOT NULL,
+  `intTransID` int(11) NOT NULL AUTO_INCREMENT,
   `intTransItemID` int(11) NOT NULL,
+  `strBuyerSNum` varchar(45) NOT NULL,
   `datDateStarted` date NOT NULL,
   `strTransStatus` varchar(20) NOT NULL,
   `datDateFinished` date DEFAULT NULL,
   PRIMARY KEY (`intTransID`),
   KEY `intTransItemID_idx` (`intTransItemID`),
-  CONSTRAINT `intTransItemID` FOREIGN KEY (`intTransItemID`) REFERENCES `tblitem` (`intItemID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `strBuyerSNum_idx` (`strBuyerSNum`),
+  CONSTRAINT `intTransItemID` FOREIGN KEY (`intTransItemID`) REFERENCES `tblitem` (`intItemID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `strBuyerSNum` FOREIGN KEY (`strBuyerSNum`) REFERENCES `tbluser` (`strSNum`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tbltransaction`
 --
 
+INSERT INTO `tbltransaction` VALUES (9,1,'1','2017-09-23','Ongoing',NULL);
 
 --
 -- Table structure for table `tbluser`
@@ -211,7 +215,7 @@ CREATE TABLE `tbluser` (
 -- Dumping data for table `tbluser`
 --
 
-INSERT INTO `tbluser` VALUES ('1','1','1','0001-01-01','1','1','1','1','unregistered',0,0,'normal'),('2','2','2','0002-02-22','2','2','2','2','unregistered',0,0,'normal'),('200','John Doe','M','1999-04-24','Main','John@gmail.com','09236835707','12','verified',101,5,'normal'),('201','Jane Doe','F','1999-05-07','Main','Jane@gmail.com','09236674044','13','verified',20,3,'normal'),('2015-01216-MN-0','Jon Balmaceda','M','1999-04-24','Sta. Mesa','balmacedajonervin@gmail.com','09236835707','pass','unregistered',0,0,'normal'),('3','3','3','0003-03-03','3','3','3','3','unregistered',0,0,'normal'),('4','4','4','0004-04-04','4','4','4','4','unregistered',0,0,'normal'),('5','5','5','0005-05-05','5','5','5','5','unregistered',0,0,'normal');
+INSERT INTO `tbluser` VALUES ('1','User One','1','0001-01-01','1','1','1','1','unregistered',0,0,'normal'),('2','User Two','2','0002-02-22','2','2','2','2','unregistered',0,0,'normal'),('200','John Doe','M','1999-04-24','Main','John@gmail.com','09236835707','12','verified',101,5,'normal'),('201','Jane Doe','F','1999-05-07','Main','Jane@gmail.com','09236674044','13','verified',20,3,'normal'),('2015-01216-MN-0','Jon Balmaceda','M','1999-04-24','Sta. Mesa','balmacedajonervin@gmail.com','09236835707','pass','unregistered',0,0,'normal'),('3','3','3','0003-03-03','3','3','3','3','unregistered',0,0,'normal'),('4','4','4','0004-04-04','4','4','4','4','unregistered',0,0,'normal'),('5','5','5','0005-05-05','5','5','5','5','unregistered',0,0,'normal');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

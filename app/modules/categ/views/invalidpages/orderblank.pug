@@ -1,0 +1,32 @@
+extends ../../../../templates/navbar.pug
+
+block content
+  section.hero.is-primary.is-bold
+    .hero-body
+        div.container(style='height:100%')
+          each post in posttab
+            h2.title
+              |
+              a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
+            hr
+            section.hero.is-danger.is-bold
+              .hero-body
+                h2.title Order Submission Failed
+                h2.subtitle - Fill in the Order Password to proceed
+            br
+            p(style='display:inline') Price : Php #{post.fltItemPrice} &nbsp //
+            p(style='display:inline') &nbsp Seller : &nbsp #{post.strName} ( #{post.strItemSNum} ) &nbsp //
+            p(style='display:inline') &nbsp Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
+            br
+            hr
+            form(method="POST" action='/categories/' + post.strCatName + '/' + post.intItemID + '/order')
+                .field
+                    .control
+                        input.input(type="password" placeholder="Order Password" name="orderpass")
+                input(type="submit" value="Order")
+            hr
+            .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/order') BUY
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK

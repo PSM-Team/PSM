@@ -11,7 +11,10 @@ block content
           each item in itemtab
             h3.title
               |
-              a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle} &nbsp&nbsp&nbsp&nbsp&nbsp Php #{item.fltItemPrice}
-            p Seller: #{item.strItemSNum}
+              a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
+            p
+              |
+              b Price: Php #{item.price}
+            p Seller: #{item.strName} ( #{item.strItemSNum} )
             p Date: #{item.date}
             hr

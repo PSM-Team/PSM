@@ -10,8 +10,12 @@ block content
               a(href='/categories/' + post.strCatName) #{post.strCatName}
             hr
             h3.title #{post.strItemTitle}
-            p Price :
-            p &nbsp Php #{post.fltItemPrice}
+            p
+              |
+              b Price :
+            p
+              |
+              b &nbsp Php #{post.price}
             br
             p Seller :
             p &nbsp #{post.strName} ( #{post.strItemSNum} )

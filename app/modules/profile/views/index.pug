@@ -5,5 +5,12 @@ block content
     .hero-body
         div.container(style='height:100%')
           h3.title Hi there, (User)
-                    hr
+          hr
+          //- ul
+          //-   each user in tblUser
+          //-     //- li= `${user.strSNum} - ${user.strName} - ${user.strEmail} - ${user.txtContact} - ${user.strPassword} - ${user.strStatus} - ${user.intCommend} - ${user.intReport} - ${user.strType}`
+          //-     li= `"${user.strSNum}" - "${user.strName}" - "${user.strEmail}" - "${user.txtContact}" - "${user.strPassword}" - "${user.strStatus}" - ${user.intCommend} - ${user.intReport} - "${user.strType}"`
+          //- ul
+          //-   each val in [1, 2, 3, 4, 5]
+          //-     li= val
           a(class="button", href="/profile/editprofile") Edit Profile

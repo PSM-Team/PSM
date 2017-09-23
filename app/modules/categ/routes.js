@@ -26,7 +26,7 @@ function fcatname(req, res, next){
 }
 function fitem(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName= ? ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum ORDER BY intItemID DESC",[req.params.catname], function (err, results, fields) {
+  db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName= ? ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC",[req.params.catname], function (err, results, fields) {
       if (err) return res.send(err);
       var tempdate = [];
       for(count=0;count<results.length;count++){
@@ -64,14 +64,30 @@ function catrender(req,res){
     res.render('login/views/invalid');
 }
 function postrender(req,res){
-  if(req.valid==1)
-    res.render('categ/views/post',{ posttab: req.post });
+  if(req.valid==1){
+    var db = require('../../lib/database')();
+    db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[ req.params.postid], (err, results, fields) => {
+    if (err) console.log(err);
+    if(!results[0])
+      res.render('categ/views/post',{ posttab: req.post });
+    else
+      res.render('categ/views/invalidpages/orderunavailable',{ posttab: req.post });
+      });
+    }
   else
     res.render('login/views/invalid');
 }
 function orderrender(req,res){
-  if(req.valid==1)
-    res.render('categ/views/order',{ posttab: req.post });
+  if(req.valid==1){
+    var db = require('../../lib/database')();
+    db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[ req.params.postid], (err, results, fields) => {
+    if (err) console.log(err);
+    if(!results[0])
+      res.render('categ/views/order',{ posttab: req.post });
+    else
+      res.render('categ/views/invalidpages/orderunavailable',{ posttab: req.post });
+    });
+  }
   else
     res.render('login/views/invalid');
 }

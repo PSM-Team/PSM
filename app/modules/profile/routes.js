@@ -1,30 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var flog = require( '../home/loggedin');
 
-router.get('/', (req, res) => {
-    if (typeof process.env.ENABLE_DATABASE !== 'undefined' && process.env.ENABLE_DATABASE === 'false') {
-        
-            return render([]);
-        }
-    
-        var db = require('../../lib/database')();
-    
-        db.query('SELECT * FROM tblUser', function (err, results, fields) {
-    
-            if (err) return res.send(err);
-    
-            render(results);
-        });
-        
-        function render(tblUser) {
-            res.render('profile/views/index', { user: tblUser });
-        }
-    
+router.get('/', flog, (req, res) => {
+  if(req.valid==1)
+    res.render('profile/views/index');
+  else
+    res.render('login/views/invalid');
 });
-
-router.get('/editprofile', (req, res) => {
+router.get('/editprofile', flog, (req, res) => {
+  if(req.valid==1)
     res.render('profile/views/editprofile');
-
+  else
+    res.render('login/views/invalid');
 });
 // router.post('/', (req, res) => {
 //     var post  = req.body;

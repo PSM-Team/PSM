@@ -10,7 +10,7 @@ function numberWithCommas(x) {
 
 function fitem(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum ORDER BY intItemID DESC", function (err, results, fields) {
+  db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC", function (err, results, fields) {
       if (err) return res.send(err);
       var tempdate = [];
       for(count=0;count<results.length;count++){

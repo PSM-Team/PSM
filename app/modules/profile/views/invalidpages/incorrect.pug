@@ -1,10 +1,15 @@
-extends ../../../templates/navbar.pug
+extends ../../../../templates/navbar.pug
 
 block content
   section.hero.is-primary.is-bold
     .hero-body
         div.container(style='height:100%')
           h3.title Edit your profile:
+          section.hero.is-danger.is-bold
+            .hero-body
+              h1.title Submission Failed
+              h1.subtitle - Password incorrect
+          br
           each user in usertab
             form(method="POST" action="/profile/-/edit")
                 .field

@@ -134,18 +134,19 @@ router.post('/test', fquestions, fchoices, (req, res) => {
     }
     else{
       testOn = 0;
-      db.query("INSERT INTO tbluser (strSNum, strName, strGender, datBirthday, strBranch, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType, boolLoggedin) VALUES (?,?,?,?,?,?,?,?,'unregistered','0','0','normal','0')",[tempRegister.studnum,tempRegister.studname,tempRegister.gender,tempRegister.bday,tempRegister.branch,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
+      console.log(choice);
+      db.query("INSERT INTO tbluser (strSNum, strName, strGender, datBirthday, strBranch, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType) VALUES (?,?,?,?,?,?,?,?,'unregistered','0','0','normal')",[tempRegister.studnum,tempRegister.studname,tempRegister.gender,tempRegister.bday,tempRegister.branch,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
           if (err) console.log(err);
+          console.log('CHOICES: '+ choice);
+          console.log('TEMPREGIS: ' +tempRegister.studnum);
           for(count=0;count<10;count++){
             db.query("INSERT INTO tblanswers (strAnswerSNum, intAnswer) VALUES (?,?)",[tempRegister.studnum, choice[count]], (err, results, fields) => {
               if (err) console.log(err);
             });
           }
-          choice = [];
           res.redirect('/register/fin');
       });
     }
-    choice = [];
 });
 
 exports.register = router;

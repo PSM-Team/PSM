@@ -34,7 +34,6 @@ function fitem(req, res, next){
         results[count].price = numberWithCommas(results[count].fltItemPrice);
       }
       req.item = results;
-      console.log(results);
       return next();
   });
 }
@@ -70,22 +69,27 @@ function postrender(req,res){
     if (err) console.log(err);
     if(!results[0])
       res.render('categ/views/post',{ posttab: req.post });
+    else if(results[0].strTransStatus == 'Ongoing')
+      res.render('categ/views/viewpost',{ posttab: req.post });
     else
-      res.render('categ/views/invalidpages/orderunavailable',{ posttab: req.post });
-      });
-    }
+      res.render('categ/views/invalidpages/itemunavailable',{ posttab: req.post });
+    });
+  }
   else
     res.render('login/views/invalid');
 }
 function orderrender(req,res){
   if(req.valid==1){
     var db = require('../../lib/database')();
-    db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[ req.params.postid], (err, results, fields) => {
+    db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
     if (err) console.log(err);
     if(!results[0])
       res.render('categ/views/order',{ posttab: req.post });
-    else
+    else if(results[0].strTransStatus == 'Ongoing'){
       res.render('categ/views/invalidpages/orderunavailable',{ posttab: req.post });
+    }
+    else
+      res.render('categ/views/invalidpages/itemunavailable',{ posttab: req.post });
     });
   }
   else

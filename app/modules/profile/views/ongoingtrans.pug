@@ -1,0 +1,46 @@
+extends ../../../templates/navbar.pug
+
+block content
+  h2.title Ongoing Transactions
+  hr
+  a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactionhistory") PREVIOUS TRANSACTIONS
+  hr
+  each trans in transtab
+    each viewer in viewertab
+      if trans.strBuyerSNum == viewer.strSNum
+        h3.title ( Buyer )
+          a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+        h3.subtitle &nbsp#{trans.strCatName}
+        p
+          b Price: Php #{trans.price}
+        p Seller: &nbsp
+          u
+            a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
+        p Date Started: #{trans.date}
+        br
+        .field.is-grouped
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransItemID) Finish
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/canceltrans/" + trans.intTransItemID) Cancel
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/reportuser/" + trans.strItemSNum) Report User
+      else
+        h3.title ( Seller )
+          a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+        h3.subtitle &nbsp#{trans.strCatName}
+        p
+          b Price: Php #{trans.price}
+        p Buyer: &nbsp
+          u
+            a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
+        p Date Started: #{trans.date}
+        br
+        .field.is-grouped
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransItemID) Finish
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/canceltrans/" + trans.intTransItemID) Cancel
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/reportuser/" + trans.strBuyerSNum) Report User
+    hr

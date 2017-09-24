@@ -34,15 +34,12 @@ function fquestions(req, res, next){
     var db = require('../../lib/database')();
     db.query("SELECT * FROM tblquestions WHERE boolUsed= '1'", (err, results, fields) => {
       if (err) console.log(err);
-      console.log(results);
       if (!results[0]){
         res.render('register/views/regoff');
       }
       else{
-        console.log('NEW REGISTRY');
         for(count= 0;count<10;count++){
           results[count].itemnum = count + 1;
-          console.log(results[count].itemnum);
         }
       }
       req.questions = results;
@@ -134,11 +131,8 @@ router.post('/test', fquestions, fchoices, (req, res) => {
     }
     else{
       testOn = 0;
-      console.log(choice);
       db.query("INSERT INTO tbluser (strSNum, strName, strGender, datBirthday, strBranch, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType) VALUES (?,?,?,?,?,?,?,?,'unregistered','0','0','normal')",[tempRegister.studnum,tempRegister.studname,tempRegister.gender,tempRegister.bday,tempRegister.branch,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
           if (err) console.log(err);
-          console.log('CHOICES: '+ choice);
-          console.log('TEMPREGIS: ' +tempRegister.studnum);
           for(count=0;count<10;count++){
             db.query("INSERT INTO tblanswers (strAnswerSNum, intAnswer) VALUES (?,?)",[tempRegister.studnum, choice[count]], (err, results, fields) => {
               if (err) console.log(err);

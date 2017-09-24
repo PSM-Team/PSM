@@ -1,20 +1,19 @@
 extends ../../../templates/navbar.pug
 
 block content
-  section.hero.is-primary.is-bold
-    .hero-body
-        div.container
-          each catname in catnametab
-            h2.title #{catname.strCatName}
-            h2.subtitle &nbspClick an Item Title to view it's Details
-          hr
-          each item in itemtab
-            h3.title
-              |
-              a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
-            p
-              |
-              b Price: Php #{item.price}
-            p Seller: #{item.strName} ( #{item.strItemSNum} )
-            p Date: #{item.date}
-            hr
+  each catname in catnametab
+    h2.title #{catname.strCatName}
+    h2.subtitle &nbspClick an Item Title to view it's Details
+  hr
+  each item in itemtab
+    h3.title
+      |
+      a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
+    p
+      |
+      b Price: Php #{item.price}
+    p Seller: &nbsp
+      u
+        a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
+    p Date: #{item.date}
+    hr

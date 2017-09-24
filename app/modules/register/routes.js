@@ -34,6 +34,7 @@ function fquestions(req, res, next){
     var db = require('../../lib/database')();
     db.query("SELECT * FROM tblquestions WHERE boolUsed= '1'", (err, results, fields) => {
       if (err) console.log(err);
+      console.log(results);
       if (!results[0]){
         res.render('register/views/regoff');
       }
@@ -71,12 +72,12 @@ function render(req,res){
     req.session.user = '';
     res.render('register/views/index');
 }
-function randredirect(req,res){
-    req.session.user = '';
-    if (registerOn == 1)
-      res.redirect('test');
-    else
-      res.render('register/views/regoff');
+function randrender(req,res){
+  req.session.user = '';
+  if (registerOn == 1)
+    res.render('register/views/rand');
+  else
+    res.render('register/views/regoff');
 }
 function CHrender(req,res){
     req.session.user = '';
@@ -103,7 +104,7 @@ function FINrender(req,res){
 }
 
 router.get('/', fcleanse, render);
-router.get('/rand', fcleanse, fquestrand1, fquestrand2, randredirect);
+router.get('/start', fcleanse, fquestrand1, fquestrand2, randrender);
 router.get('/test', fquestions, fchoices, CHrender);
 router.get('/fin', FINrender);
 
@@ -119,7 +120,7 @@ router.post('/', auth, (req, res) => {
     tempRegister.contact = req.body.contact;
     tempRegister.password = req.body.password;
     registerOn = 1;
-    res.redirect('/register/rand');
+    res.redirect('/register/start');
     }
     else{
       res.render('register/views/invalidpages/notmatch');

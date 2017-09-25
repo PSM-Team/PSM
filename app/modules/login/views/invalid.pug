@@ -1,13 +1,38 @@
 extends ../../../templates/master.pug
-
 block content
-  section.hero.is-danger.is-bold
-    .hero-body
-        div.container(style='height:100%')
-          section.hero.is-dark.is-bold
-            .hero-body
-              h1.title PUP Student Market
-          hr
-          h3.title Please Sign-in first to View Homepage!
-          hr
-          a.button.is-danger.is-inverted.is-outlined(href="/login") SIGN-IN
+    section.hero.is-black
+        .hero-body
+            img.ui.image.is-pulled-right(style="width: 150px; height:150px;", src='/assets/images/pup_logo.png')
+            i.fa.fa-shopping-cart.fa-5x 
+                | PUP Student Market
+            br
+            br
+            br
+            br
+            br
+            hr
+            section.hero.is-danger.is-bold
+                .hero-body
+                    div.container(style='height:10%')
+                        h1.title You need to Sign-in first to view this page!
+                        br
+                section.hero.is-primary.is-bold
+                    .hero-body
+                        div.container(style='height:10%')
+                            i.fa.fa-sign-in.fa-2x 
+                                | Sign-in
+                            br
+                            br
+                            form(method="POST" action="/login")
+                                .field
+                                    .label Student Number
+                                    .control
+                                        input.input(type="text" placeholder="" name="studnum")
+                                .field
+                                    .label Password
+                                    .control
+                                        input.input(type="password" placeholder="" name="password")
+                                input.button.is-pulled-left(type="submit" value="Sign-in")
+                                br
+                                hr
+                                a.button.is-pulled-left(class="button", href="/register") REGISTER

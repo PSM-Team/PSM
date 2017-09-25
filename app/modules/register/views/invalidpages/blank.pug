@@ -1,49 +1,46 @@
 extends ../../../../templates/master.pug
-
 block content
-  section.hero.is-info.is-bold
-    .hero-body
-        div.container
-          section.hero.is-dark.is-bold
-            .hero-body
-              h1.title PUP Student Market
-          hr
-          h3.title Register:
-          section.hero.is-danger.is-bold
-            .hero-body
-              h1.title Submission Failed
-              h1.subtitle - Some required fields were blank
-          br
-          p All fields are required in order to successfully register, unless stated optional
-          form(method="POST" action="/register")
-              .field
-                  .control
-                      input.input(type="text" placeholder="Student Number" name="studnum")
-              .field
-                  .control
-                      input.input(type="password" placeholder="Password" name="password")
-              .field
-                  .control
-                      input.input(type="password" placeholder="Confirm Password" name="confirm")
-              .field
-                  .control
-                      input.input(type="text" placeholder="Full Name (John S. Doe) " name="studname")
-              .field
-                  .control
-                      input.input(type="text" placeholder="Gender (M/F)" name="gender")
-              .field
-                  .control
-                      input.input(type="date" placeholder="Birthdate (YYYMMDD)" name="bday")
-              .field
-                  .control
-                      input.input(type="text" placeholder="Branch" name="branch")
-              .field
-                  .control
-                      input.input(type="text" placeholder="E-mail Address" name="email")
-              .field
-                  .control
-                      input.input(type="text" placeholder="Contact Info (Optional)" name="contact")
+    section.hero.is-black
+        .hero-body
+            img.ui.image.is-pulled-right(style="width: 100px; height:100px;", src='/assets/images/pup_logo.png')
+            i.fa.fa-shopping-cart.fa-5x 
+                | PUP Student Market
+            hr
+            section.hero.is-danger.is-bold
+                .hero-body
+                    div.container(style='height:10%')
+                            h1.title Submission Failed
+                        h1.subtitle - Fill in all fields to continue
+                        br
+                section.hero.is-primary.is-bold
+                    .hero-body
+                        div.container(style='height:10%')
+                            h3.title Register:
+                            p All fields are required in order to successfully register, unless stated optional
+                            br
+                            hr
+                            br
+                            form(method="POST" action="/register")
+                                .field
+                                    .label Student Number
+                                         input.input(type="text" placeholder="example: 222201234mn0" name="studnum" required)
+                                .field
+                                    .label Password
+                                        input.input(type="password" placeholder="" name="password" required)
+                                .field
+                                    .label Confirm Password
+                                        input.input(type="password" placeholder="" name="confirm" required)
+                                .field
+                                    .label Name
+                                        input.input(type="text" placeholder="example: FirstName MiddleInitial. LastName" name="studname" required)
+                                .field
+                                    .label Email Address
+                                        input.input(type="email" placeholder="example: ted@xyz.com" name="email" required)
+                                .field
+                                    .label Contact Information
+                                        input.input(type="text" placeholder="cellphone/telephone/other email accounts: seperated by space" name="contact" required)
 
-              input(type="submit" value="Register")
-              hr
-              a.button.is-info.is-inverted.is-outlined(href="/login") SIGN-IN
+                                input.button(type="submit" value="Register")
+                                br
+                                hr
+                                a.button.is-pulled-left(class="button", href="/login") SIGN-IN

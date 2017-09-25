@@ -20,11 +20,13 @@ block content
                         br
                         form(method="POST" action="/login")
                             .field
+                                .label Student Number
                                 .control
-                                    input.input(type="text" placeholder="Student Number" name="studnum")
+                                    input.input(type="text" placeholder="" name="studnum")
                             .field
+                                .label Password
                                 .control
-                                    input.input(type="password" placeholder="Password" name="password")
+                                    input.input(type="password" placeholder="" name="password")
                             input.button.is-pulled-left(type="submit" value="Sign-in")
                             br
                             hr

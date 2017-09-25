@@ -2,41 +2,37 @@ extends ../../../templates/master.pug
 block content
     section.hero.is-black
         .hero-body
-            h1.title PUP Student Market
+            img.ui.image.is-pulled-right(style="width: 100px; height:100px;", src='/assets/images/pup_logo.png')
+            i.fa.fa-shopping-cart.fa-5x 
+                | PUP Student Market
             hr
             section.hero.is-primary.is-bold
                 .hero-body
                     div.container(style='height:10%')
                         h3.title Register:
                         p All fields are required in order to successfully register, unless stated optional
+                        br
+                        hr
+                        br
                         form(method="POST" action="/register")
                             .field
-                                .control
-                                    input.input(type="text" placeholder="Student Number" name="studnum")
+                                .label Student Number
+                                    input.input(type="text" placeholder="example: 222201234mn0" name="studnum" required)
                             .field
-                                .control
-                                    input.input(type="password" placeholder="Password" name="password")
+                                .label Password
+                                    input.input(type="password" placeholder="" name="password" required)
                             .field
-                                .control
-                                    input.input(type="password" placeholder="Confirm Password" name="confirm")
+                                .label Confirm Password
+                                    input.input(type="password" placeholder="" name="confirm" required)
                             .field
-                                .control
-                                    input.input(type="text" placeholder="Full Name (John S. Doe) " name="studname")
+                                .label Name
+                                    input.input(type="text" placeholder="example: FirstName MiddleInitial. LastName" name="studname" required)
                             .field
-                                .control
-                                    input.input(type="text" placeholder="Gender (M/F)" name="gender")
+                                .label Email Address
+                                    input.input(type="email" placeholder="example: ted@xyz.com" name="email" required)
                             .field
-                                .control
-                                    input.input(type="date" placeholder="Birthdate (YYYMMDD)" name="bday")
-                            .field
-                                .control
-                                    input.input(type="text" placeholder="Branch" name="branch")
-                            .field
-                                .control
-                                    input.input(type="email" placeholder="E-mail Address" name="email")
-                            .field
-                                .control
-                                    input.input(type="text" placeholder="Contact Info (Optional)" name="contact")
+                                .label Contact Information
+                                    input.input(type="text" placeholder="cellphone/telephone/other email accounts: seperated by space" name="contact" required)
 
                             input.button(type="submit" value="Register")
                             br

@@ -12,8 +12,12 @@ function fuser(req,res,next){
   var db = require('../../lib/database')();
   db.query("SELECT * FROM tbluser WHERE strSNum= ?",[req.params.userid], (err, results, fields) => {
       if (err) console.log(err);
-      for(count=0;count<results.length;count++){
-        results[count].bday= results[count].datBirthday.toDateString("en-US").slice(4, 15);
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].bday= results[count].datBirthday.toDateString("en-US").slice(4, 15);
+        }
       }
       req.user= results;
       return next();
@@ -29,11 +33,16 @@ function fedituser(req,res,next){
 }
 function ftrans(req,res,next){
   var db = require('../../lib/database')();
-  db.query("SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus= 'Ongoing') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC",[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
+  var sqltrans1 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus= 'Ongoing') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
+  db.query(sqltrans1,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
-      for(count=0;count<results.length;count++){
-        results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
-        results[count].price = numberWithCommas(results[count].fltItemPrice);
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
+          results[count].price = numberWithCommas(results[count].fltItemPrice);
+        }
       }
       req.trans= results;
       return next();
@@ -43,9 +52,13 @@ function fmypost(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT B.*, strTransStatus FROM(SELECT * FROM(SELECT * FROM tblitem INNER JOIN tbluser ON strItemSNum= strSNum WHERE strSNum= ?) A INNER JOIN tblcategories ON intItemCat= intCatID) B LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC",[req.params.userid], (err, results, fields) => {
       if (err) console.log(err);
-      for(count=0;count<results.length;count++){
-        results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
-        results[count].price = numberWithCommas(results[count].fltItemPrice);
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
+          results[count].price = numberWithCommas(results[count].fltItemPrice);
+        }
       }
       req.mypost = results;
       return next();
@@ -56,7 +69,7 @@ function feditpost(req, res, next){
   db.query("SELECT B.*, strTransStatus FROM(SELECT * FROM(SELECT * FROM tblitem INNER JOIN tbluser ON strItemSNum= strSNum WHERE strSNum= ?) A INNER JOIN tblcategories ON intItemCat= intCatID) B LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus IS NULL AND intItemID= ? ORDER BY intItemID DESC",[req.params.userid, req.params.postid], (err, results, fields) => {
       if (err) console.log(err);
       if (!results[0]){
-        console.log('EMPTY');
+        console.log('');
       }
       else{
         results[0].date= results[0].datPostDate.toDateString("en-US").slice(4, 15);
@@ -65,6 +78,15 @@ function feditpost(req, res, next){
       req.editpost = results;
       return next();
     });
+}
+function ftransfin(req, res, next){
+  var db = require('../../lib/database')();
+  var sqltrans2 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus= 'Ongoing') AS B INNER JOIN tbluser WHERE ((strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?)) AND intTransID= ? ORDER BY intTransID DESC";
+  db.query(sqltrans2,[req.session.user,req.session.user,req.session.user,req.session.user,req.params.transid], (err, results, fields) => {
+      if (err) console.log(err);
+      req.transfin= results;
+      return next();
+  });
 }
 
 function profilerender(req,res){
@@ -86,6 +108,24 @@ function editprofilerender(req,res){
 function transrender(req,res){
   if(req.valid==1)
     res.render('profile/views/ongoingtrans',{transtab: req.trans, viewertab: req.user});
+  else
+    res.render('login/views/invalid');
+}
+function transfinrender(req,res){
+  if(req.valid==1){
+    if (!req.transfin[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else
+      if (req.session.user == req.transfin[0].strItemSNum || req.session.user == req.transfin[0].strBuyerSNum){
+        var db = require('../../lib/database')();
+        db.query("UPDATE tbltransaction SET strTransStatus= 'Finished', datDateFinished= (SELECT curdate() AS CD) WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
+            if (err) console.log(err);
+            res.render('profile/views/transfin');
+        });
+      }
+      else
+        res.render('profile/views/invalidpages/unauthorized');
+  }
   else
     res.render('login/views/invalid');
 }
@@ -119,6 +159,7 @@ router.get('/', (req, res) => {
 router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions', flog, ftrans, fedituser, transrender);
+router.get('/-/finishtrans/:transid', flog, ftransfin, transfinrender);
 router.get('/:userid/posts', flog, fuser, fmypost, mypostrender);
 router.get('/:userid/posts/:postid/edit', flog, fmypost, feditpost, editpostrender);
 
@@ -165,6 +206,5 @@ router.post('/:userid/posts/:postid/edit', feditpost, (req, res) => {
   else
     res.render('profile/views/invalidpages/postnotmatch',{editposttab: req.editpost});
 });
-
 
 exports.profile= router;

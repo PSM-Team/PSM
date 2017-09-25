@@ -58,7 +58,6 @@ function fcleanse(req, res, next){
     var db = require('../../lib/database')();
     db.query("UPDATE tblquestions SET boolUsed= '0' WHERE boolUsed= '1'", (err, results, fields) => {
       if (err) console.log(err);
-
       return next();
     });
 }

@@ -6,8 +6,14 @@ block content
       |
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
     hr
-    p(style='display:inline') Price : Php #{post.fltItemPrice} &nbsp //
-    p(style='display:inline') &nbsp Seller : &nbsp #{post.strName} ( #{post.strItemSNum} ) &nbsp //
+    p(style='display:inline') Price : Php &nbsp
+      b #{post.fltItemPrice}
+    p(style='display:inline') &nbsp //
+    p(style='display:inline') &nbsp Seller : &nbsp&nbsp
+      u
+        a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+    p(style='display:inline') &nbsp - #{post.strStatus}
+    p(style='display:inline') &nbsp //
     p(style='display:inline') &nbsp Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
     br
     hr

@@ -10,8 +10,11 @@ block content
     h3.subtitle &nbsp#{post.strCatName}
     p
       b Price: Php #{post.price}
-    p Seller: &nbsp
-      u
-        a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
     p Date: #{post.date}
+    br
+    .field.is-grouped
+      p.control
+        a.button.is-primary.is-inverted.is-outlined(class="button", href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/edit' ) Edit Post
+      p.control
+        a.button.is-primary.is-inverted.is-outlined(class="button", href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/delete') Delete Post
     hr

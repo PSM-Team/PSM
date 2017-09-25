@@ -30,10 +30,8 @@ router.post('/', (req, res) => {
               res.render('login/views/invalidpages/incorrect');
           }
         }
-
     });
   }
-
 });
 
 exports.login = router;

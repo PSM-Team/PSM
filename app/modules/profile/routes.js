@@ -51,6 +51,21 @@ function fmypost(req, res, next){
       return next();
     });
 }
+function feditpost(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT B.*, strTransStatus FROM(SELECT * FROM(SELECT * FROM tblitem INNER JOIN tbluser ON strItemSNum= strSNum WHERE strSNum= ?) A INNER JOIN tblcategories ON intItemCat= intCatID) B LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus IS NULL AND intItemID= ? ORDER BY intItemID DESC",[req.params.userid, req.params.postid], (err, results, fields) => {
+      if (err) console.log(err);
+      if (!results[0]){
+        console.log('EMPTY');
+      }
+      else{
+        results[0].date= results[0].datPostDate.toDateString("en-US").slice(4, 15);
+        results[0].price = numberWithCommas(results[0].fltItemPrice);
+      }
+      req.editpost = results;
+      return next();
+    });
+}
 
 function profilerender(req,res){
   if(req.valid==1){
@@ -75,9 +90,25 @@ function transrender(req,res){
     res.render('login/views/invalid');
 }
 function mypostrender(req,res){
-  console.log('SUCCESS');
   if(req.valid==1)
-    res.render('profile/views/myposts', { usertab: req.user, myposttab: req.mypost });
+    if(req.session.user == req.mypost[0].strSNum)
+      res.render('profile/views/myposts', { usertab: req.user, myposttab: req.mypost });
+    else
+      res.render('profile/views/otherposts', { usertab: req.user, myposttab: req.mypost });
+  else
+    res.render('login/views/invalid');
+}
+function editpostrender(req,res){
+  if(req.valid==1){
+    if(!req.editpost[0])
+        res.render('categ/views/invalidpages/itemunavailable');
+    else{
+      if (req.session.user == req.editpost[0].strItemSNum)
+        res.render('profile/views/editpost', { editposttab: req.editpost });
+      else
+        res.render('profile/views/invalidpages/unauthorized');
+    }
+  }
   else
     res.render('login/views/invalid');
 }
@@ -89,6 +120,7 @@ router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions', flog, ftrans, fedituser, transrender);
 router.get('/:userid/posts', flog, fuser, fmypost, mypostrender);
+router.get('/:userid/posts/:postid/edit', flog, fmypost, feditpost, editpostrender)
 
 router.post('/-/edit', fedituser, (req, res) => {
   var db = require('../../lib/database')();

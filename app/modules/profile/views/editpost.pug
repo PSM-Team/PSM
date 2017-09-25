@@ -1,0 +1,7 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each post in editposttab
+    h3.title
+      a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
+    hr

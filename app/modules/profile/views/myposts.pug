@@ -1,0 +1,17 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each user in usertab
+    h3.title #{user.strName}'s posts
+    hr
+  each post in myposttab
+    h3.title
+      a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
+    h3.subtitle &nbsp#{post.strCatName}
+    p
+      b Price: Php #{post.price}
+    p Seller: &nbsp
+      u
+        a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+    p Date: #{post.date}
+    hr

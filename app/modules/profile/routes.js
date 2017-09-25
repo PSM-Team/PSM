@@ -39,6 +39,18 @@ function ftrans(req,res,next){
       return next();
     });
 }
+function fmypost(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT B.*, strTransStatus FROM(SELECT * FROM(SELECT * FROM tblitem INNER JOIN tbluser ON strItemSNum= strSNum WHERE strSNum= ?) A INNER JOIN tblcategories ON intItemCat= intCatID) B LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC",[req.params.userid], (err, results, fields) => {
+      if (err) console.log(err);
+      for(count=0;count<results.length;count++){
+        results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
+        results[count].price = numberWithCommas(results[count].fltItemPrice);
+      }
+      req.mypost = results;
+      return next();
+    });
+}
 
 function profilerender(req,res){
   if(req.valid==1){
@@ -62,6 +74,13 @@ function transrender(req,res){
   else
     res.render('login/views/invalid');
 }
+function mypostrender(req,res){
+  console.log('SUCCESS');
+  if(req.valid==1)
+    res.render('profile/views/myposts', { usertab: req.user, myposttab: req.mypost });
+  else
+    res.render('login/views/invalid');
+}
 
 router.get('/', (req, res) => {
     res.redirect('/profile/'+req.session.user);
@@ -69,6 +88,7 @@ router.get('/', (req, res) => {
 router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions', flog, ftrans, fedituser, transrender);
+router.get('/:userid/posts', flog, fuser, fmypost, mypostrender);
 
 router.post('/-/edit', fedituser, (req, res) => {
   var db = require('../../lib/database')();

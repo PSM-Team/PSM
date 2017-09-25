@@ -120,7 +120,7 @@ router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions', flog, ftrans, fedituser, transrender);
 router.get('/:userid/posts', flog, fuser, fmypost, mypostrender);
-router.get('/:userid/posts/:postid/edit', flog, fmypost, feditpost, editpostrender)
+router.get('/:userid/posts/:postid/edit', flog, fmypost, feditpost, editpostrender);
 
 router.post('/-/edit', fedituser, (req, res) => {
   var db = require('../../lib/database')();
@@ -143,5 +143,28 @@ router.post('/-/edit', fedituser, (req, res) => {
   else
     res.render('profile/views/invalidpages/notmatch',{usertab: req.user});
 });
+router.post('/:userid/posts/:postid/edit', feditpost, (req, res) => {
+  var db = require('../../lib/database')();
+  if(req.body.title=='' || req.body.price=='' || req.body.oldpass=='' || req.body.newpass=='' || req.body.confirm=='' ){
+    res.render('profile/views/invalidpages/postblank',{editposttab: req.editpost});
+  }
+  else if( req.body.newpass === req.body.confirm ){
+    db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ? ",[req.params.postid], (err, results, fields) => {
+        if (err) console.log(err);
+        console.log(results[0].strOrderPass);
+        if(req.body.oldpass === results[0].strOrderPass){
+          db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, req.body.category, req.params.postid], (err, results1, fields) => {
+              if (err) console.log(err);
+              res.redirect('/profile/'+req.session.user+'/posts');
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/postincorrect',{editposttab: req.editpost});
+      });
+  }
+  else
+    res.render('profile/views/invalidpages/postnotmatch',{editposttab: req.editpost});
+});
+
 
 exports.profile= router;

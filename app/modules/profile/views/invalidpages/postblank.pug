@@ -1,4 +1,4 @@
-extends ../../../templates/navbar.pug
+extends ../../../../templates/navbar.pug
 
 block content
   each post in editposttab
@@ -6,6 +6,11 @@ block content
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
     hr
     h3.title Edit Post:
+    section.hero.is-danger.is-bold
+      .hero-body
+        h1.title Submission Failed
+        h1.subtitle - Fill in all required fields to Update Post
+    br
     form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit")
         .field
             .control

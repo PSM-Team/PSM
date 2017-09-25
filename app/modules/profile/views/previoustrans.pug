@@ -1,7 +1,7 @@
 extends ../../../templates/navbar.pug
 
 block content
-  h2.title Ongoing Transactions
+  h2.title Previous Transactions
   hr
   .field.is-grouped
     p.control
@@ -14,8 +14,7 @@ block content
   each trans in transtab
     each viewer in viewertab
       if trans.strBuyerSNum == viewer.strSNum
-        h3.title ( Buyer )
-          a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+        h3.title ( Buyer ) #{trans.strItemTitle}
         h3.subtitle &nbsp#{trans.strCatName}
         p
           b Price: Php #{trans.price}
@@ -23,13 +22,9 @@ block content
           u
             a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
         p Date Started: #{trans.date}
-        br
-        .field.is-grouped
-          p.control
-            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
+        p Date Finished: #{trans.fin}
       else
-        h3.title ( Seller )
-          a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+        h3.title ( Seller ) #{trans.strItemTitle}
         h3.subtitle &nbsp#{trans.strCatName}
         p
           b Price: Php #{trans.price}
@@ -37,8 +32,5 @@ block content
           u
             a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
         p Date Started: #{trans.date}
-        br
-        .field.is-grouped
-          p.control
-            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
+        p Date Finished: #{trans.fin}
     hr

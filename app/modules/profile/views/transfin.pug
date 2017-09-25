@@ -1,6 +1,30 @@
 extends ../../../templates/navbar.pug
 
 block content
-  h2.title Successful transaction!
+  h2.title End of Transaction!
   hr
-  a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') BACK TO TRANSACTIONS
+  each trans in transtab
+    each user in usertab
+      if trans.strBuyerSNum == user.strSNum
+        h2.subtitle Seller: &nbsp
+          u
+            a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
+            br
+        .field.is-grouped
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') COMMEND SELLER
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') REPORT SELLER
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') BACK TO TRANSACTIONS
+      else
+        h2.subtitle Buyer: &nbsp
+          u
+            a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
+        .field.is-grouped
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') COMMEND BUYER
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') REPORT BUYER
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') BACK TO TRANSACTIONS

@@ -33,7 +33,7 @@ function fedituser(req,res,next){
 }
 function ftrans(req,res,next){
   var db = require('../../lib/database')();
-  var sqltrans1 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus= 'Ongoing') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
+  var sqltrans1 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus='Ongoing') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
   db.query(sqltrans1,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
       if (!results[0])
@@ -47,6 +47,59 @@ function ftrans(req,res,next){
       req.trans= results;
       return next();
     });
+}
+function fholdtrans(req,res,next){
+  var db = require('../../lib/database')();
+  var sqltrans2 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!='Ongoing' AND strTransStatus!='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
+  db.query(sqltrans2,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
+      if (err) console.log(err);
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
+          results[count].price = numberWithCommas(results[count].fltItemPrice);
+        }
+      }
+      req.hold= results;
+      return next();
+    });
+}
+function ftranshistory(req,res,next){
+  var db = require('../../lib/database')();
+  var sqltrans4 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
+  db.query(sqltrans4,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
+      if (err) console.log(err);
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
+          results[count].fin= results[count].datDateFinished.toDateString("en-US").slice(4, 15);
+          results[count].price = numberWithCommas(results[count].fltItemPrice);
+
+        }
+      }
+      req.history= results;
+      return next();
+    });
+}
+function ftransfin(req, res, next){
+  var db = require('../../lib/database')();
+  var sqltrans3 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!= 'Finished') AS B INNER JOIN tbluser WHERE ((strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?)) AND intTransID= ? ORDER BY intTransID DESC";
+  db.query(sqltrans3,[req.session.user,req.session.user,req.session.user,req.session.user,req.params.transid], (err, results, fields) => {
+      if (err) console.log(err);
+      req.transfin= results;
+      return next();
+  });
+}
+function ftransid(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tbltransaction WHERE  intTransID= ?",[req.params.transid], (err, results, fields) => {
+      if (err) console.log(err);
+      req.transid= results;
+      return next();
+  });
 }
 function fmypost(req, res, next){
   var db = require('../../lib/database')();
@@ -79,15 +132,6 @@ function feditpost(req, res, next){
       return next();
     });
 }
-function ftransfin(req, res, next){
-  var db = require('../../lib/database')();
-  var sqltrans2 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus= 'Ongoing') AS B INNER JOIN tbluser WHERE ((strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?)) AND intTransID= ? ORDER BY intTransID DESC";
-  db.query(sqltrans2,[req.session.user,req.session.user,req.session.user,req.session.user,req.params.transid], (err, results, fields) => {
-      if (err) console.log(err);
-      req.transfin= results;
-      return next();
-  });
-}
 
 function profilerender(req,res){
   if(req.valid==1){
@@ -111,30 +155,71 @@ function transrender(req,res){
   else
     res.render('login/views/invalid');
 }
+function transholdrender(req,res){
+  if(req.valid==1)
+    res.render('profile/views/onholdtrans',{transtab: req.hold, viewertab: req.user});
+  else
+    res.render('login/views/invalid');
+}
+function transhistrender(req,res){
+  if(req.valid==1)
+    res.render('profile/views/previoustrans',{transtab: req.history, viewertab: req.user});
+  else
+    res.render('login/views/invalid');
+}
 function transfinrender(req,res){
   if(req.valid==1){
     if (!req.transfin[0])
       res.render('categ/views/invalidpages/itemunavailable');
-    else
-      if (req.session.user == req.transfin[0].strItemSNum || req.session.user == req.transfin[0].strBuyerSNum){
-        var db = require('../../lib/database')();
-        db.query("UPDATE tbltransaction SET strTransStatus= 'Finished', datDateFinished= (SELECT curdate() AS CD) WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
-            if (err) console.log(err);
-            res.render('profile/views/transfin');
-        });
+    else{
+      var db = require('../../lib/database')();
+      if ( req.transid[0].strTransStatus=='Ongoing' ){
+        if (req.session.user == req.transfin[0].strItemSNum ){
+          db.query("UPDATE tbltransaction SET strTransStatus= 'SFinished' WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
+              if (err) console.log(err);
+              res.render('profile/views/transfin',{transtab: req.transfin, usertab: req.user});
+          });
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum){
+          db.query("UPDATE tbltransaction SET strTransStatus= 'BFinished' WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
+              if (err) console.log(err);
+              res.render('profile/views/transfin',{transtab: req.transfin, usertab: req.user});
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
       }
-      else
-        res.render('profile/views/invalidpages/unauthorized');
+      else{
+        if (req.session.user == req.transfin[0].strItemSNum && req.transid[0].strTransStatus!= 'SFinished'){
+          db.query("UPDATE tbltransaction SET strTransStatus= 'Finished', datDateFinished= (SELECT curdate() AS CD) WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
+              if (err) console.log(err);
+              res.render('profile/views/transfin',{transtab: req.transfin, usertab: req.user});
+          });
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum && req.transid[0].strTransStatus!= 'BFinished'){
+          db.query("UPDATE tbltransaction SET strTransStatus= 'Finished', datDateFinished= (SELECT curdate() AS CD) WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
+              if (err) console.log(err);
+              res.render('profile/views/transfin',{transtab: req.transfin, usertab: req.user});
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+
+    }
   }
   else
     res.render('login/views/invalid');
 }
 function mypostrender(req,res){
-  if(req.valid==1)
-    if(req.session.user == req.mypost[0].strSNum)
+  if(req.valid==1){
+    if(!req.mypost[0])
+      res.render('profile/views/myposts', { usertab: req.user, myposttab: req.mypost });
+    else if(req.session.user == req.mypost[0].strSNum)
       res.render('profile/views/myposts', { usertab: req.user, myposttab: req.mypost });
     else
       res.render('profile/views/otherposts', { usertab: req.user, myposttab: req.mypost });
+  }
   else
     res.render('login/views/invalid');
 }
@@ -159,7 +244,9 @@ router.get('/', (req, res) => {
 router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions', flog, ftrans, fedituser, transrender);
-router.get('/-/finishtrans/:transid', flog, ftransfin, transfinrender);
+router.get('/-/transactions/hold', flog, fholdtrans, fedituser, transholdrender);
+router.get('/-/transactions/history', flog, ftranshistory, fedituser, transhistrender);
+router.get('/-/finishtrans/:transid', flog, ftransfin, fedituser, ftransid, transfinrender);
 router.get('/:userid/posts', flog, fuser, fmypost, mypostrender);
 router.get('/:userid/posts/:postid/edit', flog, fmypost, feditpost, editpostrender);
 
@@ -192,7 +279,6 @@ router.post('/:userid/posts/:postid/edit', feditpost, (req, res) => {
   else if( req.body.newpass === req.body.confirm ){
     db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ? ",[req.params.postid], (err, results, fields) => {
         if (err) console.log(err);
-        console.log(results[0].strOrderPass);
         if(req.body.oldpass === results[0].strOrderPass){
           db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, req.body.category, req.params.postid], (err, results1, fields) => {
               if (err) console.log(err);

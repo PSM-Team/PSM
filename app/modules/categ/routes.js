@@ -82,7 +82,7 @@ function postrender(req,res){
       res.render('categ/views/invalidpages/itemunavailable');
     else if(!results[0])
       res.render('categ/views/post',{ posttab: req.post });
-    else if(results[0].strTransStatus == 'Ongoing')
+    else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished')
       res.render('categ/views/viewpost',{ posttab: req.post });
     else
       res.render('categ/views/invalidpages/itemunavailable');
@@ -100,7 +100,7 @@ function orderrender(req,res){
       res.render('categ/views/invalidpages/orderunavailable');
     else if(!results[0])
       res.render('categ/views/order',{ posttab: req.post });
-    else if(results[0].strTransStatus == 'Ongoing'){
+    else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished' ){
       res.render('categ/views/invalidpages/orderunavailable',{ posttab: req.post });
     }
     else

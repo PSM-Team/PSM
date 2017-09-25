@@ -1,0 +1,75 @@
+extends ../../../templates/navbar.pug
+
+block content
+  h2.title On Hold Transactions
+  hr
+  .field.is-grouped
+    p.control
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions") ONGOING TRANSACTION
+    p.control
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/hold") ON HOLD TRANSACTIONS
+    p.control
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/history") PREVIOUS TRANSACTIONS
+  hr
+  each trans in transtab
+    each viewer in viewertab
+      if trans.strBuyerSNum == viewer.strSNum
+        if trans.strTransStatus == 'BFinished'
+          h3.title ( Buyer )
+            a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+          h3.subtitle &nbsp#{trans.strCatName}
+          p
+            b Price: Php #{trans.price}
+          p Seller: &nbsp
+            u
+              a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
+          p Date Started: #{trans.date}
+          br
+          p You Marked this as Finished Transaction
+        else
+          h3.title ( Buyer )
+            a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+          h3.subtitle &nbsp#{trans.strCatName}
+          p
+            b Price: Php #{trans.price}
+          p Seller: &nbsp
+            u
+              a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
+          p Date Started: #{trans.date}
+          br
+          p Seller Marked this as Finished Transaction
+          .field.is-grouped
+            p.control
+              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
+
+      else
+        if trans.strTransStatus == 'SFinished'
+          h3.title ( Seller )
+            a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+          h3.subtitle &nbsp#{trans.strCatName}
+          p
+            b Price: Php #{trans.price}
+          p Buyer: &nbsp
+            u
+              a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
+          p Date Started: #{trans.date}
+          br
+          p You Marked this as Finished Transaction
+        else
+          h3.title ( Seller )
+            a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
+          h3.subtitle &nbsp#{trans.strCatName}
+          p
+            b Price: Php #{trans.price}
+          p Buyer: &nbsp
+            u
+              a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
+          p Date Started: #{trans.date}
+          br
+          p Buyer Marked this as Finished Transaction
+          .field.is-grouped
+            p.control
+              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
+
+
+    hr

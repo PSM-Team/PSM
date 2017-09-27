@@ -1,0 +1,7 @@
+extends ../../../templates/navbaradmin.pug
+
+block content
+  each user in usertab
+    h3.title PUP Student Market Admin Page
+    h3.subtitle &nbsp#{user.strName} 
+    hr

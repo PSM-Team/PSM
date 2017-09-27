@@ -18,17 +18,18 @@ router.post('/', (req, res) => {
         if (!results[0]){
           res.render('login/views/invalidpages/incorrect');
         }
+        else if ( results[0].strStatus == 'unregistered' ){
+          res.render('login/views/invalidpages/unreg');
+        }
+        else if(req.body.password === results[0].strPassword){
+          req.session.user = results[0].strSNum;
+          if(results[0].strType == 'normal')
+            res.redirect('/home');
+          else
+            res.redirect('/admin');
+        }
         else{
-          if(req.body.password === results[0].strPassword){
-            db.query("SELECT strSNum FROM tbluser WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
-                if (err) console.log(err);
-                req.session.user = results[0].strSNum;
-                res.redirect('/home');
-              });
-          }
-          else{
-              res.render('login/views/invalidpages/incorrect');
-          }
+            res.render('login/views/invalidpages/incorrect');
         }
     });
   }

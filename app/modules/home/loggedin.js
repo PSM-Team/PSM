@@ -3,10 +3,12 @@ module.exports= (req,res,next)=>{
   var db = require('../../lib/database')();
   db.query("SELECT * FROM tbluser WHERE strSNum= ?",[req.session.user], function (err, results, fields) {
       if (err) console.log(err);
-      req.valid = 1;
-      if (!results[0]){
+      if (!results[0])
         req.valid = 0;
-      }
+      else if (results[0].strType == 'normal')
+        req.valid = 1;
+      else
+        req.valid = 2;
       req.user = results;
       return next();
   });

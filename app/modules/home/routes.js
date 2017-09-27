@@ -28,6 +28,8 @@ function fitem(req, res, next){
 function render(req,res){
   if(req.valid==1)
     res.render('home/views/index', { usertab: req.user, itemtab: req.item});
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');  
   else
     res.render('login/views/invalid');
 }

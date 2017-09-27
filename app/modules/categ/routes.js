@@ -80,6 +80,8 @@ function postrender(req,res){
     if (err) console.log(err);
     if(!req.post[0])
       res.render('categ/views/invalidpages/itemunavailable');
+    else if(req.post[0].strItemSNum == req.session.user)
+      res.render('categ/views/ownpost',{ posttab: req.post });
     else if(!results[0])
       res.render('categ/views/post',{ posttab: req.post });
     else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished')
@@ -94,15 +96,16 @@ function postrender(req,res){
 function orderrender(req,res){
   if(req.valid==1){
     var db = require('../../lib/database')();
-    db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
+    db.query("SELECT strTransStatus FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
     if (err) console.log(err);
     if(!req.post[0])
       res.render('categ/views/invalidpages/orderunavailable');
+    else if(req.post[0].strItemSNum == req.session.user)
+      res.render('categ/views/invalidpages/selforder');
     else if(!results[0])
       res.render('categ/views/order',{ posttab: req.post });
-    else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished' ){
-      res.render('categ/views/invalidpages/orderunavailable',{ posttab: req.post });
-    }
+    else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished' )
+      res.render('categ/views/invalidpages/orderunavailable');
     else
       res.render('categ/views/invalidpages/itemunavailable');
     });

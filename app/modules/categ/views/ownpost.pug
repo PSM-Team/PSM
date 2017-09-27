@@ -1,0 +1,39 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each post in posttab
+    h2.title
+      |
+      a(href='/categories/' + post.strCatName) #{post.strCatName}
+    hr
+    h3.title #{post.strItemTitle}
+    p
+      |
+      b Price :
+    p
+      |
+      b &nbsp Php #{post.price}
+    br
+    p Seller :
+    p
+      | &nbsp&nbsp
+      u
+        a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+    p &nbsp Status: #{post.strStatus}
+    p &nbsp Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
+    br
+    p Date :
+    p &nbsp #{post.date}
+    br
+    p Item Description :
+    p - #{post.txtItemDesc}
+    br
+    p Contact Information:
+    p &nbsp Email : #{post.strEmail}
+    p &nbsp Others : #{post.txtContact}
+    hr
+    .field.is-grouped
+      p.control
+        a.button.is-primary.is-inverted.is-outlined(href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/edit') EDIT POST
+      p.control
+        a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName) BACK TO CATEGORY

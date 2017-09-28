@@ -140,30 +140,40 @@ function profilerender(req,res){
     else
       res.render('profile/views/otherprofile',{usertab: req.user, transtab: req.trans});
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 function editprofilerender(req,res){
   if(req.valid==1)
     res.render('profile/views/editprofile',{usertab: req.user});
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 function transrender(req,res){
   if(req.valid==1)
     res.render('profile/views/ongoingtrans',{transtab: req.trans, viewertab: req.user});
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 function transholdrender(req,res){
   if(req.valid==1)
     res.render('profile/views/onholdtrans',{transtab: req.hold, viewertab: req.user});
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 function transhistrender(req,res){
   if(req.valid==1)
     res.render('profile/views/previoustrans',{transtab: req.history, viewertab: req.user});
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -208,6 +218,8 @@ function transfinrender(req,res){
 
     }
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -220,6 +232,8 @@ function mypostrender(req,res){
     else
       res.render('profile/views/otherposts', { usertab: req.user, myposttab: req.mypost });
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -234,12 +248,15 @@ function editpostrender(req,res){
         res.render('profile/views/invalidpages/unauthorized');
     }
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 
-router.get('/', (req, res) => {
-    res.redirect('/profile/'+req.session.user);
+router.get('/', flog, (req, res) => {
+      res.redirect('/profile/'+req.session.user);
+
 });
 router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);

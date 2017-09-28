@@ -1,0 +1,28 @@
+extends ../../../templates/navbaradmin.pug
+
+block content
+  h3.title Registration Manipulation
+  hr(style='border: 0.5px solid #000105')
+  .field.is-grouped
+    p.control
+      a.button.is-warning.is-inverted.is-outlined(class="button", href="/admin/registration-unregistered") UNREGISTERED
+    p.control
+      a.button.is-warning.is-inverted.is-outlined(class="button", href="/admin/registration-rejected") REJECTED REGISTRATIONS
+  hr(style='border: 0.5px solid #000105')
+  each stud in studtab
+    h3.title
+      b #{stud.strSNum}
+    h3.subtitle &nbsp#{stud.strName}
+    p Email: #{stud.strEmail}
+    p Results: #{stud.TotalScore}
+    br
+    .field.is-grouped
+      if stud.strStatus == 'unregistered'
+        p.control
+          a.button.is-warning.is-inverted.is-outlined(class="button", href="/admin/registration/approve/"+ stud.strSNum) Approve
+        p.control
+          a.button.is-warning.is-inverted.is-outlined(class="button", href="/admin/registration/reject/"+ stud.strSNum) Reject
+      else
+        p.control
+          a.button.is-warning.is-inverted.is-outlined(class="button", href="/admin/registration/revert/"+ stud.strSNum) Revert
+    hr(style='border: 0.5px solid #000105')

@@ -5,6 +5,8 @@ var flog = require( '../home/loggedin');
 function render(req,res){
   if(req.valid==1)
     res.render('sell/views/index', { curdatetab: req.curdate });
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }

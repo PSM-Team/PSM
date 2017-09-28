@@ -60,6 +60,8 @@ function fpost(req, res, next){
 function render(req,res){
   if(req.valid==1)
     res.render('categ/views/index', { cattab: req.cat });
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -70,6 +72,8 @@ function catrender(req,res){
     else
       res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item});
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -90,6 +94,8 @@ function postrender(req,res){
       res.render('categ/views/invalidpages/itemunavailable');
     });
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -110,6 +116,8 @@ function orderrender(req,res){
       res.render('categ/views/invalidpages/itemunavailable');
     });
   }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }

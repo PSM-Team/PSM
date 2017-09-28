@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
         if (!results[0]){
           res.render('login/views/invalidpages/incorrect');
         }
-        else if ( results[0].strStatus == 'unregistered' ){
+        else if ( results[0].strStatus == 'unregistered' || results[0].strStatus == 'rejected'){
           res.render('login/views/invalidpages/unreg');
         }
         else if(req.body.password === results[0].strPassword){

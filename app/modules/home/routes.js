@@ -29,7 +29,7 @@ function render(req,res){
   if(req.valid==1)
     res.render('home/views/index', { usertab: req.user, itemtab: req.item});
   else if(req.valid==2)
-    res.render('home/views/invalidpages/adminonly');  
+    res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
@@ -39,18 +39,24 @@ router.get('/', flog, fitem, render);
 router.get('/contact_us', flog, (req, res) => {
     if(req.valid==1)
       res.render('home/views/contact_us');
+    else if(req.valid==2)
+      res.render('home/views/invalidpages/adminonly');
     else
       res.render('login/views/invalid');
 });
 router.get('/help', flog, (req, res) => {
     if(req.valid==1)
       res.render('home/views/help');
+    else if(req.valid==2)
+      res.render('home/views/invalidpages/adminonly');
     else
       res.render('login/views/invalid');
 });
 router.get('/rules', flog, (req, res) => {
     if(req.valid==1)
       res.render('home/views/rules');
+    else if(req.valid==2)
+      res.render('home/views/invalidpages/adminonly');
     else
       res.render('login/views/invalid');
 });

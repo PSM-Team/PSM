@@ -253,6 +253,26 @@ function editpostrender(req,res){
   else
     res.render('login/views/invalid');
 }
+function deletepostrender(req,res){
+  if(req.valid==1){
+    if(!req.editpost[0])
+        res.render('categ/views/invalidpages/itemunavailable');
+    else{
+      if (req.session.user == req.editpost[0].strItemSNum){
+        var db = require('../../lib/database')();
+        db.query("DELETE FROM tblitem WHERE strItemSNum= ? AND intItemID= ?",[req.params.userid, req.params.postid], (err, results, fields) => {
+          res.redirect('/profile/'+ req.params.userid +'/posts');
+        });
+      }
+      else
+        res.render('profile/views/invalidpages/unauthorized');
+    }
+  }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
+  else
+    res.render('login/views/invalid');
+}
 
 router.get('/', flog, (req, res) => {
       res.redirect('/profile/'+req.session.user);
@@ -265,7 +285,9 @@ router.get('/-/transactions/hold', flog, fholdtrans, fedituser, transholdrender)
 router.get('/-/transactions/history', flog, ftranshistory, fedituser, transhistrender);
 router.get('/-/finishtrans/:transid', flog, ftransfin, fedituser, ftransid, transfinrender);
 router.get('/:userid/posts', flog, fuser, fmypost, mypostrender);
-router.get('/:userid/posts/:postid/edit', flog, fmypost, feditpost, editpostrender);
+router.get('/:userid/posts/:postid/edit', flog, feditpost, editpostrender);
+router.get('/:userid/posts/:postid/delete', flog, feditpost, deletepostrender);
+
 
 router.post('/-/edit', fedituser, (req, res) => {
   var db = require('../../lib/database')();

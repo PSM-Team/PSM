@@ -1,0 +1,35 @@
+extends ../../../../templates/navbar.pug
+
+block content
+  h3.title Sell an Item:
+  h3.subtitle &nbspAll fields are required
+  section.hero.is-danger.is-bold
+    .hero-body
+      h1.title Submission Failed
+      h1.subtitle - Incorrect input for some fields
+  br
+  form(method="POST" action="/sell")
+      .field
+          .control
+              .select.is-primary
+                  select(name="category")
+                    option(value='') -- Category --
+                    option(value='Books') Books
+                    option(value='School Supplies') School Supplies
+                    option(value='Food') Food
+                    option(value='Misc.') Misc.
+      .field
+          .control
+              input.input(type="text" placeholder="Item Title" name="title")
+      .field
+          .control
+              input.input(type="text" placeholder="Item Price" name="price")
+      .field
+          .control
+              input.input(type="text" placeholder="Item Description" name="description")
+      .field
+          .control
+              input.input(type="password" placeholder="Order Password" name="orderpass")
+      input(type="submit" value="Post")
+      hr
+      a.button.is-primary.is-inverted.is-outlined(href='/home') Cancel

@@ -84,7 +84,7 @@ function postrender(req,res){
     if (err) console.log(err);
     if(!req.post[0])
       res.render('categ/views/invalidpages/itemunavailable');
-    else if(req.post[0].strItemSNum == req.session.user)
+    else if(req.post[0].strItemSNum == req.session.user && !results[0] )
       res.render('categ/views/ownpost',{ posttab: req.post });
     else if(!results[0])
       res.render('categ/views/post',{ posttab: req.post });

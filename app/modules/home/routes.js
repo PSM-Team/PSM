@@ -12,14 +12,30 @@ function fitem(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC", function (err, results, fields) {
       if (err) return res.send(err);
+      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1];
       if (!results[0])
         console.log('');
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
           results[count].price = numberWithCommas(results[count].fltItemPrice);
+          results[count].page = page;
+          results[count].curpage = req.params.page;
+          if((count+1)%5==0){
+            page+=1;
+          }
         }
       }
+      if(req.params.page > 5){
+        pagearr[0] = req.params.page - 5;
+      }
+      for(count=1;count<10;count++){
+        pagearr[count] = pagearr[count-1] + 1;
+      }
+      req.curpage = curpage;
+      req.prevpage = prevpage;
+      req.nextpage = nextpage;
+      req.page = pagearr;
       req.item = results;
       return next();
   });
@@ -27,14 +43,14 @@ function fitem(req, res, next){
 
 function render(req,res){
   if(req.valid==1)
-    res.render('home/views/index', { usertab: req.user, itemtab: req.item});
+    res.render('home/views/index', { usertab: req.user, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage});
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 
-router.get('/', flog, fitem, render);
+router.get('/page/:page', flog, fitem, render);
 
 router.get('/contact_us', flog, (req, res) => {
     if(req.valid==1)

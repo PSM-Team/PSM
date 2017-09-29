@@ -4,7 +4,7 @@ block content
   each post in posttab
     h2.title
       |
-      a(href='/categories/' + post.strCatName) #{post.strCatName}
+      a(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
     hr
     h3.title #{post.strItemTitle}
     p
@@ -36,4 +36,4 @@ block content
       p.control
         a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') BACK TO TRANSACTIONS
       p.control
-        a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName) BACK TO CATEGORY
+        a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName +'/page/1') BACK TO CATEGORY

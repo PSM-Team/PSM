@@ -11,10 +11,18 @@ block content
         h2.title Order Submission Failed
         h2.subtitle - Fill in the Order Password to proceed
     br
-    p(style='display:inline') Price : Php #{post.fltItemPrice} &nbsp //
-    p(style='display:inline') &nbsp Seller : &nbsp #{post.strName} ( #{post.strItemSNum} ) &nbsp //
+    p(style='display:inline') Price : Php &nbsp
+      b #{post.fltItemPrice}
+    p(style='display:inline') &nbsp ||
+    p(style='display:inline') &nbsp Seller : &nbsp&nbsp
+      u
+        a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+    p(style='display:inline') &nbsp - #{post.strStatus}
+    p(style='display:inline') &nbsp ||
     p(style='display:inline') &nbsp Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
-    br
+    p Contact Information:
+    p - Email : #{post.strEmail}
+    p - #{post.txtContact}
     hr
     form(method="POST" action='/categories/' + post.strCatName + '/' + post.intItemID + '/order')
         .field

@@ -4,19 +4,21 @@ html
 
         link(rel="stylesheet" href="/assets/bulma/bulma.css")
         link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css")
+        link(rel="stylesheet" href="semantic/dist/semantic.min.css")
+        script(src='https://code.jquery.com/jquery-3.1.1.min.js', integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=', crossorigin='anonymous')
+        script(src='semantic/dist/semantic.min.js')
 
     body
-        nav.navbar
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-light-blue.container-fluid.is-bold
+            a.navbar-item(href="/home/page/1") 
+                b PUP STUDENT MARKET
             div.navbar-brand
-                a.navbar-item(href="/home/page/1") PUP STUDENT MARKET
-            div.navbar-brand
-                a.navbar-item(href="/categories") Categories
+                a.navbar-item(href="/categories")  Categories
             div.navbar-brand
                 a.navbar-item(href="/profile") Profile
             div.navbar-brand
                 a.navbar-item(href="/sell") Sell Item
-
-
             div.navbar-end
                 div.navbar-item.has-dropdown.is-hoverable
                     a.navbar-item

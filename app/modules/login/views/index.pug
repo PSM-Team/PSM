@@ -1,18 +1,26 @@
 extends ../../../templates/master.pug
 
 block content
-  section.hero.is-dark.is-bold
-    .hero-body
-      h1.title PUP Student Market
-  hr
-  h3.title Sign In:
-  form(method="POST" action="/login")
-      .field
-          .control
-              input.input(type="text" placeholder="Student Number" name="studnum")
-      .field
-          .control
-              input.input(type="password" placeholder="Password" name="password")
-      input(type="submit" value="Sign-in")
-  hr
-  a.button.is-primary.is-inverted.is-outlined(href="/register") REGISTER
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/login.css")
+  .login-wrap
+    .login-html
+        label PUP STUDENT MARKET 
+        br
+        br
+        label.tab Sign In
+        form(method="POST" action="/login")
+            .group
+            label.label(for='user') 
+            .bg-red Student Number
+                input.input(type="text" placeholder="XXXX-XXXXX-MN-0" name="studnum")
+            .group
+            label.label(for='pass') 
+            .bg-red Password
+                input.input(type="password" placeholder="Password" name="password")
+            br
+            .group
+            input.button(type='submit', value='Sign In')
+            br
+            br
+            .group
+            a.button.is-primary.is-inverted.is-outlined(href="/register") REGISTER

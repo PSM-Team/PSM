@@ -1,0 +1,15 @@
+extends ../../../templates/navbar.pug
+
+block content
+  h2.title Ongoing Transactions
+  hr
+  .field.is-grouped
+    p.control
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
+    p.control
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
+    p.control
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
+  hr
+  p
+    i No transactions were found

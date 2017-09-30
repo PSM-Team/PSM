@@ -206,7 +206,9 @@ function feditpost(req, res, next){
 
 function profilerender(req,res){
   if(req.valid==1){
-    if(req.user[0].strSNum == req.session.user)
+    if (!req.user[0])
+      res.render('login/views/noroute');
+    else if(req.user[0].strSNum == req.session.user)
       res.render('profile/views/index',{usertab: req.user, transtab: req.trans});
     else
       res.render('profile/views/otherprofile',{usertab: req.user, transtab: req.trans});
@@ -225,24 +227,54 @@ function editprofilerender(req,res){
     res.render('login/views/invalid');
 }
 function transrender(req,res){
-  if(req.valid==1)
-    res.render('profile/views/ongoingtrans',{transtab: req.trans, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  if(req.valid==1){
+    if(!req.trans[0]){
+      if(req.params.page == 1)
+        res.render('profile/views/notrans');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('profile/views/ongoingtrans',{transtab: req.trans, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 function transholdrender(req,res){
-  if(req.valid==1)
-    res.render('profile/views/onholdtrans',{transtab: req.hold, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  if(req.valid==1){
+    if(!req.hold[0]){
+      if(req.params.page == 1)
+        res.render('profile/views/notrans');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('profile/views/onholdtrans',{transtab: req.hold, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
     res.render('login/views/invalid');
 }
 function transhistrender(req,res){
-  if(req.valid==1)
-    res.render('profile/views/previoustrans',{transtab: req.history, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  if(req.valid==1){
+    if(!req.history[0]){
+      if(req.params.page == 1)
+        res.render('profile/views/notrans');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('profile/views/previoustrans',{transtab: req.history, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
@@ -296,8 +328,14 @@ function transfinrender(req,res){
 }
 function mypostrender(req,res){
   if(req.valid==1){
-    if(!req.mypost[0])
-      res.render('profile/views/noposts');
+    if(!req.mypost[0]){
+      if(req.params.page == 1)
+        res.render('profile/views/noposts', { usertab: req.user} );
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
     else if(req.session.user == req.mypost[0].strSNum)
       res.render('profile/views/myposts', { usertab: req.user, myposttab: req.mypost , pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
     else

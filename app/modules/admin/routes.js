@@ -138,16 +138,36 @@ function render(req,res){
     res.render('login/views/invalid');
 }
 function studunregrender(req,res){
-  if(req.valid==2)
-    res.render('admin/views/registrations',{studtab: req.stud, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage, statustab: req.status});
+  if(req.valid==2){
+    if(!req.stud[0]){
+      if(req.params.page == 1)
+        res.render('admin/views/noaccounts');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('admin/views/registrations',{studtab: req.stud, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage, statustab: req.status});
+  }
   else if(req.valid==1)
     res.render('admin/views/invalidpages/normalonly');
   else
     res.render('login/views/invalid');
 }
 function studrejrender(req,res){
-  if(req.valid==2)
-    res.render('admin/views/registrations',{studtab: req.stud, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage, statustab: req.status});
+  if(req.valid==2){
+    if(!req.stud[0]){
+      if(req.params.page == 1)
+        res.render('admin/views/noaccounts');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('admin/views/registrations',{studtab: req.stud, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage, statustab: req.status});
+  }
   else if(req.valid==1)
     res.render('admin/views/invalidpages/normalonly');
   else

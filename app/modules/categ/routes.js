@@ -87,6 +87,14 @@ function catrender(req,res){
   if(req.valid==1){
     if(!req.catname[0])
       res.render('categ/views/invalidpages/nocateg');
+    else if(!req.item[0]){
+      if(req.params.page == 1)
+        res.render('categ/views/noposts', {catnametab: req.catname});
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
     else
       res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
   }

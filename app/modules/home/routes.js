@@ -44,8 +44,18 @@ function fitem(req, res, next){
 }
 
 function render(req,res){
-  if(req.valid==1)
-    res.render('home/views/index', { usertab: req.user, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  if(req.valid==1){
+    if(!req.item[0]){
+      if(req.params.page == 1)
+        res.render('home/views/noposts', { usertab: req.user});
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('home/views/index', { usertab: req.user, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else

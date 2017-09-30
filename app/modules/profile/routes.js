@@ -33,6 +33,7 @@ function fedituser(req,res,next){
 }
 function ftrans(req,res,next){
   var db = require('../../lib/database')();
+  var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
   var sqltrans1 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus='Ongoing') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
   db.query(sqltrans1,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
@@ -42,14 +43,32 @@ function ftrans(req,res,next){
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
           results[count].price = numberWithCommas(results[count].fltItemPrice);
+          results[count].page = page;
+          results[count].curpage = req.params.page;
+          if((count+1)%5==0){
+            page+=1;
+          }
         }
+        lastpage[0] = results[results.length-1].page;
       }
+      if(req.params.page > 5){
+        pagearr[0] = req.params.page - 5;
+      }
+      for(count=1;count<10;count++){
+        pagearr[count] = pagearr[count-1] + 1;
+      }
+      req.lastpage = lastpage;
+      req.curpage = curpage;
+      req.prevpage = prevpage;
+      req.nextpage = nextpage;
+      req.page = pagearr;
       req.trans= results;
       return next();
     });
 }
 function fholdtrans(req,res,next){
   var db = require('../../lib/database')();
+  var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
   var sqltrans2 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!='Ongoing' AND strTransStatus!='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
   db.query(sqltrans2,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
@@ -59,14 +78,32 @@ function fholdtrans(req,res,next){
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
           results[count].price = numberWithCommas(results[count].fltItemPrice);
+          results[count].page = page;
+          results[count].curpage = req.params.page;
+          if((count+1)%5==0){
+            page+=1;
+          }
         }
+        lastpage[0] = results[results.length-1].page;
       }
+      if(req.params.page > 5){
+        pagearr[0] = req.params.page - 5;
+      }
+      for(count=1;count<10;count++){
+        pagearr[count] = pagearr[count-1] + 1;
+      }
+      req.lastpage = lastpage;
+      req.curpage = curpage;
+      req.prevpage = prevpage;
+      req.nextpage = nextpage;
+      req.page = pagearr;
       req.hold= results;
       return next();
     });
 }
 function ftranshistory(req,res,next){
   var db = require('../../lib/database')();
+  var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
   var sqltrans4 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
   db.query(sqltrans4,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
@@ -77,9 +114,25 @@ function ftranshistory(req,res,next){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
           results[count].fin= results[count].datDateFinished.toDateString("en-US").slice(4, 15);
           results[count].price = numberWithCommas(results[count].fltItemPrice);
-
+          results[count].page = page;
+          results[count].curpage = req.params.page;
+          if((count+1)%5==0){
+            page+=1;
+          }
         }
+        lastpage[0] = results[results.length-1].page;
       }
+      if(req.params.page > 5){
+        pagearr[0] = req.params.page - 5;
+      }
+      for(count=1;count<10;count++){
+        pagearr[count] = pagearr[count-1] + 1;
+      }
+      req.lastpage = lastpage;
+      req.curpage = curpage;
+      req.prevpage = prevpage;
+      req.nextpage = nextpage;
+      req.page = pagearr;
       req.history= results;
       return next();
     });
@@ -173,7 +226,7 @@ function editprofilerender(req,res){
 }
 function transrender(req,res){
   if(req.valid==1)
-    res.render('profile/views/ongoingtrans',{transtab: req.trans, viewertab: req.user});
+    res.render('profile/views/ongoingtrans',{transtab: req.trans, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
@@ -181,7 +234,7 @@ function transrender(req,res){
 }
 function transholdrender(req,res){
   if(req.valid==1)
-    res.render('profile/views/onholdtrans',{transtab: req.hold, viewertab: req.user});
+    res.render('profile/views/onholdtrans',{transtab: req.hold, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
@@ -189,7 +242,7 @@ function transholdrender(req,res){
 }
 function transhistrender(req,res){
   if(req.valid==1)
-    res.render('profile/views/previoustrans',{transtab: req.history, viewertab: req.user});
+    res.render('profile/views/previoustrans',{transtab: req.history, viewertab: req.user, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else
@@ -298,9 +351,9 @@ router.get('/', flog, (req, res) => {
 });
 router.get('/:userid', flog, fuser, profilerender);
 router.get('/-/edit', flog, fedituser, editprofilerender);
-router.get('/-/transactions', flog, ftrans, fedituser, transrender);
-router.get('/-/transactions/hold', flog, fholdtrans, fedituser, transholdrender);
-router.get('/-/transactions/history', flog, ftranshistory, fedituser, transhistrender);
+router.get('/-/transactions/:page', flog, ftrans, fedituser, transrender);
+router.get('/-/transactions/hold/:page', flog, fholdtrans, fedituser, transholdrender);
+router.get('/-/transactions/history/:page', flog, ftranshistory, fedituser, transhistrender);
 router.get('/-/finishtrans/:transid', flog, ftransfin, fedituser, ftransid, transfinrender);
 router.get('/:userid/posts/:page', flog, fuser, fmypost, mypostrender);
 router.get('/:userid/posts/:postid/edit', flog, feditpost, editpostrender);

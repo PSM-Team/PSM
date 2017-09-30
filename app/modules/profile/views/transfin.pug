@@ -12,15 +12,19 @@ block content
             br
         .field.is-grouped
           p.control
-            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') BACK TO TRANSACTIONS
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') COMMEND SELLER
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') REPORT SELLER
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
       else
         h2.subtitle Buyer: &nbsp
           u
             a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
         .field.is-grouped
           p.control
-            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') COMMEND BUYER
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') COMMEND BUYER
           p.control
-            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') REPORT BUYER
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') REPORT BUYER
           p.control
-            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions') BACK TO TRANSACTIONS
+            a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS

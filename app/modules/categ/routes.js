@@ -28,7 +28,7 @@ function fitem(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName= ? ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC",[req.params.catname], function (err, results, fields) {
       if (err) return res.send(err);
-      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1];
+      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
       if (!results[0])
         console.log('');
       else{
@@ -41,6 +41,7 @@ function fitem(req, res, next){
             page+=1;
           }
         }
+        lastpage[0] = results[results.length-1].page;
       }
       if(req.params.page > 5){
         pagearr[0] = req.params.page - 5;
@@ -48,7 +49,7 @@ function fitem(req, res, next){
       for(count=1;count<10;count++){
         pagearr[count] = pagearr[count-1] + 1;
       }
-      console.log(results);
+      req.lastpage = lastpage;
       req.curpage = curpage;
       req.prevpage = prevpage;
       req.nextpage = nextpage;
@@ -87,7 +88,7 @@ function catrender(req,res){
     if(!req.catname[0])
       res.render('categ/views/invalidpages/nocateg');
     else
-      res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage});
+      res.render('categ/views/catposts', {catnametab: req.catname, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
   }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');

@@ -88,5 +88,4 @@ router.get('/rules', flog, (req, res) => {
     else
       res.render('login/views/invalid');
 });
-
 exports.home= router;

@@ -1,0 +1,8 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each user in usertab
+    h3.title #{user.strName}'s posts
+    hr
+    p
+      i No posts were found

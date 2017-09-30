@@ -1,0 +1,8 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each catname in catnametab
+    h2.title #{catname.strCatName}
+    hr
+    p
+      i No posts were found

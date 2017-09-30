@@ -12,7 +12,7 @@ function fitem(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC", function (err, results, fields) {
       if (err) return res.send(err);
-      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1];
+      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
       if (!results[0])
         console.log('');
       else{
@@ -25,6 +25,7 @@ function fitem(req, res, next){
             page+=1;
           }
         }
+        lastpage[0] = results[results.length-1].page;
       }
       if(req.params.page > 5){
         pagearr[0] = req.params.page - 5;
@@ -32,6 +33,7 @@ function fitem(req, res, next){
       for(count=1;count<10;count++){
         pagearr[count] = pagearr[count-1] + 1;
       }
+      req.lastpage = lastpage;
       req.curpage = curpage;
       req.prevpage = prevpage;
       req.nextpage = nextpage;
@@ -42,8 +44,18 @@ function fitem(req, res, next){
 }
 
 function render(req,res){
-  if(req.valid==1)
-    res.render('home/views/index', { usertab: req.user, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage});
+  if(req.valid==1){
+    if(!req.item[0]){
+      if(req.params.page == 1)
+        res.render('home/views/noposts', { usertab: req.user});
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('home/views/index', { usertab: req.user, itemtab: req.item, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
   else

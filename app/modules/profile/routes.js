@@ -57,6 +57,7 @@ function ftrans(req,res,next){
       for(count=1;count<10;count++){
         pagearr[count] = pagearr[count-1] + 1;
       }
+      console.log(results);
       req.lastpage = lastpage;
       req.curpage = curpage;
       req.prevpage = prevpage;

@@ -63,7 +63,7 @@ function fpost(req, res, next){
   db.query("SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName = ? AND intItemID = ? ) AS T INNER JOIN tbluser ON strItemSNum= strSNum ",[ req.params.catname, req.params.postid], (err, results, fields) => {
       if (err) console.log(err);
       if (!results[0])
-        console.log('empty');
+        console.log('');
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
@@ -164,8 +164,11 @@ router.post('/:catname/:postid/order', fpost, (req, res) => {
         if(req.body.orderpass === results[0].strOrderPass ){
           db.query("INSERT INTO tbltransaction ( intTransItemID, strBuyerSNum, datDateStarted, strTransStatus ) VALUES ( ?, ?, (SELECT curdate() AS CD) , 'Ongoing' )",[req.params.postid, req.session.user], (err, results, fields) => {
             if (err) console.log(err);
-
-            res.render('categ/views/ordersuccess',{ posttab: req.post });
+            db.query("SELECT * FROM tblitem INNER JOIN tbltransaction ON intItemID= intTransItemID WHERE intItemID= ? AND strTransStatus!= 'Finished'",[req.params.postid], (err, results, fields) => {
+                if (err) console.log(err);
+                console.log(results);
+                res.render('categ/views/ordersuccess',{ posttab: req.post , transposttab: results});
+              });
           });
         }
         else{

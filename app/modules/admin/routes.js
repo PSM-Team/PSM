@@ -141,7 +141,7 @@ function studunregrender(req,res){
   if(req.valid==2){
     if(!req.stud[0]){
       if(req.params.page == 1)
-        res.render('admin/views/noaccounts');
+        res.render('admin/views/noaccountsunreg');
       else
         res.render('login/views/noroute');
     }
@@ -159,7 +159,7 @@ function studrejrender(req,res){
   if(req.valid==2){
     if(!req.stud[0]){
       if(req.params.page == 1)
-        res.render('admin/views/noaccounts');
+        res.render('admin/views/noaccountsrej');
       else
         res.render('login/views/noroute');
     }

@@ -27,6 +27,9 @@ block content
             p Date Started: #{trans.date}
             br
             p You Marked this as Finished Transaction
+            .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
           else
             h3.title ( Buyer )
               a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
@@ -40,6 +43,8 @@ block content
             br
             p Seller Marked this as Finished Transaction
             .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
               p.control
                 a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
 
@@ -56,6 +61,9 @@ block content
             p Date Started: #{trans.date}
             br
             p You Marked this as Finished Transaction
+            .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
           else
             h3.title ( Seller )
               a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
@@ -69,6 +77,8 @@ block content
             br
             p Buyer Marked this as Finished Transaction
             .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
               p.control
                 a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
 

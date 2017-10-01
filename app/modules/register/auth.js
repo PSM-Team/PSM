@@ -1,7 +1,7 @@
 
 module.exports= (req,res,next)=>{
   var db = require('../../lib/database')();
-  if (req.body.studnum === "" || req.body.studname === "" || req.body.gender === "" || req.body.bday === "" || req.body.branch === "" || req.body.email === ""){
+  if (req.body.studnum === "" || req.body.studname === "" ||  req.body.email === ""){
     res.render('register/views/invalidpages/blank');
   }
   else{

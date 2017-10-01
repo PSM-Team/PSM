@@ -12,13 +12,6 @@ function fuser(req,res,next){
   var db = require('../../lib/database')();
   db.query("SELECT * FROM tbluser WHERE strSNum= ?",[req.params.userid], (err, results, fields) => {
       if (err) console.log(err);
-      if (!results[0])
-        console.log('');
-      else{
-        for(count=0;count<results.length;count++){
-          results[count].bday= results[count].datBirthday.toDateString("en-US").slice(4, 15);
-        }
-      }
       req.user= results;
       return next();
     });
@@ -57,7 +50,6 @@ function ftrans(req,res,next){
       for(count=1;count<10;count++){
         pagearr[count] = pagearr[count-1] + 1;
       }
-      console.log(results);
       req.lastpage = lastpage;
       req.curpage = curpage;
       req.prevpage = prevpage;

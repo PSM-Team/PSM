@@ -3,7 +3,7 @@ var router = express.Router();
 var auth = require( './auth');
 var questArray = [], rand = [], choice = [];
 var registerOn = 0, testOn = 0;
-var tempRegister = {studnum:"" , studname:"", gender:"", bday:"", branch:"", email:"", contact:"", password:""};
+var tempRegister = {studnum:"" , studname:"", email:"", contact:"", password:""};
 
 function fquestrand1(req, res, next){
     var db = require('../../lib/database')();
@@ -109,9 +109,6 @@ router.post('/', auth, (req, res) => {
     if(req.body.password === req.body.confirm && req.body.password != ""){
     tempRegister.studnum = req.body.studnum;
     tempRegister.studname = req.body.studname;
-    tempRegister.gender = req.body.gender;
-    tempRegister.bday = req.body.bday;
-    tempRegister.branch = req.body.branch;
     tempRegister.email = req.body.email;
     tempRegister.contact = req.body.contact;
     tempRegister.password = req.body.password;
@@ -130,7 +127,7 @@ router.post('/test', fquestions, fchoices, (req, res) => {
     }
     else{
       testOn = 0;
-      db.query("INSERT INTO tbluser (strSNum, strName, strGender, datBirthday, strBranch, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType) VALUES (?,?,?,?,?,?,?,?,'unregistered','0','0','normal')",[tempRegister.studnum,tempRegister.studname,tempRegister.gender,tempRegister.bday,tempRegister.branch,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
+      db.query("INSERT INTO tbluser (strSNum, strName, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType) VALUES (?,?,?,?,?,'unregistered','0','0','normal')",[tempRegister.studnum,tempRegister.studname,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
           if (err) console.log(err);
           for(count=0;count<10;count++){
             db.query("INSERT INTO tblanswers (strAnswerSNum, intAnswer) VALUES (?,?)",[tempRegister.studnum, choice[count]], (err, results, fields) => {

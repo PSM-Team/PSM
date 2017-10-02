@@ -8,7 +8,7 @@ block content
       h1.title Submission Failed
       h1.subtitle - Fill in all fields to Post an item
   br
-  form(method="POST" action="/sell")
+  form(method="POST" action="/sell" enctype='multipart/form-data')
       .field
           .control
               .select.is-primary
@@ -18,6 +18,26 @@ block content
                     option(value='School Supplies') School Supplies
                     option(value='Food') Food
                     option(value='Misc.') Misc.
+      hr
+      p Upload atleat One(1) Picture of the Item to be posted
+      br
+      .field
+          .control
+            div(style='width: 33%; float: left')
+              label PICTURE 1
+              br
+              input.file-input(type='file', name='pic1', accept='image/*')
+            div(style='width: 33%; float: left')
+              label PICTURE 2
+              br
+              input.file-input(type='file', name='pic2', accept='image/*')
+            div(style='width: 34%; float: right')
+              label PICTURE 3
+              br
+              input.file-input(type='file', name='pic3', accept='image/*')
+      br
+      br
+      hr
       .field
           .control
               input.input(type="text" placeholder="Item Title" name="title")

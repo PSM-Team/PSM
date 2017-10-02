@@ -70,7 +70,6 @@ function fpost(req, res, next){
           results[count].price = numberWithCommas(results[count].fltItemPrice);
         }
       }
-      console.log(results);
       req.post = results;
       return next();
     });

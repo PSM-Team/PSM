@@ -11,7 +11,7 @@ block content
         h1.title Submission Failed
         h1.subtitle - Password did not match
     br
-    form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit")
+    form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit" enctype='multipart/form-data')
         .field
             .control
                 .select.is-primary
@@ -36,6 +36,24 @@ block content
                         option(value='1') Books
                         option(value='2') School Supplies
                         option(value='3') Food
+        hr
+        .field
+            .control
+              div(style='width: 33%; float: left')
+                label PICTURE 1
+                br
+                input.file-input(type='file', name='pic1', accept='image/*')
+              div(style='width: 33%; float: left')
+                label PICTURE 2
+                br
+                input.file-input(type='file', name='pic2', accept='image/*')
+              div(style='width: 34%; float: right')
+                label PICTURE 3
+                br
+                input.file-input(type='file', name='pic3', accept='image/*')
+        br
+        br
+        hr
         .field
             .control
                 input.input(type="text" placeholder="Item Title" value=post.strItemTitle name="title")

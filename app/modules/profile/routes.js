@@ -1,11 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var flog = require( '../home/loggedin');
+var fs = require('fs');
 
 function numberWithCommas(x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
+}
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 50; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
 }
 
 function fuser(req,res,next){
@@ -420,10 +428,107 @@ router.post('/:userid/posts/:postid/edit', feditpost, (req, res) => {
     db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ? ",[req.params.postid], (err, results, fields) => {
         if (err) console.log(err);
         if(req.body.oldpass === results[0].strOrderPass){
-          db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, req.body.category, req.params.postid], (err, results1, fields) => {
-              if (err) console.log(err);
-              res.redirect('/profile/'+req.session.user+'/posts');
-          });
+          var randomId= makeid();
+          jpeg1= req.session.user.concat('-'+randomId+'-1.jpg');
+          jpeg2= req.session.user.concat('-'+randomId+'-2.jpg');
+          jpeg3= req.session.user.concat('-'+randomId+'-3.jpg');
+          if(!req.files.pic1 && !req.files.pic2 && !req.files.pic3){
+            db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, req.body.category, req.params.postid], (err, results1, fields) => {
+                if (err) console.log(err);
+                res.redirect('/profile/'+req.session.user+'/posts/1');
+            });
+          }// none
+          else if(!req.files.pic2 && !req.files.pic3){
+            req.files.pic1.mv('public/images/uploaded_images/'+jpeg1, function(err) {
+              db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strFirstPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg1, req.body.category, req.params.postid], (err, results1, fields) => {
+                  if (err) console.log(err);
+                  if(req.editpost[0].strFirstPic!= 'blank.jpg')
+                    fs.unlink('public/images/uploaded_images/'+req.editpost[0].strFirstPic);
+                  res.redirect('/profile/'+req.session.user+'/posts/1');
+              });
+            });
+          }// 1
+          else if(!req.files.pic1 && !req.files.pic3){
+            req.files.pic2.mv('public/images/uploaded_images/'+jpeg2, function(err) {
+              db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strSecondPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg2, req.body.category, req.params.postid], (err, results1, fields) => {
+                  if (err) console.log(err);
+                  if(req.editpost[0].strSecondPic!= 'blank.jpg')
+                    fs.unlink('public/images/uploaded_images/'+req.editpost[0].strSecondPic);
+                  res.redirect('/profile/'+req.session.user+'/posts/1');
+              });
+            });
+          }// 2
+          else if(!req.files.pic1 && !req.files.pic2){
+            req.files.pic3.mv('public/images/uploaded_images/'+jpeg3, function(err) {
+              db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strThirdPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg3, req.body.category, req.params.postid], (err, results1, fields) => {
+                  if (err) console.log(err);
+                  if(req.editpost[0].strThirdPic!= 'blank.jpg')
+                    fs.unlink('public/images/uploaded_images/'+req.editpost[0].strThirdPic);
+                  res.redirect('/profile/'+req.session.user+'/posts/1');
+              });
+            });
+          }// 3
+          else if(!req.files.pic3){
+            req.files.pic1.mv('public/images/uploaded_images/'+jpeg1, function(err) {
+              req.files.pic2.mv('public/images/uploaded_images/'+jpeg2, function(err) {
+                db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strFirstPic= ?, strSecondPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg1, jpeg2, req.body.category, req.params.postid], (err, results1, fields) => {
+                    if (err) console.log(err);
+                    if(req.editpost[0].strFirstPic!= 'blank.jpg')
+                      fs.unlink('public/images/uploaded_images/'+req.editpost[0].strFirstPic);
+                    if(req.editpost[0].strSecondPic!= 'blank.jpg')
+                      fs.unlink('public/images/uploaded_images/'+req.editpost[0].strSecondPic);
+                    res.redirect('/profile/'+req.session.user+'/posts/1');
+                });
+              });
+            });
+          }// 12
+          else if(!req.files.pic2){
+            req.files.pic1.mv('public/images/uploaded_images/'+jpeg1, function(err) {
+              req.files.pic3.mv('public/images/uploaded_images/'+jpeg3, function(err) {
+                db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strFirstPic= ?, strThirdPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg1, jpeg3, req.body.category, req.params.postid], (err, results1, fields) => {
+                    if (err) console.log(err);
+                    if(req.editpost[0].strFirstPic!= 'blank.jpg')
+                      fs.unlink('public/images/uploaded_images/'+req.editpost[0].strFirstPic);
+                    if(req.editpost[0].strThirdPic!= 'blank.jpg')
+                      fs.unlink('public/images/uploaded_images/'+req.editpost[0].strThirdPic);
+                    res.redirect('/profile/'+req.session.user+'/posts/1');
+                });
+              });
+            });
+          }// 13
+          else if(!req.files.pic1){
+            req.files.pic2.mv('public/images/uploaded_images/'+jpeg2, function(err) {
+              req.files.pic3.mv('public/images/uploaded_images/'+jpeg3, function(err) {
+                db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strSecondPic= ?, strThirdPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg2, jpeg3, req.body.category, req.params.postid], (err, results1, fields) => {
+                    if (err) console.log(err);
+                    if(req.editpost[0].strSecondPic!= 'blank.jpg')
+                      fs.unlink('public/images/uploaded_images/'+req.editpost[0].strSecondPic);
+                    if(req.editpost[0].strThirdPic!= 'blank.jpg')
+                      fs.unlink('public/images/uploaded_images/'+req.editpost[0].strThirdPic);
+                    res.redirect('/profile/'+req.session.user+'/posts/1');
+                });
+              });
+            });
+          }// 23
+          else{
+            req.files.pic1.mv('public/images/uploaded_images/'+jpeg1, function(err) {
+              req.files.pic2.mv('public/images/uploaded_images/'+jpeg2, function(err) {
+                req.files.pic3.mv('public/images/uploaded_images/'+jpeg3, function(err) {
+                  db.query("UPDATE tblitem SET strItemTitle = ?, fltItemPrice= ?, txtItemDesc= ?, strOrderPass= ?, strFirstPic= ?, strSecondPic= ?, strThirdPic= ?, intItemCat= ? WHERE intItemID= ? ",[req.body.title, req.body.price, req.body.description, req.body.newpass, jpeg1, jpeg2, jpeg3, req.body.category, req.params.postid], (err, results1, fields) => {
+                      if (err) console.log(err);
+                      if(req.editpost[0].strFirstPic!= 'blank.jpg')
+                        fs.unlink('public/images/uploaded_images/'+req.editpost[0].strFirstPic);
+                      if(req.editpost[0].strSecondPic!= 'blank.jpg')
+                        fs.unlink('public/images/uploaded_images/'+req.editpost[0].strSecondPic);
+                      if(req.editpost[0].strThirdPic!= 'blank.jpg')
+                        fs.unlink('public/images/uploaded_images/'+req.editpost[0].strThirdPic);
+                      res.redirect('/profile/'+req.session.user+'/posts/1');
+                  });
+                });
+              });
+            });
+          }// all
+
         }
         else
           res.render('profile/views/invalidpages/postincorrect',{editposttab: req.editpost});

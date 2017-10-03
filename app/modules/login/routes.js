@@ -3,47 +3,36 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
     var db = require('../../lib/database')();
-    db.query("UPDATE tbluser SET boolLoggedin= '0' WHERE boolLoggedin!= '0'", (err, results, fields) => {
-        if (err)
-          console.log(err);
-      });
+    req.session.user = '';
     res.render('login/views/index');
 });
 
 router.post('/', (req, res) => {
   var db = require('../../lib/database')();
-  if(req.body.username === ""){
-    res.redirect('/login');
-  }
-
-  else if(req.body.password === ""){
-    res.redirect('/login');
+  if(req.body.studnum === "" || req.body.password === ""){
+    res.render('login/views/invalidpages/blank');
   }
   else{
     db.query("SELECT * FROM tbluser WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
         if (err) console.log(err);
         if (!results[0]){
-          res.redirect('/login');
+          res.render('login/views/invalidpages/incorrect');
+        }
+        else if ( results[0].strStatus == 'unregistered' || results[0].strStatus == 'rejected'){
+          res.render('login/views/invalidpages/unreg');
+        }
+        else if(req.body.password === results[0].strPassword){
+          req.session.user = results[0].strSNum;
+          if(results[0].strType == 'normal')
+            res.redirect('/home/page/1');
+          else
+            res.redirect('/admin');
         }
         else{
-          if(req.body.password === results[0].strPassword)
-          {
-            db.query("UPDATE tbluser SET boolLoggedin= '1' WHERE strSNum= ? ",[req.body.studnum], (err, results, fields) => {
-                if (err){
-                  console.log(err);
-                  res.redirect('/login');
-                  }
-                res.redirect('/home');
-              });
-          }
-          else{
-              res.redirect('/login');
-          }
+            res.render('login/views/invalidpages/incorrect');
         }
-
     });
   }
-
 });
 
 exports.login = router;

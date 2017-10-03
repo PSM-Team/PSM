@@ -1,0 +1,72 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each post in editposttab
+    h3.title
+      a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
+    hr
+    h3.title Edit Post:
+    form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit" enctype='multipart/form-data')
+        .field
+            .control
+                .select.is-primary
+                    select(name="category")
+                      if post.intItemCat == 1
+                        option(value='1') Books
+                        option(value='2') School Supplies
+                        option(value='3') Food
+                        option(value='4') Misc.
+                      else if post.intItemCat == 2
+                        option(value='2') School Supplies
+                        option(value='1') Books
+                        option(value='3') Food
+                        option(value='4') Misc.
+                      else if post.intItemCat == 3
+                        option(value='3') Food
+                        option(value='1') Books
+                        option(value='2') School Supplies
+                        option(value='4') Misc.
+                      else if post.intItemCat == 4
+                        option(value='4') Misc.
+                        option(value='1') Books
+                        option(value='2') School Supplies
+                        option(value='3') Food
+        hr
+        .field
+            .control
+              div(style='width: 33%; float: left')
+                label PICTURE 1
+                br
+                input.file-input(type='file', name='pic1', accept='image/*')
+              div(style='width: 33%; float: left')
+                label PICTURE 2
+                br
+                input.file-input(type='file', name='pic2', accept='image/*')
+              div(style='width: 34%; float: right')
+                label PICTURE 3
+                br
+                input.file-input(type='file', name='pic3', accept='image/*')
+        br
+        br
+        hr
+        .field
+            .control
+                input.input(type="text" placeholder="Item Title" value=post.strItemTitle name="title")
+        .field
+            .control
+                input.input(type="text" placeholder="Item Price" value=post.fltItemPrice name="price")
+        .field
+            .control
+                input.input(type="text" placeholder="Item Description" value=post.txtItemDesc name="description")
+        .field
+            .control
+                input.input(type="password" placeholder="Old Order Password" name="oldpass")
+        .field
+            .control
+                input.input(type="password" placeholder="New Order Password" name="newpass")
+        .field
+            .control
+                input.input(type="password" placeholder="Confirm Order Password" name="confirm")
+        input(type="submit" value="Post")
+    hr
+    a.button.is-primary.is-inverted.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel

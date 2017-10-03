@@ -1,0 +1,12 @@
+extends ../../../templates/navbar.pug
+
+block content
+  h2.title Order Success!
+  hr
+  each post in posttab
+    .field.is-grouped
+      each trans in transposttab
+        p.control
+          a.button.is-primary.is-inverted.is-outlined(href='/orderslip/' + trans.intTransID) ORDER SLIP
+        p.control
+          a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK TO POST

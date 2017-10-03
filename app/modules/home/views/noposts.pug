@@ -1,0 +1,8 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each user in usertab
+    h3.title Welcome to PUP Student Market, #{user.strName}
+    hr
+    p
+      i No posts were found

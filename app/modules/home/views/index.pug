@@ -1,6 +1,38 @@
-extends ../../../templates/master.pug
+extends ../../../templates/navbar.pug
 
 block content
-    h1.title PUP Student Market
+  each user in usertab
+    h3.title Welcome to PUP Student Market, #{user.strName}
     hr
-    h3.title Welcom Home, User
+  each item in itemtab
+    if item.page == item.curpage
+      h3.title
+        a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
+      h3.subtitle &nbsp#{item.strCatName}
+      p
+        |
+        b Price: Php #{item.price}
+      p Seller: &nbsp
+        u
+          a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
+      p Date: #{item.date}
+      hr
+  each curpage in curpagetab
+    .field.is-grouped
+      if curpage > 1
+        each prevpage in prevpagetab
+          p.control
+            a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/home/page/'+ prevpage ) << Previous
+      each lastpage in lastpagetab
+        each page in pagetab
+          if page == curpage
+            p.control
+              a.button.is-primary.is-inverted.is-hovered() #{page}
+          else
+            if page <= lastpage
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(href='/home/page/'+ page ) #{page}
+        each nextpage in nextpagetab
+          if curpage < lastpage
+            p.control
+              a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/home/page/'+ nextpage ) Next >>

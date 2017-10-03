@@ -1,50 +1,46 @@
-var auth = require( './auth')
 var express = require('express');
 var router = express.Router();
-var questArray = [], rand = [];
-var registerOn = 0;
-var tempRegister = {studnum:"" , studname:"", gender:"", bday:"", branch:"", email:"", contact:"", password:""};
+var auth = require( './auth');
+var questArray = [], rand = [], choice = [];
+var registerOn = 0, testOn = 0;
+var tempRegister = {studnum:"" , studname:"", email:"", contact:"", password:""};
 
-function flog(req, res, next){
-    var db = require('../../lib/database')();
-    db.query("UPDATE tbluser SET boolLoggedin= '0' WHERE boolLoggedin!= '0'", (err, results, fields) => {
-        if (err) console.log(err);
-        return next();
-    });
-}
 function fquestrand1(req, res, next){
     var db = require('../../lib/database')();
-    db.query("SELECT * FROM tblquestions WHERE boolUsed= '0'", (err, results1, fields) => {
+    db.query("SELECT * FROM tblquestions WHERE boolUsed= '0'", (err, results, fields) => {
       questArray = [];
       rand = [];
       if (err) console.log(err);
-      for(count=0;count<results1.length;count++){
-        questArray[count] = results1[count].intQuestionID;
+      for(count=0;count<results.length;count++){
+        questArray[count] = results[count].intQuestionID;
       }
-      for(count=0;count<2;count++){
+      for(count=0;count<10;count++){
         rand[count]= questArray[Math.floor(Math.random()*questArray.length)]
         questArray.splice(questArray.indexOf(rand[count]),1);
       }
-      console.log(rand);
       return next();
     });
 }
 function fquestrand2(req, res, next){
     var db = require('../../lib/database')();
-    for(count=0;count<2;count++){
+    for(count=0;count<10;count++){
       db.query("UPDATE tblquestions SET boolUsed= '1' WHERE intQuestionID= ? ",[rand[count]], (err, results2, fields) => {
         if (err) console.log(err);
         return next();
       });
     }
-
 }
 function fquestions(req, res, next){
     var db = require('../../lib/database')();
     db.query("SELECT * FROM tblquestions WHERE boolUsed= '1'", (err, results, fields) => {
       if (err) console.log(err);
-      for(count= 0;count<results.length;count++){
-        results[count].itemnum = count + 1;
+      if (!results[0]){
+        res.render('register/views/regoff');
+      }
+      else{
+        for(count= 0;count<10;count++){
+          results[count].itemnum = count + 1;
+        }
       }
       req.questions = results;
       return next();
@@ -55,7 +51,6 @@ function fchoices(req, res, next){
     db.query("SELECT * FROM tblquestions INNER JOIN tblchoices ON intQuestionID = intChQuestionID WHERE boolUsed = 1", (err, results, fields) => {
       if (err) console.log(err);
       req.choices = results;
-
       return next();
     });
 }
@@ -63,48 +58,85 @@ function fcleanse(req, res, next){
     var db = require('../../lib/database')();
     db.query("UPDATE tblquestions SET boolUsed= '0' WHERE boolUsed= '1'", (err, results, fields) => {
       if (err) console.log(err);
-
       return next();
     });
 }
 
 function render(req,res){
+    registerOn = 0;
+    testOn = 1;
+    req.session.user = '';
     res.render('register/views/index');
 }
+function randrender(req,res){
+  req.session.user = '';
+  if (registerOn == 1)
+    res.render('register/views/rand');
+  else
+    res.render('register/views/regoff');
+}
 function CHrender(req,res){
-    console.log(req.questions);
-    res.render('register/views/questions', { questiontab: req.questions , choicetab: req.choices,  });
+    req.session.user = '';
+    if (registerOn == 1){
+      testOn = 1;
+      res.render('register/views/questions', { questiontab: req.questions , choicetab: req.choices });
+    }
+    else
+      res.render('register/views/regoff');
 }
 function FINrender(req,res){
-    res.render('register/views/regformfin');
+    req.session.user = '';
+    if (registerOn == 1){
+      if (testOn == 0){
+        res.render('register/views/regformfin');
+        registerOn = 0;
+      }
+      else{
+        res.render('register/views/teston');
+      }
+    }
+    else
+      res.render('register/views/regoff');
 }
 
-router.get('/', flog, render);
-router.get('/test', flog, fquestrand1, fquestrand2, fquestions, fchoices, fcleanse, CHrender);
-router.get('/fin', flog, FINrender);
+router.get('/', fcleanse, render);
+router.get('/start', fcleanse, fquestrand1, fquestrand2, randrender);
+router.get('/test', fquestions, fchoices, CHrender);
+router.get('/fin', FINrender);
 
-router.post('/',auth, (req, res) => {
+router.post('/', auth, (req, res) => {
     var db = require('../../lib/database')();
     if(req.body.password === req.body.confirm && req.body.password != ""){
     tempRegister.studnum = req.body.studnum;
     tempRegister.studname = req.body.studname;
-    tempRegister.gender = req.body.gender;
-    tempRegister.bday = req.body.bday;
-    tempRegister.branch = req.body.branch;
     tempRegister.email = req.body.email;
     tempRegister.contact = req.body.contact;
     tempRegister.password = req.body.password;
-    res.redirect('/register/test');
+    registerOn = 1;
+    res.redirect('/register/start');
     }
     else{
-      res.redirect('/register');
+      res.render('register/views/invalidpages/notmatch');
     }
-    console.log(tempRegister);
 });
-router.post('/test', (req, res) => {
-    console.log("POST VALUE");
-    console.log(req.body);
-    res.redirect('/register/fin');
+router.post('/test', fquestions, fchoices, (req, res) => {
+    var db = require('../../lib/database')();
+    choice = [ req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6, req.body.choice7, req.body.choice8, req.body.choice9, req.body.choice10 ];
+    if(!req.body.choice1 || !req.body.choice2 || !req.body.choice3 || !req.body.choice4 || !req.body.choice5 || !req.body.choice6 || !req.body.choice7 || !req.body.choice8 || !req.body.choice9 || !req.body.choice10 ){
+      res.render('register/views/invalidpages/blankquest',{ questiontab: req.questions , choicetab: req.choices });
+    }
+    else{
+      testOn = 0;
+      db.query("INSERT INTO tbluser (strSNum, strName, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType) VALUES (?,?,?,?,?,'unregistered','0','0','normal')",[tempRegister.studnum,tempRegister.studname,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
+          if (err) console.log(err);
+          for(count=0;count<10;count++){
+            db.query("INSERT INTO tblanswers (strAnswerSNum, intAnswer) VALUES (?,?)",[tempRegister.studnum, choice[count]], (err, results, fields) => {
+              if (err) console.log(err);
+            });
+          }
+          res.redirect('/register/fin');
+      });
+    }
 });
 
 exports.register = router;

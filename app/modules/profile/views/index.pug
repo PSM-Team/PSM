@@ -1,0 +1,33 @@
+extends ../../../templates/navbar.pug
+
+block content
+  each user in usertab
+    h2.title #{user.strName}
+    h2.subtitle &nbsp#{user.strSNum}
+    hr
+    div(style='width: 25%; float: left')
+      h3.subtitle
+        b Status
+      h3.subtitle
+        b Commends - Reports
+      h3.subtitle
+        b E-mail
+      h3.subtitle
+        b Contact Information
+    div(style='width: 75%; float: right')
+      h3.subtitle #{user.strStatus}
+      h3.subtitle #{user.intCommend} - #{user.intReport}
+      h3.subtitle #{user.strEmail}
+      h3.subtitle #{user.txtContact}
+    div(align='left')
+      p &nbsp
+      br
+      br
+      hr
+      .field.is-grouped
+        p.control
+          a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/edit") Edit Profile
+        p.control
+          a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") Transactions
+        p.control
+          a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts

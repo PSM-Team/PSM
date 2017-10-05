@@ -20,7 +20,7 @@ function finvoice(req, res, next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
-          results[count].price = numberWithCommas(results[count].fltItemPrice);
+          results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
         }
       }
       console.log(results);

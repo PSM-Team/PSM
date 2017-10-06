@@ -25,8 +25,4 @@ block content
                 input.input(type="password" placeholder="Order Password" name="orderpass")
         input(type="submit" value="Order")
     hr
-    .field.is-grouped
-      p.control
-        a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/order') BUY
-      p.control
-        a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK
+    a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK

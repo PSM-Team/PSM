@@ -400,17 +400,29 @@ router.get('/:userid/posts/:postid/delete', flog, feditpost, deletepostrender);
 
 router.post('/-/edit', fedituser, (req, res) => {
   var db = require('../../lib/database')();
-  if(req.body.studname=='' || req.body.oldpass=='' || req.body.newpass=='' || req.body.confirm=='' || req.body.email=='' || req.body.contact=='' ){
+  if(req.body.studname=='' || req.body.oldpass=='' || req.body.newpass=='' || req.body.confirm=='' || req.body.email=='' ){
     res.render('profile/views/invalidpages/blank',{usertab: req.user});
   }
   else if( req.body.newpass === req.body.confirm ){
     db.query("SELECT strPassword FROM tbluser WHERE strSNum= ? ",[req.session.user], (err, results, fields) => {
         if (err) console.log(err);
         if(req.body.oldpass === results[0].strPassword){
-          db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, req.session.user], (err, results1, fields) => {
-              if (err) console.log(err);
-              res.redirect('/profile');
-          });
+          var randomId= makeid();
+          jpeg= req.session.user.concat('-'+randomId+'-dp.jpg');
+          if(!req.files.profilepic){
+            db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, req.session.user], (err, results1, fields) => {
+                if (err) console.log(err);
+                res.redirect('/profile');
+            });
+          }
+          else{
+            req.files.profilepic.mv('public/images/profile_pictures/'+jpeg, function(err) {
+              db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ?, strProfilePicture= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, jpeg, req.session.user], (err, results1, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile');
+              });
+            });
+          }
         }
         else
           res.render('profile/views/invalidpages/incorrect',{usertab: req.user});

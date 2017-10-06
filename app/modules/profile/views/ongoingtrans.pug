@@ -29,7 +29,7 @@ block content
             p.control
               a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
             p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
+              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
         else
           h3.title ( Seller )
             a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
@@ -45,7 +45,7 @@ block content
             p.control
               a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
             p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
+              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
       hr
   each curpage in curpagetab
     .field.is-grouped

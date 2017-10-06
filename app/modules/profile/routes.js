@@ -143,13 +143,14 @@ function ftransfin(req, res, next){
   var sqltrans3 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!= 'Finished') AS B INNER JOIN tbluser WHERE ((strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?)) AND intTransID= ? ORDER BY intTransID DESC";
   db.query(sqltrans3,[req.session.user,req.session.user,req.session.user,req.session.user,req.params.transid], (err, results, fields) => {
       if (err) console.log(err);
+      console.log('TRANSFIN: '+ results);
       req.transfin= results;
       return next();
   });
 }
 function ftransid(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT * FROM tbltransaction WHERE  intTransID= ?",[req.params.transid], (err, results, fields) => {
+  db.query("SELECT * FROM tbltransaction WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
       if (err) console.log(err);
       req.transid= results;
       return next();
@@ -281,6 +282,150 @@ function transhistrender(req,res){
   else
     res.render('login/views/invalid');
 }
+function transconfirmrender(req,res){
+  if(req.valid==1){
+    if (!req.transfin[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else{
+      var db = require('../../lib/database')();
+      if ( req.transid[0].strTransStatus=='Ongoing' ){
+        if (req.session.user == req.transfin[0].strItemSNum || req.session.user == req.transfin[0].strBuyerSNum){
+          res.render('profile/views/transconfirm',{transtab: req.transfin, usertab: req.user});
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+      else{
+        if (req.session.user == req.transfin[0].strItemSNum && req.transid[0].strTransStatus!= 'SFinished'){
+          res.render('profile/views/transconfirm',{transtab: req.transfin, usertab: req.user});
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum && req.transid[0].strTransStatus!= 'BFinished'){
+          res.render('profile/views/transconfirm',{transtab: req.transfin, usertab: req.user});
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+    }
+  }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
+  else
+    res.render('login/views/invalid');
+}
+function commendrender(req,res){
+  if(req.valid==1){
+    if (!req.transfin[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else{
+      var db = require('../../lib/database')();
+      if ( req.transid[0].strTransStatus=='Ongoing' ){
+        if (req.session.user == req.transfin[0].strItemSNum ){
+          db.query("SELECT intCommend FROM tbluser WHERE strSNum= ?",[req.transfin[0].strBuyerSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var commend = results[0].intCommend + 1;
+              db.query("UPDATE tbluser SET intCommend= ? WHERE strSNum= ?",[commend, req.transfin[0].strBuyerSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum){
+          db.query("SELECT intCommend FROM tbluser WHERE strSNum= ?",[req.transfin[0].strItemSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var commend = results[0].intCommend + 1;
+              db.query("UPDATE tbluser SET intCommend= ? WHERE strSNum= ?",[commend, req.transfin[0].strItemSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+      else{
+        if (req.session.user == req.transfin[0].strItemSNum && req.transid[0].strTransStatus!= 'SFinished'){
+          db.query("SELECT intCommend FROM tbluser WHERE strSNum= ?",[req.transfin[0].strBuyerSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var commend = results[0].intCommend + 1;
+              db.query("UPDATE tbluser SET intCommend= ? WHERE strSNum= ?",[commend, req.transfin[0].strBuyerSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum && req.transid[0].strTransStatus!= 'BFinished'){
+          db.query("SELECT intCommend FROM tbluser WHERE strSNum= ?",[req.transfin[0].strItemSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var commend = results[0].intCommend + 1;
+              db.query("UPDATE tbluser SET intCommend= ? WHERE strSNum= ?",[commend, req.transfin[0].strItemSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+    }
+  }
+}
+function reportrender(req,res){
+  if(req.valid==1){
+    if (!req.transfin[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else{
+      var db = require('../../lib/database')();
+      if ( req.transid[0].strTransStatus=='Ongoing' ){
+        if (req.session.user == req.transfin[0].strItemSNum ){
+          db.query("SELECT intReport FROM tbluser WHERE strSNum= ?",[req.transfin[0].strBuyerSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var report = results[0].intReport + 1;
+              db.query("UPDATE tbluser SET intReport= ? WHERE strSNum= ?",[report, req.transfin[0].strBuyerSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum){
+          db.query("SELECT intReport FROM tbluser WHERE strSNum= ?",[req.transfin[0].strItemSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var report = results[0].intReport + 1;
+              db.query("UPDATE tbluser SET intReport= ? WHERE strSNum= ?",[report, req.transfin[0].strItemSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+      else{
+        if (req.session.user == req.transfin[0].strItemSNum && req.transid[0].strTransStatus!= 'SFinished'){
+          db.query("SELECT intReport FROM tbluser WHERE strSNum= ?",[req.transfin[0].strBuyerSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var report = results[0].intReport + 1;
+              db.query("UPDATE tbluser SET intReport= ? WHERE strSNum= ?",[report, req.transfin[0].strBuyerSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else if (req.session.user == req.transfin[0].strBuyerSNum && req.transid[0].strTransStatus!= 'BFinished'){
+          db.query("SELECT intReport FROM tbluser WHERE strSNum= ?",[req.transfin[0].strItemSNum], (err, results, fields) => {
+              if (err) console.log(err);
+              var report = results[0].intReport + 1;
+              db.query("UPDATE tbluser SET intReport= ? WHERE strSNum= ?",[report, req.transfin[0].strItemSNum], (err, results, fields) => {
+                  if (err) console.log(err);
+                  res.redirect('/profile/-/finishtrans/'+req.transid[0].intTransID);
+              });
+          });
+        }
+        else
+          res.render('profile/views/invalidpages/unauthorized');
+      }
+    }
+  }
+}
 function transfinrender(req,res){
   if(req.valid==1){
     if (!req.transfin[0])
@@ -319,7 +464,6 @@ function transfinrender(req,res){
         else
           res.render('profile/views/invalidpages/unauthorized');
       }
-
     }
   }
   else if(req.valid==2)
@@ -393,6 +537,9 @@ router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions/:page', flog, ftrans, fedituser, transrender);
 router.get('/-/transactions/hold/:page', flog, fholdtrans, fedituser, transholdrender);
 router.get('/-/transactions/history/:page', flog, ftranshistory, fedituser, transhistrender);
+router.get('/-/confirmtrans/:transid', flog, ftransfin, fedituser, ftransid, transconfirmrender);
+router.get('/-/commend/:transid', flog, ftransfin, ftransid, commendrender);
+router.get('/-/report/:transid', flog, ftransfin, ftransid, reportrender);
 router.get('/-/finishtrans/:transid', flog, ftransfin, fedituser, ftransid, transfinrender);
 router.get('/:userid/posts/:page', flog, fuser, fmypost, mypostrender);
 router.get('/:userid/posts/:postid/edit', flog, feditpost, editpostrender);

@@ -385,10 +385,26 @@ function bannedrender(req,res){
 function banverrender(req,res){
   if(req.valid==2){
     var db = require('../../lib/database')();
-    var sql = "UPDATE tbluser SET strStatus= 'banned' WHERE strSNum= ?";
-    db.query(sql,[req.params.userid], function (err, results, fields) {
-      if (err) return res.send(err);
-      res.redirect('/admin/account-verified/1');
+    var sqlban = "UPDATE tbluser SET strStatus= 'banned' WHERE strSNum= ?";
+    var sqlfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'Finished', datDateFinished= (SELECT CURDATE() AS CD) WHERE (strBuyerSNum= ? AND strTransStatus= 'SFinished') OR (strItemSNum= ? AND strTransStatus= 'BFinished')";
+    var sqlbfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'BFinished' WHERE strBuyerSNum= ? AND strTransStatus= 'Ongoing'";
+    var sqlsfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'SFinished' WHERE strItemSNum= ? AND strTransStatus= 'Ongoing'";
+    var sqldel = "DELETE item FROM tblitem item LEFT JOIN tbltransaction trans ON intItemID= intTransItemID  WHERE strItemSNum= ? AND intTransID IS NULL";
+    db.query(sqlban,[req.params.userid], function (err, results, fields) {
+      if (err) console.log(err);
+      db.query(sqlfin,[req.params.userid, req.params.userid], function (err, results, fields) {
+        if (err) console.log(err);
+        db.query(sqlbfin,[req.params.userid], function (err, results, fields) {
+          if (err) console.log(err);
+          db.query(sqlsfin,[req.params.userid], function (err, results, fields) {
+            if (err) console.log(err);
+            db.query(sqldel,[req.params.userid], function (err, results, fields) {
+              if (err) console.log(err);
+              res.redirect('/admin/account-verified/1');
+            });
+          });
+        });
+      })
     });
   }
   else if(req.valid==1)

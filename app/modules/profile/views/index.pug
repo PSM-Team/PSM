@@ -5,12 +5,11 @@ block content
   body
     each user in usertab
       .container
-        .innerwrap
           section.section1.clearfix
             div
-              .row.grid.clearfix
+              .row.clearfix
                 .col2.first
-                  img(src='http://images.contactmusic.com/newsimages/david_beckham_1133321.jpg', alt='')
+                  img(src='/images/profile_pictures/'+ user.strProfilePicture, alt='')
                   br
                   p5
                     |
@@ -52,4 +51,8 @@ block content
           p.control
             a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") Transactions
           p.control
+<<<<<<< HEAD
             a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+=======
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+>>>>>>> 0640a95e8c8f5865c0b6995b2edc22ac1d2d446c

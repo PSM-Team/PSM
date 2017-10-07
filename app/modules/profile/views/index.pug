@@ -12,9 +12,14 @@ block content
                 .col2.first
                   img(src='http://images.contactmusic.com/newsimages/david_beckham_1133321.jpg', alt='')
                   br
-                  h3 #{user.strName}
-                  hr
-                  h4 #{user.strSNum}
+                  p5
+                    |
+                    hr
+                  p5
+                    | #{user.strName}
+                    hr
+                  p5
+                    | #{user.strSNum}
                 .col2.last
                   .grid.clearfix
                     .col3.first
@@ -23,21 +28,28 @@ block content
                     .col3
                       h1 #{user.intReport}
                       span Report
+                  br
                   .grid.clearfix      
                     p1
-                        |&nbsp #{user.strStatus}
+                        |&nbsp &nbsp #{user.strStatus}
                         br
                     p2
-                        |&nbsp #{user.strEmail}
+                        |&nbsp &nbsp #{user.strEmail}
                         br
-                        |&nbsp #{user.txtContact}
-              .row
-                ul.row2tab
-                  li
-                    a.button.is-primary.is-outlined(class="button", href="/profile/-/edit") Edit Profile
-                  li
-                    a.button.is-primary.is-outlined(class="button", href="/profile/-/transactions/1") Transactions
-                  li
-                    a.button.is-primary.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
-                  li
-                    a.button.is-primary.is-outlined
+                        |&nbsp &nbsp #{user.txtContact}
+              //- .row
+              //-   ul.row2tab
+              //-     li
+              //-       a.button.is-primary.is-outlined(class="button", href="/profile/-/edit") Edit Profile
+              //-     li
+              //-       a.button.is-primary.is-outlined(class="button", href="/profile/-/transactions/1") Transactions
+              //-     li
+              //-       a.button.is-primary.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+        br
+        .field.is-grouped
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/edit") Edit Profile
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") Transactions
+          p.control
+            a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts

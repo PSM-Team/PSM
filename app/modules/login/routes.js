@@ -21,6 +21,9 @@ router.post('/', (req, res) => {
         else if ( results[0].strStatus == 'unregistered' || results[0].strStatus == 'rejected'){
           res.render('login/views/invalidpages/unreg');
         }
+        else if ( results[0].strStatus == 'banned'){
+          res.render('login/views/invalidpages/banned');
+        }
         else if(req.body.password === results[0].strPassword){
           req.session.user = results[0].strSNum;
           if(results[0].strType == 'normal')

@@ -4,24 +4,24 @@ block content
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/login.css")
   .login-wrap
     .login-html
-        label PUP STUDENT MARKET 
+        label PUP STUDENT MARKET
         br
         br
         label.tab Sign In
         form(method="POST" action="/login")
             .group
-            label.label(for='user') 
+            label.label(for='user')
             h2 Student Number
             input.input(type="text" maxlength="15" placeholder="Student Number" name="studnum", required)
             .group
-            label.label(for='pass') 
+            label.label(for='pass')
             h2 Password
             input.input(type="password" placeholder="Password" name="password", required)
             br
             br
             .group
-            input.button.is-primary.is-inverted.is-outlined(type='submit', value='Sign In')
+            input.button.is-info.is-inverted.is-outlined(type='submit', value='Sign In')
             br
             br
             .group
-            a.button.is-primary.is-inverted.is-outlined(href="/register") REGISTER
+            a.button.is-info.is-inverted.is-outlined(href="/register") REGISTER

@@ -58,7 +58,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 
 /* profile page */
 .container {
-	float: left;
+    padding: 60px 50px 70px;
 }
 
 .innerwrap {
@@ -227,7 +227,7 @@ section.section2 {
 
 @media only screen and (max-width: 1300px) {
 	.innerwrap {
-		width: auto;
+		width: 90%;
 	}
 	.section2 .col3 {
 		margin-right: 5%;
@@ -273,7 +273,7 @@ section.section2 {
     margin-top:25px;
   }
 }
- @media only screen and (max-width: 450px) {
+@media only screen and (max-width: 450px) {
 	.container {
     padding: 60px 5px 70px;
 }
@@ -289,7 +289,10 @@ section.section2 {
 	}
 	
 }
-
+p1{
+	color: black;
+	text-transform: uppercase;
+}
 p2{
 	color: black;
 }
@@ -300,13 +303,4 @@ h3{
 h4{
 	color: black;
 	font-size: 15pt;
-}
-p5{
-	color: black;
-	font-size: 25pt;
-	font-weight: bolder;
-}
-p1{
-	color: black;
-	text-transform: uppercase;
 }

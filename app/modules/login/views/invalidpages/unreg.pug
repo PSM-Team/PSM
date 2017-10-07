@@ -1,12 +1,35 @@
-extends ../../../../templates/masterdanger.pug
+eextends ../../../../templates/master.pug
 
 block content
-  section.hero.is-dark.is-bold
-    .hero-body
-      h1.title PUP Student Market
-  hr
-  h3.title Your registration is still under assessment by our team
-  p &nbsp
-  h3.subtitle &nbsp Contact Us: psm.sup.adm@gmail.com / 091996919603
-  hr
-  a.button.is-danger.is-inverted.is-outlined(href="/login") SIGN-IN
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/login.css")
+  .login-wrap
+    .login-html
+        label PUP STUDENT MARKET 
+        br
+        br
+        label.tab Sign In
+        br
+        label4 Your registration is still under assessment by our team
+        label4 Contact Us: psm.sup.adm@gmail.com / 091996919603
+        br
+        form(method="POST" action="/login")
+            .group
+            label.label(for='user') 
+            h2 Student Number
+                input.input(type="text" maxlength="15" placeholder="Student Number" name="studnum", required)
+            .group
+            label.label(for='pass') 
+            h2 Password
+                input.input(type="password" placeholder="Password" name="password", required)
+            br
+            .group
+            input.button.is-primary.is-inverted.is-outlined(type='submit', value='Sign In')
+            br
+            br
+            .group
+            a.button.is-primary.is-inverted.is-outlined(href="/register") REGISTER
+
+
+    //- h3.title 
+  //- p &nbsp
+  //- h3.subtitle &nbsp Contact Us: psm.sup.adm@gmail.com / 091996919603

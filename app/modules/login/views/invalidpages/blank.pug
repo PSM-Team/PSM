@@ -14,15 +14,15 @@ block content
         form(method="POST" action="/login")
             .group
             label.label(for='user') 
-            .bg-red Student Number
-                input.input(type="text" placeholder="XXXX-XXXXX-MN-0" name="studnum")
+            h2 Student Number
+                input.input(type="text" maxlength="15" placeholder="Student Number" name="studnum", required)
             .group
             label.label(for='pass') 
-            .bg-red Password
-                input.input(type="password" placeholder="Password" name="password")
+            h2 Password
+                input.input(type="password" placeholder="Password" name="password", required)
             br
             .group
-            input.button(type='submit', value='Sign In')
+            input.button.is-primary.is-inverted.is-outlined(type='submit', value='Sign In')
             br
             br
             .group

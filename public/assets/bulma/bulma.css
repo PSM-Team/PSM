@@ -241,14 +241,25 @@ table th {
 #wrapper {
             min-height: 100%;
         }
+
+#yourContainerblank {
+    width: 200px;
+    height: 170px;
+}
+
+#yourContainerblank img {
+    width: 100%;
+    height: 100%;
+}
+
 #yourContainer {
-    width: 500px;
+    width: 300px;
     height: 170px;
 }
 
 #yourContainer img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
 }
 @media screen and (max-width: 768px) {
   .is-block-mobile {

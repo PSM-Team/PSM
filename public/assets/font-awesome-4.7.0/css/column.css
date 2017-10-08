@@ -102,7 +102,7 @@ General styles
 }
 
 .main-content {
-	background: white;
+	background: #FF7F66;
 }
 .masthead {
 	background: #2185C5;
@@ -110,15 +110,16 @@ General styles
 }
 
 .sidebar {
-	background: #FF7F66;
+	background: #00695c;
+
 }
 
 .twin {
-	background: #2185C5;
+	background: #3F729B;
 }
 
 .twin:last-of-type {
-	background: #7ECEFD;
+	background: #3F729B;
 }
 
 .colophon {
@@ -180,6 +181,3 @@ CSS Grid layout for wider screens, when browser supports grid:
 		.twin:last-of-type {
 			grid-column: 5/8;
 		}
-
-	}
-}

@@ -32,7 +32,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 }
 
 .grid .col2 {
-	width: 50%;
+	width: 100%;
 	padding: 0 10px 0 0;
 }
 .grid .col2.first {
@@ -58,7 +58,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 
 /* profile page */
 .container {
-	float: left;
+ float: left;
 }
 
 .innerwrap {
@@ -227,7 +227,7 @@ section.section2 {
 
 @media only screen and (max-width: 1300px) {
 	.innerwrap {
-		width: auto;
+		width: 90%;
 	}
 	.section2 .col3 {
 		margin-right: 5%;
@@ -273,7 +273,7 @@ section.section2 {
     margin-top:25px;
   }
 }
- @media only screen and (max-width: 450px) {
+@media only screen and (max-width: 450px) {
 	.container {
     padding: 60px 5px 70px;
 }
@@ -289,15 +289,18 @@ section.section2 {
 	}
 	
 }
-
-p2{
+ul1{
+	color: black;
+	text-transform: uppercase;
+}
+ul2{
 	color: black;
 }
-h3{
+ul4{
 	color: black;
-	font-size: 20pt;
+	font-size: 25pt;
 }
-h4{
+ul{
 	color: black;
 	font-size: 15pt;
 }
@@ -322,5 +325,5 @@ p1{
     height: 100px;
     width: 100px;
     left: 80px;
-    top: 20px;
+	top: 20px;
 }

@@ -1,32 +1,10 @@
 extends ../../../../templates/navbar.pug
 
 block content
-  h3.title Edit your profile:
+  h3.title Update your information:
   section.hero.is-danger.is-bold
     .hero-body
       h1.title Submission Failed
-      h1.subtitle - Password did not match
-  br
-  each user in usertab
-    form(method="POST" action="/profile/-/edit")
-        .field
-            .control
-                input.input(type="text" placeholder="Full Name (John S. Doe)" value=user.strName name="studname")
-        .field
-            .control
-                input.input(type="password" placeholder="Old Password" name="oldpass")
-        .field
-            .control
-                input.input(type="password" placeholder="New Password" name="newpass")
-        .field
-            .control
-                input.input(type="password" placeholder="Confirm Password" name="confirm")
-        .field
-            .control
-                input.input(type="email" placeholder="E-mail Address" value=user.strEmail name="email")
-        .field
-            .control
-                input.input(type="text" placeholder="Contact Info (Optional)" value=user.txtContact name="contact")
-        input(type="submit" value="Save")
-        hr
-        a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile") Back
+      h1.subtitle - Password did not match!
+      hr
+      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/edit") Back

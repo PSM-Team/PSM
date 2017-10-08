@@ -35,16 +35,16 @@ block content
       hr
       .field
           .control
-              input.input(type="text" placeholder="Item Title" name="title")
+              input.input(type="text" placeholder="Item Title" name="title", required)
       .field
           .control
-              input.input(type="text" placeholder="Item Price" name="price")
+              input.input(type="text" placeholder="Item Price" name="price", required)
       .field
           .control
-              input.input(type="text" placeholder="Item Description" name="description")
+              input.input(type="text" placeholder="Item Description" name="description", required)
       .field
           .control
-              input.input(type="password" placeholder="Order Password" name="orderpass")
-      input(type="submit" value="Post")
+              input.input(type="password" placeholder="Order Password" name="orderpass", required)
+      input.button.is-primary.is-inverted.is-outlined(type="submit" value="Post")
       hr
       a.button.is-primary.is-inverted.is-outlined(href='/profile') Cancel

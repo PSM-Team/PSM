@@ -238,6 +238,80 @@ function fbanned(req, res, next){
       return next();
   });
 }
+function fpostreport(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT *, COUNT(*) AS CNT FROM(SELECT * FROM(SELECT * FROM(SELECT * FROM tblitem INNER JOIN tblreport ON intItemID= intReportItemID)AS A INNER JOIN tblcategories ON intItemCat= intCatID)AS B INNER JOIN tbluser ON strItemSNum= strSNum)AS C LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus!= 'Finished' OR strTransStatus IS NULL GROUP BY intItemID ORDER BY CNT DESC", function (err, results, fields) {
+      if (err) return res.send(err);
+      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
+          results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
+          results[count].page = page;
+          results[count].curpage = req.params.page;
+          if((count+1)%5==0){
+            page+=1;
+          }
+        }
+        lastpage[0] = results[results.length-1].page;
+      }
+      if(req.params.page > 5){
+        pagearr[0] = req.params.page - 5;
+      }
+      for(count=1;count<10;count++){
+        pagearr[count] = pagearr[count-1] + 1;
+      }
+      req.lastpage = lastpage;
+      req.curpage = curpage;
+      req.prevpage = prevpage;
+      req.nextpage = nextpage;
+      req.page = pagearr;
+      req.post = results;
+      return next();
+  });
+}
+function freportlog(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM(SELECT * FROM(SELECT * FROM tblreport INNER JOIN tblitem ON intItemID= intReportItemID)AS A INNER JOIN tbluser ON strReportSNum= strSNum)AS B INNER JOIN tblcategories ON intItemCat= intCatID ORDER BY intReportID DESC;", function (err, results, fields) {
+      if (err) return res.send(err);
+      var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
+      if (!results[0])
+        console.log('');
+      else{
+        for(count=0;count<results.length;count++){
+          results[count].page = page;
+          results[count].curpage = req.params.page;
+          if((count+1)%5==0){
+            page+=1;
+          }
+        }
+        lastpage[0] = results[results.length-1].page;
+      }
+      if(req.params.page > 5){
+        pagearr[0] = req.params.page - 5;
+      }
+      for(count=1;count<10;count++){
+        pagearr[count] = pagearr[count-1] + 1;
+      }
+      req.lastpage = lastpage;
+      req.curpage = curpage;
+      req.prevpage = prevpage;
+      req.nextpage = nextpage;
+      req.page = pagearr;
+      req.log = results;
+      return next();
+  });
+}
+function fremove(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblitem INNER JOIN tbltransaction ON intItemID= intTransItemID WHERE intItemID= ?",[req.params.postid], function (err, results, fields) {
+      if (err) return res.send(err);
+      req.remove = results;
+      return next();
+  });
+}
 
 function render(req,res){
   if(req.valid==2)
@@ -404,7 +478,7 @@ function banverrender(req,res){
             });
           });
         });
-      })
+      });
     });
   }
   else if(req.valid==1)
@@ -415,10 +489,26 @@ function banverrender(req,res){
 function bannotverrender(req,res){
   if(req.valid==2){
     var db = require('../../lib/database')();
-    var sql = "UPDATE tbluser SET strStatus= 'banned' WHERE strSNum= ?";
-    db.query(sql,[req.params.userid], function (err, results, fields) {
-      if (err) return res.send(err);
-      res.redirect('/admin/account-notverified/1');
+    var sqlban = "UPDATE tbluser SET strStatus= 'banned' WHERE strSNum= ?";
+    var sqlfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'Finished', datDateFinished= (SELECT CURDATE() AS CD) WHERE (strBuyerSNum= ? AND strTransStatus= 'SFinished') OR (strItemSNum= ? AND strTransStatus= 'BFinished')";
+    var sqlbfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'BFinished' WHERE strBuyerSNum= ? AND strTransStatus= 'Ongoing'";
+    var sqlsfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'SFinished' WHERE strItemSNum= ? AND strTransStatus= 'Ongoing'";
+    var sqldel = "DELETE item FROM tblitem item LEFT JOIN tbltransaction trans ON intItemID= intTransItemID  WHERE strItemSNum= ? AND intTransID IS NULL";
+    db.query(sqlban,[req.params.userid], function (err, results, fields) {
+      if (err) console.log(err);
+      db.query(sqlfin,[req.params.userid, req.params.userid], function (err, results, fields) {
+        if (err) console.log(err);
+        db.query(sqlbfin,[req.params.userid], function (err, results, fields) {
+          if (err) console.log(err);
+          db.query(sqlsfin,[req.params.userid], function (err, results, fields) {
+            if (err) console.log(err);
+            db.query(sqldel,[req.params.userid], function (err, results, fields) {
+              if (err) console.log(err);
+              res.redirect('/admin/account-notverified/1');
+            });
+          });
+        });
+      });
     });
   }
   else if(req.valid==1)
@@ -443,6 +533,66 @@ function reinstaterender(req,res){
   else
     res.render('login/views/invalid');
 }
+function postreportrender(req,res){
+  if(req.valid==2){
+    if(!req.post[0]){
+      if(req.params.page == 1)
+        res.render('admin/views/nopostsreported');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('admin/views/postreported',{posttab: req.post, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
+  else if(req.valid==1)
+    res.render('admin/views/invalidpages/normalonly');
+  else
+    res.render('login/views/invalid');
+}
+function postreplogrender(req,res){
+  if(req.valid==2){
+    if(!req.log[0]){
+      if(req.params.page == 1)
+        res.render('admin/views/nopostreportlogged');
+      else
+        res.render('login/views/noroute');
+    }
+    else if(req.params.page < 1 || req.params.page > req.lastpage[0])
+      res.render('login/views/noroute');
+    else
+      res.render('admin/views/postreportlog',{logtab: req.log, pagetab: req.page, curpagetab: req.curpage, prevpagetab: req.prevpage, nextpagetab: req.nextpage, lastpagetab: req.lastpage});
+  }
+  else if(req.valid==1)
+    res.render('admin/views/invalidpages/normalonly');
+  else
+    res.render('login/views/invalid');
+}
+function removepostrender(req,res){
+  if(req.valid==2){
+    if(!req.remove[0]){
+      var db = require('../../lib/database')();
+      db.query("DELETE FROM tblreport WHERE intReportItemID= ?",[req.params.postid], (err, results, fields) => {
+        if (err) console.log(err);
+        db.query("DELETE FROM tblitem WHERE intItemID= ?",[req.params.postid], (err, results, fields) => {
+          if (err) console.log(err);
+          res.redirect('/admin/post-reported/1');
+        });
+      });
+    }
+    if(req.remove[0].strTransStatus == 'Finished'){
+      res.render('categ/views/invalidpages/itemunavailable');
+    }
+    else{
+      res.render('admin/views/invalidpages/removeunavailable');
+    }
+  }
+  else if(req.valid==1)
+    res.render('admin/views/invalidpages/normalonly');
+  else
+    res.render('login/views/invalid');
+}
 
 router.get('/', flog, fregcount, fvercount, fnvercount, funregcount, frejcount, fbancount, render);
 router.get('/registration-unregistered/:page', flog, fstudunreg, studunregrender);
@@ -456,5 +606,8 @@ router.get('/account-banned/:page', flog, fbanned, bannedrender);
 router.get('/account/banver/:userid', flog, banverrender);
 router.get('/account/bannotver/:userid', flog, bannotverrender);
 router.get('/account/reinstate/:userid', flog, freguser, reinstaterender);
+router.get('/post-reported/:page', flog, fpostreport, postreportrender);
+router.get('/post-reportlog/:page', flog, freportlog, postreplogrender);
+router.get('/post/remove/:postid', flog, fremove, removepostrender);
 
 exports.admin= router;

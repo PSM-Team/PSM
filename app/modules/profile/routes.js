@@ -514,8 +514,12 @@ function deletepostrender(req,res){
     else{
       if (req.session.user == req.editpost[0].strItemSNum){
         var db = require('../../lib/database')();
-        db.query("DELETE FROM tblitem WHERE strItemSNum= ? AND intItemID= ?",[req.params.userid, req.params.postid], (err, results, fields) => {
-          res.redirect('/profile/'+ req.params.userid +'/posts/1');
+        db.query("DELETE FROM tblreport WHERE intReportItemID= ?",[req.params.postid], (err, results, fields) => {
+          if (err) console.log(err);
+          db.query("DELETE FROM tblitem WHERE strItemSNum= ? AND intItemID= ?",[req.params.userid, req.params.postid], (err, results, fields) => {
+            if (err) console.log(err);
+            res.redirect('/profile/'+ req.params.userid +'/posts/1');
+          });
         });
       }
       else

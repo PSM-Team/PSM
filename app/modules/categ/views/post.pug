@@ -12,8 +12,12 @@ block content
     each post in posttab
       .site
         header.masthead
-          h2.site-title  
-            a(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
+          div(style='width: 50%; float: left')
+            h2.site-title
+              a(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
+          div(style='width: 50%; float: right', align= 'right')
+            h2.site-title
+              a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/report') [ ! ] REPORT
         main#content.main-content
           h2.title #{post.strItemTitle}
               link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/component.css")
@@ -48,7 +52,7 @@ block content
           h3 Other Details:
           ul
             li Contact Information:
-            li 
+            li
               a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
             li Status: #{post.strStatus}
             li Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}

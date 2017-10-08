@@ -47,14 +47,15 @@ block content
           p.control
             a.button.is-warning.is-inverted.is-outlined(class="button", href="/admin/account/reinstate/"+ stud.strSNum) Reinstate
       hr(style='border: 0.5px solid #000105')
+
   each curpage in curpagetab
     .field.is-grouped
       each status in statustab
-        if status == 'unregistered'
+        if status == 'verified'
           if curpage > 1
             each prevpage in prevpagetab
               p.control
-                a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/registration-unregistered/'+ prevpage ) << Previous
+                a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/account-verified/'+ prevpage ) << Previous
           each lastpage in lastpagetab
             each page in pagetab
               if page == curpage
@@ -63,16 +64,35 @@ block content
               else
                 if page <= lastpage
                   p.control
-                    a.button.is-warning.is-inverted.is-outlined(href='/admin/registration-unregistered/'+ page ) #{page}
+                    a.button.is-warning.is-inverted.is-outlined(href='/admin/account-verified/'+ page ) #{page}
             each nextpage in nextpagetab
               if curpage < lastpage
                 p.control
-                  a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/registration-unregistered/'+ nextpage ) Next >>
+                  a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/account-verified/'+ nextpage ) Next >>
+        else if status == 'not verified'
+          if curpage > 1
+            each prevpage in prevpagetab
+              p.control
+                a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/account-notverified/'+ prevpage ) << Previous
+          each lastpage in lastpagetab
+            each page in pagetab
+              if page == curpage
+                p.control
+                  a.button.is-warning.is-inverted.is-hovered() #{page}
+              else
+                if page <= lastpage
+                  p.control
+                    a.button.is-warning.is-inverted.is-outlined(href='/admin/account-notverified/'+ page ) #{page}
+            each nextpage in nextpagetab
+              if curpage < lastpage
+                p.control
+                  a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/account-notverified/'+ nextpage ) Next >>
+
         else
           if curpage > 1
             each prevpage in prevpagetab
               p.control
-                a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/registration-rejected/'+ prevpage ) << Previous
+                a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/account-banned/'+ prevpage ) << Previous
           each lastpage in lastpagetab
             each page in pagetab
               if page == curpage
@@ -81,8 +101,8 @@ block content
               else
                 if page <= lastpage
                   p.control
-                    a.button.is-warning.is-inverted.is-outlined(href='/admin/registration-rejected/'+ page ) #{page}
+                    a.button.is-warning.is-inverted.is-outlined(href='/admin/account-banned/'+ page ) #{page}
             each nextpage in nextpagetab
               if curpage < lastpage
                 p.control
-                  a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/registration-rejected/'+ nextpage ) Next >>
+                  a.button.is-warning.is-inverted.is-outlined.is-hovered(href='/admin/account-banned/'+ nextpage ) Next >>

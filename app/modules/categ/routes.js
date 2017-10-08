@@ -8,7 +8,7 @@ function numberWithCommas(x) {
     return parts.join(".");
 }
 
-function fcat(req,res,next){
+function fcat(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT * FROM tblcategories", (err, results, fields) => {
       if (err) console.log(err);
@@ -74,6 +74,22 @@ function fpost(req, res, next){
       return next();
     });
 }
+function ftrans(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
+  if (err) console.log(err);
+      req.trans = results;
+      return next();
+    });
+}
+function freport(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblreport WHERE strReportSNum= ? AND intReportItemID= ?",[req.session.user, req.params.postid], (err, results, fields) => {
+      if (err) console.log(err);
+      req.report = results;
+      return next();
+    });
+}
 
 function render(req,res){
   if(req.valid==1)
@@ -105,20 +121,16 @@ function catrender(req,res){
 }
 function postrender(req,res){
   if(req.valid==1){
-    var db = require('../../lib/database')();
-    db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[ req.params.postid], (err, results, fields) => {
-    if (err) console.log(err);
     if(!req.post[0])
       res.render('categ/views/invalidpages/itemunavailable');
-    else if(req.post[0].strItemSNum == req.session.user && !results[0] )
+    else if(req.post[0].strItemSNum == req.session.user && !req.trans[0] )
       res.render('categ/views/ownpost',{ posttab: req.post });
-    else if(!results[0])
+    else if(!req.trans[0])
       res.render('categ/views/post',{ posttab: req.post });
-    else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished')
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished')
       res.render('categ/views/viewpost',{ posttab: req.post });
     else
       res.render('categ/views/invalidpages/itemunavailable');
-    });
   }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
@@ -127,20 +139,43 @@ function postrender(req,res){
 }
 function orderrender(req,res){
   if(req.valid==1){
-    var db = require('../../lib/database')();
-    db.query("SELECT strTransStatus FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
-    if (err) console.log(err);
     if(!req.post[0])
       res.render('categ/views/invalidpages/orderunavailable');
     else if(req.post[0].strItemSNum == req.session.user)
       res.render('categ/views/invalidpages/selforder');
-    else if(!results[0])
+    else if(!req.trans[0])
       res.render('categ/views/order',{ posttab: req.post });
-    else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished' )
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished' )
       res.render('categ/views/invalidpages/orderunavailable');
     else
       res.render('categ/views/invalidpages/itemunavailable');
-    });
+  }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
+  else
+    res.render('login/views/invalid');
+}
+function reportrender(req,res){
+  if(req.valid==1){
+    if(!req.post[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else if(!req.trans[0]){
+      if(req.session.user == req.post[0].strItemSNum)
+        res.render('profile/views/invalidpages/unauthorized');
+      else if(!req.report[0]){
+        var db = require('../../lib/database')();
+        db.query("INSERT INTO tblreport (intReportItemID, strReportSNum) VALUES (?,?)",[req.params.postid, req.session.user], (err, results, fields) => {
+          if (err) console.log(err);
+          res.redirect('/home/page/1');
+        });
+      }
+      else
+        res.render('categ/views/invalidpages/reportunavailable');
+    }
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished' )
+      res.render('profile/views/invalidpages/unauthorized');
+    else if(req.trans[0].strTransStatus == 'Finished')
+      res.render('categ/views/invalidpages/itemunavailable');
   }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
@@ -150,8 +185,9 @@ function orderrender(req,res){
 
 router.get('/', flog, fcat, render);
 router.get('/:catname/page/:page', flog, fcatname, fitem, catrender);
-router.get('/:catname/:postid', flog, fpost, postrender);
-router.get('/:catname/:postid/order', flog, fpost, orderrender);
+router.get('/:catname/:postid', flog, fpost, ftrans, postrender);
+router.get('/:catname/:postid/order', flog, fpost, ftrans, orderrender);
+router.get('/:catname/:postid/report', flog, fpost, freport, ftrans, reportrender);
 
 router.post('/:catname/:postid/order', fpost, (req, res) => {
   var db = require('../../lib/database')();

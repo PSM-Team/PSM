@@ -2,6 +2,9 @@ extends ../../../templates/navbar.pug
 
 block content
   h3.title Update your information:
+  section.hero.is-info.is-bold
+    .hero-body
+      h3.subtitle Note: You can use your old password as your new password.
   each user in usertab
     form(method="POST" action="/profile/-/edit" enctype='multipart/form-data')
         .field

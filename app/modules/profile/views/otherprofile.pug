@@ -2,48 +2,41 @@
 extends ../../../templates/navbar.pug
 
 block content
-  each user in usertab
-    div
-      if user.strProfilePicture == 'blank.jpg'
-        div(style='width: 20%; float: left')
-          #yourContainerblank
-            img(src='/images/profile_pictures/'+ user.strProfilePicture, alt='')
-        div(style='width: 80%; float: right')
-          br
-          h3.title #{user.strName}
-          hr
-          h4.subtitle #{user.strSNum}
-      else
-        div(style='width: 30%; float: left')
-          #yourContainer
-            img(src='/images/profile_pictures/'+ user.strProfilePicture, alt='')
-        div(style='width: 70%; float: right')
-          br
-          h3.title #{user.strName}
-          hr
-          h4.subtitle #{user.strSNum}
-    p &nbsp
-    br
-    hr
-    div(style='width: 25%; float: left')
-      h3.subtitle
-        b Status
-      h3.subtitle
-        b Commends - Reports
-      h3.subtitle
-        b E-mail
-      h3.subtitle
-        b Contact Information
-    div(style='width: 75%; float: right')
-      h3.subtitle #{user.strStatus}
-      h3.subtitle #{user.intCommend} - #{user.intReport}
-      h3.subtitle #{user.strEmail}
-      h3.subtitle #{user.txtContact}
-    div(align='left')
-      p &nbsp
-      br
-      br
-      hr
-      .field.is-grouped
-        p.control
-          a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile.css")
+  body
+    each user in usertab
+      .container
+          section.section1.clearfix
+            div
+              .row.clearfix
+                .col2.first
+                  if user.strProfilePicture == 'blank.jpg'
+                    div(style='width: 20%; float: left')
+                      #yourContainerblank
+                        img(src='/images/profile_pictures/'+ user.strProfilePicture, alt='')
+                  else
+                    div(style='width: 30%; float: left')
+                      #yourContainer
+                        img(src='/images/profile_pictures/'+ user.strProfilePicture, alt='')
+                .col2.last
+                  .grid.clearfix
+                    .col3.first
+                      h1 #{user.intCommend}
+                      span Commend
+                    .col3
+                      h1 #{user.intReport}
+                      span Report
+                    p5
+                      ul4|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strName}
+                      ul|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strSNum}
+                  br 
+
+                  div(style='position: relative')  
+                    ul1|&nbsp &nbsp&nbsp &nbsp #{user.strStatus} |
+                    ul2|&nbsp &nbsp #{user.strEmail}  |
+                    ul2|&nbsp &nbsp #{user.txtContact} 
+          div(align='left')
+            p &nbsp
+            .field.is-grouped
+              p.control
+                a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts

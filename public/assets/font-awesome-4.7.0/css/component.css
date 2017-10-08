@@ -89,9 +89,8 @@
 #slide5:checked ~ #controls label:nth-child(1) {
 	background: url('../images/next.png') no-repeat;
 	float: right;
-	margin: 0 10px 0 0;
 	display: block;
-	background-color:#ef023f;
+	background-color: #ef023f;
 }
 
 
@@ -102,7 +101,6 @@
 #slide5:checked ~ #controls label:nth-child(4) {
 	background: url('../images/prev.png') no-repeat;
 	float: left;
-	margin: 0 0 0 px;
 	display: block;
 	background-color:#ef023f;
 }

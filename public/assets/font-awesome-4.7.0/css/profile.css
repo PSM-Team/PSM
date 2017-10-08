@@ -32,7 +32,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 }
 
 .grid .col2 {
-	width: 50%;
+	width: 100%;
 	padding: 0 10px 0 0;
 }
 .grid .col2.first {
@@ -58,7 +58,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 
 /* profile page */
 .container {
-    padding: 60px 50px 70px;
+ float: left;
 }
 
 .innerwrap {
@@ -289,18 +289,41 @@ section.section2 {
 	}
 	
 }
+ul1{
+	color: black;
+	text-transform: uppercase;
+}
+ul2{
+	color: black;
+}
+ul4{
+	color: black;
+	font-size: 25pt;
+}
+ul{
+	color: black;
+	font-size: 15pt;
+}
+p5{
+	color: black;
+	font-size: 15pt;
+	font-weight: bolder;
+}
 p1{
 	color: black;
 	text-transform: uppercase;
 }
-p2{
-	color: black;
-}
-h3{
-	color: black;
-	font-size: 20pt;
-}
-h4{
-	color: black;
-	font-size: 15pt;
+.circular{
+
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    border-radius: 150px;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+    border: 5px solid white;
+    overflow: hidden;
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    left: 80px;
+	top: 20px;
 }

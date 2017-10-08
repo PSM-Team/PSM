@@ -46,3 +46,14 @@ text:hover, text:focus, #items td.total-value text:hover, #items td.total-value 
 
 .delete-wpr { position: relative; }
 .delete { display: block; color: #000; text-decoration: none; position: absolute; background: #EEEEEE; font-weight: bold; padding: 0px 3px; border: 1px solid; top: -6px; left: -22px; font-family: Verdana; font-size: 12px; }
+
+
+
+h8{
+  text-decoration: overline;
+  float: left;
+}
+h9{
+  text-decoration: overline;
+  float: right;
+}

@@ -328,10 +328,19 @@ p1{
 	top: 20px;
 }
 .section1{
-	background-color: #cc9966;
+	background-color: #778899;
 
 }
 
 h1{
 	font-size: 20pt;
+}
+body{
+	background-color: #E00000;
+}
+.hero{
+	background-color: #2F4F4F;
+}
+.hero-body{
+	color: whitesmoke;
 }

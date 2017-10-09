@@ -1,4 +1,3 @@
-
 extends ../../../templates/navbar.pug
 
 block content
@@ -11,8 +10,8 @@ block content
               .row.clearfix
                 .col2.first
                   if user.strProfilePicture == 'blank.jpg'
-                    div(style='width: 20%; float: left')
-                      #yourContainerblank
+                    div(style='width: 30%; float: left')
+                      #yourContainer
                         img(src='/images/profile_pictures/'+ user.strProfilePicture, alt='')
                   else
                     div(style='width: 30%; float: left')
@@ -28,15 +27,20 @@ block content
                       span Report
                     p5
                       ul4|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strName}
-                      ul|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strSNum}
-                  br 
-
-                  div(style='position: relative')  
-                    ul1|&nbsp &nbsp&nbsp &nbsp #{user.strStatus} |
-                    ul2|&nbsp &nbsp #{user.strEmail}  |
-                    ul2|&nbsp &nbsp #{user.txtContact} 
-          div(align='left')
-            p &nbsp
-            .field.is-grouped
-              p.control
-                a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+                      ul|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strSNum} [ #{user.strStatus} ]
+          section.hero.is-info
+            .hero-body
+              div(style='width: 70%; float: right')
+                p
+                  b Contact Information :
+                p
+                  i E-mail: &nbsp
+                  | #{user.strEmail}
+                p
+                  i Others: &nbsp
+                  | #{user.txtContact}
+              div(align='left')
+                p &nbsp
+                .field.is-grouped
+                  p.control
+                    a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts

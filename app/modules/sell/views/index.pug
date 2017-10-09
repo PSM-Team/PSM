@@ -45,6 +45,8 @@ block content
       .field
           .control
               input.input(type="password" placeholder="Order Password" name="orderpass", required)
-      input.button.is-primary.is-inverted.is-outlined(type="submit" value="Post")
-      hr
-      a.button.is-primary.is-inverted.is-outlined(href='/profile') Cancel
+      .field.is-grouped
+          .control
+              input.button.is-primary.is-inverted.is-outlined(type="submit" value="Post")
+          .control
+              a.button.is-primary.is-inverted.is-outlined(href='/profile') Cancel

@@ -58,7 +58,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 
 /* profile page */
 .container {
- float: left;
+ float: center;
 }
 
 .innerwrap {
@@ -115,11 +115,11 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 	padding: 8px 0;
 }
 .section1 .col2.last .col3 span {
-    color: #a2a2a2;
+    color: #000000;
     font-size: 14px;
 }
 .section1 .col2.last .col3 h1 {
-	color: #FB4C22;
+	color: #000000;
 	font-weight: bolder;
 }
 
@@ -287,7 +287,7 @@ section.section2 {
 	.section1 .col2.last .col3 h1 {
 		font-size: 18px;
 	}
-	
+
 }
 ul1{
 	color: black;
@@ -328,8 +328,8 @@ p1{
 	top: 20px;
 }
 .section1{
-	background-color: #b2ebf2;
-	
+	background-color: #cc9966;
+
 }
 
 h1{

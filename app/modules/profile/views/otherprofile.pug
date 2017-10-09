@@ -1,4 +1,4 @@
-extends ../../../templates/navbar.pug
+extends ../../../templates/navbarnocontainer.pug
 
 block content
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile.css")
@@ -28,9 +28,9 @@ block content
                     p5
                       ul4|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strName}
                       ul|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strSNum} [ #{user.strStatus} ]
-          section.hero.is-info
+          section.hero
             .hero-body
-              div(style='width: 70%; float: right')
+              div(style='width: 80%; float: right')
                 p
                   b Contact Information :
                 p

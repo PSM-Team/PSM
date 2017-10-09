@@ -1,4 +1,4 @@
-extends ../../../templates/navbar.pug
+extends ../../../templates/navbarnofooter.pug
 
 block content
     meta(http-equiv='content-type', content='text/html; charset=UTF-8')
@@ -64,8 +64,8 @@ block content
           h4 Item Description :
             p #{post.txtItemDesc}
         aside.twin
-          a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
+          a.button.is-info.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
         aside.twin
-          a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName +'/page/1') BACK TO CATEGORY
+          a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName +'/page/1') BACK TO CATEGORY
         footer.colophon.grid
           aside

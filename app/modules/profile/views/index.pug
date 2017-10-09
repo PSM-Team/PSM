@@ -1,4 +1,4 @@
-extends ../../../templates/navbar.pug
+extends ../../../templates/navbarnocontainer.pug
 
 block content
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile.css")
@@ -51,15 +51,3 @@ block content
                   p &nbsp
                   p
                     a.button.is-info.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") &nbsp&nbsp&nbsp&nbsp&nbsp Posts &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-
-  br
-  #footer
-    .container
-      .content.has-text-centered
-        br
-        p
-          b PUP Student Market
-          | &nbspis a project made by PSM Team
-        p
-          b Contact Us:
-          | &nbsppsm.sup.adm@gmail.com

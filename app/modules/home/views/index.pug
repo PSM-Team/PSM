@@ -3,8 +3,9 @@ extends ../../../templates/navbar.pug
 block content
     link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/posts.css")
     each user in usertab
-        h3.title Welcome to PUP Student Market, #{user.strName}
-        hr
+        div(align='center')
+          h3.title Welcome to PUP Student Market, #{user.strName}
+    hr(style='border: 0.5px solid #990000')
     each item in itemtab
         br
         if item.page == item.curpage
@@ -15,8 +16,8 @@ block content
               h4.card-title
                 h9 &nbsp&nbsp &nbsp #{item.strItemTitle}
                 #image-container
-                  img(src='/images/uploaded_images/blank.jpg')
-                p.card-text 
+                  img(src='/images/uploaded_images/'+item.strFirstPic)
+                p.card-text
                     ul1
                       b &nbsp&nbsp Price: Php #{item.price}
                       br
@@ -29,7 +30,7 @@ block content
                           a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
                 br
                 a.btn.btn-primary(href='/categories/' + item.strCatName + '/' + item.intItemID) View Details
-    
+
     br
     each curpage in curpagetab
       .field.is-grouped

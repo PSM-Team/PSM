@@ -1,10 +1,14 @@
 extends ../../../templates/navbar.pug
 
 block content
-  h2.title CATEGORIES
-  h2.subtitle &nbspSelect a Category to view posts in it
-  hr
-  each cat in cattab
-    br
-    h3.title
-      a(href='/categories/'+ cat.strCatName +'/page/1') #{cat.strCatName}
+  div(align='center')
+    h2.title CATEGORIES
+    h2.subtitle &nbspSelect a Category to view posts in it
+    hr(style='border: 0.5px solid #990000')
+    section.hero.is-info
+      .hero-body
+        #wrapper
+          each cat in cattab
+            br
+            h3.title
+              a(href='/categories/'+ cat.strCatName +'/page/1') #{cat.strCatName}

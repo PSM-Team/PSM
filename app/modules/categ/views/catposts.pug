@@ -1,23 +1,36 @@
 extends ../../../templates/navbar.pug
 
 block content
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/posts.css")
   each catname in catnametab
-    h2.title #{catname.strCatName}
-    h2.subtitle &nbspClick an Item Title to view it's Details
-  hr
+    div(align='center')
+      h2.title #{catname.strCatName}
+  hr(style='border: 0.5px solid #990000')
   each item in itemtab
+    br
     if item.page == item.curpage
-      h3.title
-        |
-        a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
-      p
-        |
-        b Price: Php #{item.price}
-      p Seller: &nbsp
-        u
-          a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
-      p Date: #{item.date}
-      hr
+      .card
+        h3.card-header
+            h3.subtitle &nbsp
+        .card-body
+         h4.card-title
+           h9 &nbsp&nbsp &nbsp #{item.strItemTitle}
+           #image-container
+             img(src='/images/uploaded_images/'+item.strFirstPic)
+           p.card-text
+               ul1
+                 b &nbsp&nbsp Price: Php #{item.price}
+                 br
+               ul1
+                 b &nbsp&nbsp Date: #{item.date}
+                 br
+               ul1
+                 b &nbsp&nbsp Seller: &nbsp
+                   u
+                     a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
+           br
+           a.btn.btn-primary(href='/categories/' + item.strCatName + '/' + item.intItemID) View Details
+  br
   each catname in catnametab
     each curpage in curpagetab
       .field.is-grouped

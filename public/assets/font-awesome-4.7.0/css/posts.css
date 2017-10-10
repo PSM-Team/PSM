@@ -1,0 +1,34 @@
+.subtitle{
+    background-color: #40E0D0;
+    font-size: 25pt;
+    border-width: 50%;
+}
+.card{
+    background-color: #ADD8E6;
+    height: 300px;
+    width: auto;
+}
+#image-container{
+    height:200px;
+    width: 150pt;
+    float: right;
+    margin-right: 25pt;
+}
+
+card-text{
+    font-size: 15pt;
+}
+hr{
+    width: 100%;
+    font-weight: bolder;
+}
+h9{
+    font-size: 20pt;
+
+}
+.btn{
+    margin-left: 10pt;
+}
+ul1{
+    font-size: 12pt;
+}

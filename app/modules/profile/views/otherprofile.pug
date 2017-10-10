@@ -28,6 +28,7 @@ block content
                     p5
                       ul4|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strName}
                       ul|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strSNum} [ #{user.strStatus} ]
+<<<<<<< HEAD
           div
             section.hero
               .hero-body
@@ -45,3 +46,21 @@ block content
                 div(style='width: 15%; float: left', align='center')
                   p
                     a.button.is-info.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") &nbsp&nbsp&nbsp&nbsp&nbsp Posts &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+=======
+          section.hero
+            .hero-body
+              div(style='width: 80%; float: right')
+                p
+                  b Contact Information :
+                p
+                  i E-mail: &nbsp
+                  | #{user.strEmail}
+                p
+                  i Others: &nbsp
+                  | #{user.txtContact}
+              div(align='left')
+                p &nbsp
+                .field.is-grouped
+                  p.control
+                    a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+>>>>>>> 7ff5e96cc7ac8aa4a1dadb79fc0c1e6002073e23

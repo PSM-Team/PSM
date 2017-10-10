@@ -1,4 +1,4 @@
-extends ../../../templates/navbar.pug
+extends ../../../templates/navbarnocontainer.pug
 
 block content
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile.css")
@@ -28,19 +28,20 @@ block content
                     p5
                       ul4|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strName}
                       ul|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#{user.strSNum} [ #{user.strStatus} ]
-          section.hero.is-info
-            .hero-body
-              div(style='width: 70%; float: right')
-                p
-                  b Contact Information :
-                p
-                  i E-mail: &nbsp
-                  | #{user.strEmail}
-                p
-                  i Others: &nbsp
-                  | #{user.txtContact}
-              div(align='left')
-                p &nbsp
-                .field.is-grouped
-                  p.control
-                    a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") Posts
+          div
+            section.hero
+              .hero-body
+                div(style='width: 83%; float: right')
+                  p
+                    b Contact Information :
+                  p
+                    i E-mail: &nbsp
+                    | #{user.strEmail}
+                  p
+                    i Others: &nbsp
+                    | #{user.txtContact}
+                div(style='width: 2%; float: right')
+                  p &nbsp
+                div(style='width: 15%; float: left', align='center')
+                  p
+                    a.button.is-info.is-inverted.is-outlined(class="button", href="/profile/"+ user.strSNum +"/posts/1") &nbsp&nbsp&nbsp&nbsp&nbsp Posts &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp

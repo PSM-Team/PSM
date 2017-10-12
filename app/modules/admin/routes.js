@@ -274,7 +274,7 @@ function fpostreport(req, res, next){
 }
 function freportlog(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT * FROM(SELECT * FROM(SELECT * FROM(SELECT * FROM tblreport INNER JOIN tblitem ON intItemID= intReportItemID)A INNER JOIN tbluser ON strReportSNum= strSNum)B INNER JOIN tblcategories ON intItemCat= intCatID)C LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus!= 'Finished' AND strTransStatus IS NOT NULL ORDER BY intReportID DESC", function (err, results, fields) {
+  db.query("SELECT * FROM(SELECT * FROM(SELECT * FROM(SELECT * FROM tblreport INNER JOIN tblitem ON intItemID= intReportItemID)A INNER JOIN tbluser ON strReportSNum= strSNum)B INNER JOIN tblcategories ON intItemCat= intCatID)C LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus!= 'Finished' OR strTransStatus IS NULL ORDER BY intReportID DESC", function (err, results, fields) {
       if (err) return res.send(err);
       var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
       if (!results[0])
@@ -607,7 +607,7 @@ function removepostrender(req,res){
         });
       });
     }
-    if(req.remove[0].strTransStatus == 'Finished'){
+    else if(req.remove[0].strTransStatus == 'Finished'){
       res.render('categ/views/invalidpages/itemunavailable');
     }
     else{

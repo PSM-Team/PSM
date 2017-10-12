@@ -70,7 +70,7 @@ function ftrans(req,res,next){
 function fholdtrans(req,res,next){
   var db = require('../../lib/database')();
   var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
-  var sqltrans2 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!='Ongoing' AND strTransStatus!='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
+  var sqltrans2 = "SELECT B.*, strName, strStatus FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!='Ongoing' AND strTransStatus!='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
   db.query(sqltrans2,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
       if (!results[0])
@@ -232,7 +232,7 @@ function transrender(req,res){
   if(req.valid==1){
     if(!req.trans[0]){
       if(req.params.page == 1)
-        res.render('profile/views/notrans');
+        res.render('profile/views/noongoingtrans');
       else
         res.render('login/views/noroute');
     }
@@ -250,7 +250,7 @@ function transholdrender(req,res){
   if(req.valid==1){
     if(!req.hold[0]){
       if(req.params.page == 1)
-        res.render('profile/views/notrans');
+        res.render('profile/views/noonholdtrans');
       else
         res.render('login/views/noroute');
     }
@@ -268,7 +268,7 @@ function transhistrender(req,res){
   if(req.valid==1){
     if(!req.history[0]){
       if(req.params.page == 1)
-        res.render('profile/views/notrans');
+        res.render('profile/views/noprevtrans');
       else
         res.render('login/views/noroute');
     }
@@ -555,29 +555,28 @@ router.post('/-/edit', fedituser, (req, res) => {
     res.render('profile/views/invalidpages/blank',{usertab: req.user});
   }
   else if( req.body.newpass === req.body.confirm ){
-    db.query("SELECT strPassword FROM tbluser WHERE strSNum= ? ",[req.session.user], (err, results, fields) => {
-        if (err) console.log(err);
-        if(req.body.oldpass === results[0].strPassword){
-          var randomId= makeid();
-          jpeg= req.session.user.concat('-'+randomId+'-dp.jpg');
-          if(!req.files.profilepic){
-            db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, req.session.user], (err, results1, fields) => {
-                if (err) console.log(err);
-                res.redirect('/profile');
-            });
-          }
-          else{
-            req.files.profilepic.mv('public/images/profile_pictures/'+jpeg, function(err) {
-              db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ?, strProfilePicture= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, jpeg, req.session.user], (err, results1, fields) => {
-                  if (err) console.log(err);
-                  res.redirect('/profile');
-              });
-            });
-          }
-        }
-        else
-          res.render('profile/views/invalidpages/incorrect',{usertab: req.user});
-      });
+    if(req.body.oldpass === req.user[0].strPassword){
+      var randomId= makeid();
+      jpeg= req.session.user.concat('-'+randomId+'-dp.jpg');
+      if(!req.files.profilepic){
+        db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, req.session.user], (err, results1, fields) => {
+            if (err) console.log(err);
+            res.redirect('/profile');
+        });
+      }
+      else{
+        req.files.profilepic.mv('public/images/profile_pictures/'+jpeg, function(err) {
+          db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ?, strProfilePicture= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, jpeg, req.session.user], (err, results1, fields) => {
+              if (err) console.log(err);
+              if(req.user[0].strProfilePicture!= 'blank.jpg')
+                fs.unlink('public/images/profile_pictures/'+req.user[0].strProfilePicture);
+              res.redirect('/profile');
+          });
+        });
+      }
+    }
+    else
+      res.render('profile/views/invalidpages/incorrect',{usertab: req.user});
   }
   else
     res.render('profile/views/invalidpages/notmatch',{usertab: req.user});

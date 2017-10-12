@@ -42,6 +42,8 @@ block content
             p Date Started: #{trans.date}
             br
             p Seller Marked this as Finished Transaction
+            if trans.strStatus == 'banned'
+              p Seller Has Been banned by the Admin
             .field.is-grouped
               p.control
                 a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
@@ -76,6 +78,8 @@ block content
             p Date Started: #{trans.date}
             br
             p Buyer Marked this as Finished Transaction
+            if trans.strStatus == 'banned'
+              p Seller Has Been banned by the Admin
             .field.is-grouped
               p.control
                 a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip

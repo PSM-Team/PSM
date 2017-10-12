@@ -127,7 +127,7 @@ router.post('/test', fquestions, fchoices, (req, res) => {
     }
     else{
       testOn = 0;
-      db.query("INSERT INTO tbluser (strSNum, strName, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strType, strProfilePicture) VALUES (?,?,?,?,?,'unregistered','0','0','normal','blank.jpg')",[tempRegister.studnum,tempRegister.studname,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
+      db.query("INSERT INTO tbluser (strSNum, strName, strEmail, txtContact, strPassword, strStatus, intCommend, intReport, strProfilePicture) VALUES (?,?,?,?,?,'unregistered','0','0','blank.jpg')",[tempRegister.studnum,tempRegister.studname,tempRegister.email,tempRegister.contact,tempRegister.password], (err, results, fields) => {
           if (err) console.log(err);
           for(count=0;count<10;count++){
             db.query("INSERT INTO tblanswers (strAnswerSNum, intAnswer) VALUES (?,?)",[tempRegister.studnum, choice[count]], (err, results, fields) => {

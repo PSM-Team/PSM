@@ -7,7 +7,6 @@ block content
           h3.title Welcome to PUP Student Market, #{user.strName}
     hr(style='border: 0.5px solid #990000')
     each item in itemtab
-        br
         if item.page == item.curpage
           .card
             h3.card-header
@@ -30,7 +29,7 @@ block content
                           a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
                 br
                 a.btn.btn-primary(href='/categories/' + item.strCatName + '/' + item.intItemID) View Details
-
+          br
     br
     each curpage in curpagetab
       .field.is-grouped

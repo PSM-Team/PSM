@@ -10,7 +10,7 @@ function numberWithCommas(x) {
 
 function fregcount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND (strStatus= 'verified' OR strStatus= 'not verified')", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE 'admin' AND (strStatus= 'verified' OR strStatus= 'not verified')", function (err, results, fields) {
       if (err) return res.send(err);
       req.regcount = results;
       return next();
@@ -18,7 +18,7 @@ function fregcount(req, res, next){
 }
 function fvercount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'verified'", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'verified'", function (err, results, fields) {
       if (err) return res.send(err);
       req.vercount = results;
       return next();
@@ -26,7 +26,7 @@ function fvercount(req, res, next){
 }
 function fnvercount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'not verified'", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'not verified'", function (err, results, fields) {
       if (err) return res.send(err);
       req.nvercount = results;
       return next();
@@ -34,7 +34,7 @@ function fnvercount(req, res, next){
 }
 function funregcount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'unregistered'", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'unregistered'", function (err, results, fields) {
       if (err) return res.send(err);
       req.unregcount = results;
       return next();
@@ -42,7 +42,7 @@ function funregcount(req, res, next){
 }
 function frejcount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'rejected'", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'rejected'", function (err, results, fields) {
       if (err) return res.send(err);
       req.rejcount = results;
       return next();
@@ -50,7 +50,7 @@ function frejcount(req, res, next){
 }
 function fbancount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'banned'", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'banned'", function (err, results, fields) {
       if (err) return res.send(err);
       req.bancount = results;
       return next();
@@ -274,7 +274,7 @@ function fpostreport(req, res, next){
 }
 function freportlog(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT * FROM(SELECT * FROM(SELECT * FROM tblreport INNER JOIN tblitem ON intItemID= intReportItemID)AS A INNER JOIN tbluser ON strReportSNum= strSNum)AS B INNER JOIN tblcategories ON intItemCat= intCatID ORDER BY intReportID DESC;", function (err, results, fields) {
+  db.query("SELECT * FROM(SELECT * FROM(SELECT * FROM(SELECT * FROM tblreport INNER JOIN tblitem ON intItemID= intReportItemID)A INNER JOIN tbluser ON strReportSNum= strSNum)B INNER JOIN tblcategories ON intItemCat= intCatID)C LEFT JOIN tbltransaction ON intTransItemID= intItemID WHERE strTransStatus!= 'Finished' AND strTransStatus IS NOT NULL ORDER BY intReportID DESC", function (err, results, fields) {
       if (err) return res.send(err);
       var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
       if (!results[0])
@@ -309,6 +309,14 @@ function fremove(req, res, next){
   db.query("SELECT * FROM tblitem INNER JOIN tbltransaction ON intItemID= intTransItemID WHERE intItemID= ?",[req.params.postid], function (err, results, fields) {
       if (err) return res.send(err);
       req.remove = results;
+      return next();
+  });
+}
+function ftranscheck(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblitem INNER JOIN tbltransaction ON intItemID= intTransItemID WHERE strItemSNum= ?",[req.params.userid], function (err, results, fields) {
+      if (err) return res.send(err);
+      req.trans = results;
       return next();
   });
 }
@@ -463,6 +471,7 @@ function banverrender(req,res){
     var sqlfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'Finished', datDateFinished= (SELECT CURDATE() AS CD) WHERE (strBuyerSNum= ? AND strTransStatus= 'SFinished') OR (strItemSNum= ? AND strTransStatus= 'BFinished')";
     var sqlbfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'BFinished' WHERE strBuyerSNum= ? AND strTransStatus= 'Ongoing'";
     var sqlsfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'SFinished' WHERE strItemSNum= ? AND strTransStatus= 'Ongoing'";
+    var sqlrep = "DELETE rep FROM tblreport rep INNER JOIN tblitem item ON intReportItemID= intItemID WHERE strItemSNum= ?"
     var sqldel = "DELETE item FROM tblitem item LEFT JOIN tbltransaction trans ON intItemID= intTransItemID  WHERE strItemSNum= ? AND intTransID IS NULL";
     db.query(sqlban,[req.params.userid], function (err, results, fields) {
       if (err) console.log(err);
@@ -472,10 +481,18 @@ function banverrender(req,res){
           if (err) console.log(err);
           db.query(sqlsfin,[req.params.userid], function (err, results, fields) {
             if (err) console.log(err);
-            db.query(sqldel,[req.params.userid], function (err, results, fields) {
-              if (err) console.log(err);
+            if(!req.trans[0]){
+              db.query(sqlrep,[req.params.userid], function (err, results, fields) {
+                if (err) console.log(err);
+                db.query(sqldel,[req.params.userid], function (err, results, fields) {
+                  if (err) console.log(err);
+                  res.redirect('/admin/account-verified/1');
+                });
+              });
+            }
+            else{
               res.redirect('/admin/account-verified/1');
-            });
+            }
           });
         });
       });
@@ -493,6 +510,7 @@ function bannotverrender(req,res){
     var sqlfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'Finished', datDateFinished= (SELECT CURDATE() AS CD) WHERE (strBuyerSNum= ? AND strTransStatus= 'SFinished') OR (strItemSNum= ? AND strTransStatus= 'BFinished')";
     var sqlbfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'BFinished' WHERE strBuyerSNum= ? AND strTransStatus= 'Ongoing'";
     var sqlsfin = "UPDATE tbltransaction INNER JOIN tblitem ON intTransItemID= intItemID SET strTransStatus= 'SFinished' WHERE strItemSNum= ? AND strTransStatus= 'Ongoing'";
+    var sqlrep = "DELETE rep FROM tblreport rep INNER JOIN tblitem item ON intReportItemID= intItemID WHERE strItemSNum= ?"
     var sqldel = "DELETE item FROM tblitem item LEFT JOIN tbltransaction trans ON intItemID= intTransItemID  WHERE strItemSNum= ? AND intTransID IS NULL";
     db.query(sqlban,[req.params.userid], function (err, results, fields) {
       if (err) console.log(err);
@@ -502,10 +520,18 @@ function bannotverrender(req,res){
           if (err) console.log(err);
           db.query(sqlsfin,[req.params.userid], function (err, results, fields) {
             if (err) console.log(err);
-            db.query(sqldel,[req.params.userid], function (err, results, fields) {
-              if (err) console.log(err);
+            if(!req.trans[0]){
+              db.query(sqlrep,[req.params.userid], function (err, results, fields) {
+                if (err) console.log(err);
+                db.query(sqldel,[req.params.userid], function (err, results, fields) {
+                  if (err) console.log(err);
+                  res.redirect('/admin/account-notverified/1');
+                });
+              });
+            }
+            else{
               res.redirect('/admin/account-notverified/1');
-            });
+            }
           });
         });
       });
@@ -603,8 +629,8 @@ router.get('/registration/revert/:userid', flog, revertrender);
 router.get('/account-verified/:page', flog, fverified, verifiedrender);
 router.get('/account-notverified/:page', flog, fnotverified, notverifiedrender);
 router.get('/account-banned/:page', flog, fbanned, bannedrender);
-router.get('/account/banver/:userid', flog, banverrender);
-router.get('/account/bannotver/:userid', flog, bannotverrender);
+router.get('/account/banver/:userid', flog, ftranscheck, banverrender);
+router.get('/account/bannotver/:userid', flog, ftranscheck, bannotverrender);
 router.get('/account/reinstate/:userid', flog, freguser, reinstaterender);
 router.get('/post-reported/:page', flog, fpostreport, postreportrender);
 router.get('/post-reportlog/:page', flog, freportlog, postreplogrender);

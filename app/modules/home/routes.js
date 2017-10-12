@@ -33,7 +33,6 @@ function fitem(req, res, next){
       for(count=1;count<10;count++){
         pagearr[count] = pagearr[count-1] + 1;
       }
-      console.log(results);
       req.lastpage = lastpage;
       req.curpage = curpage;
       req.prevpage = prevpage;
@@ -65,14 +64,6 @@ function render(req,res){
 
 router.get('/page/:page', flog, fitem, render);
 
-router.get('/contact_us', flog, (req, res) => {
-    if(req.valid==1)
-      res.render('home/views/contact_us');
-    else if(req.valid==2)
-      res.render('home/views/invalidpages/adminonly');
-    else
-      res.render('login/views/invalid');
-});
 router.get('/help', flog, (req, res) => {
     if(req.valid==1)
       res.render('home/views/help');

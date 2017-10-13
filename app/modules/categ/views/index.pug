@@ -11,4 +11,15 @@ block content
           each cat in cattab
             br
             h3.title
-              a(href='/categories/'+ cat.strCatName +'/page/1') #{cat.strCatName}
+            section.hero.is-warning
+                a.button.is-warning.is-large(class="button", href="/categories/"+ cat.strCatName +'/page/1') #{cat.strCatName}
+            //- .card.card-primary.mb-3.text-center
+            //-   .card-block
+            //-     blockquote.card-blockquote
+            //-       p
+            //-         a.button.is-info.is-warning.is-large(class="button", href="/categories/"+ cat.strCatName +'/page/1') #{cat.strCatName}
+                    //- footer
+                    //-   | Someone famous in 
+                    //-   cite(title='Source Title') Source Title
+
+            //- a(href='/categories/'+ cat.strCatName +'/page/1') #{cat.strCatName}

@@ -8,6 +8,6 @@ block content
       link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/order.css")
       each trans in transposttab
         p.control
-          a.button.is-outlined(href='/orderslip/' + trans.intTransID) ORDER SLIP
+          a.button(href='/orderslip/' + trans.intTransID) ORDER SLIP
         p.control
-          a.button.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK TO POST
+          a.button(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK TO POST

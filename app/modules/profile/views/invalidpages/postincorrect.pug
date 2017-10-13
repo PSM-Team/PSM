@@ -14,7 +14,7 @@ block content
     form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit" enctype='multipart/form-data')
         .field
             .control
-                .select.is-primary
+                .select.is-danger
                     select(name="category")
                       if post.intItemCat == 1
                         option(value='1') Books

@@ -24,5 +24,8 @@ block content
         .field
             .control
                 input.input(type="password" placeholder="Order Password" name="orderpass")
-        input.button.is-inverted(type="submit" value="Order")
-        a.button.is-inverted(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK
+        .field.is-grouped
+            .control
+                input.button.is-inverted(type="submit" value="ORDER")
+            .control
+                a.button.is-inverted(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK

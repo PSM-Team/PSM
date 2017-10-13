@@ -5,14 +5,15 @@ block content
   div(align='center')
     h2.title Previous Transactions
   hr(style='border: 0.5px solid #990000')
-  div(style='width: 33%; float: left' , align='center')
-    a.button(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
-  div(style='width: 33%; float: right' , align='center')
-    a.button(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
-  div(style='width: 34%; float: right' , align='center')
+  div(style='width: 38%; float: left' , align='right')
+    a.button(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTIONS
+  div(style='width: 38%; float: right' , align='left')
     a.button(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
+  div(style='width: 24%; float: right' , align='center')
+    a.button(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
   br
   br
-  hr(style='border: 0.5px solid #990000')
-  p
-    i No transactions were found
+  br
+  div(align='center')
+    p
+      i No transactions were found

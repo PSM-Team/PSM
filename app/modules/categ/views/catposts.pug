@@ -27,7 +27,7 @@ block content
                ul1
                  b &nbsp&nbsp Seller: &nbsp
                    u
-                     a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
+                     a.lan(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
            br
            a.btn.btn-primary(href='/categories/' + item.strCatName + '/' + item.intItemID) View Details
   br
@@ -42,7 +42,7 @@ block content
           each page in pagetab
             if page == curpage
               p.control
-                a.button.is-inverted.is-hovered() #{page}
+                a.jon.button.is-hovered() #{page}
             else
               if page <= lastpage
                 p.control

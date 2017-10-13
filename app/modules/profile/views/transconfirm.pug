@@ -1,6 +1,7 @@
 extends ../../../templates/navbar.pug
 
 block content
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile_post.css")
   h2.title Finish Transaction?
   hr(style='border: 0.5px solid #990000')
   each trans in transtab
@@ -16,10 +17,10 @@ block content
       br
       .field.is-grouped
         p.control
-          a.button.is-primary.is-inverted.is-outlined(href='/profile/-/commend/'+ trans.intTransID) COMMEND & FINISH
+          a.button.is-outlined(href='/profile/-/commend/'+ trans.intTransID) COMMEND & FINISH
         p.control
-          a.button.is-primary.is-inverted.is-outlined(href='/profile/-/report/'+ trans.intTransID) REPORT & FINISH
+          a.button.is-outlined(href='/profile/-/report/'+ trans.intTransID) REPORT & FINISH
         p.control
-          a.button.is-primary.is-inverted.is-outlined(href='/profile/-/finishtrans/'+ trans.intTransID) FINISH TRANSACTION
+          a.button.is-outlined(href='/profile/-/finishtrans/'+ trans.intTransID) FINISH TRANSACTION
         p.control
-          a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
+          a.button.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS

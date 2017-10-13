@@ -1,6 +1,7 @@
 extends ../../../templates/navbar.pug
 
 block content
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile_post.css")
   each post in editposttab
     h3.title
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
@@ -57,7 +58,8 @@ block content
                 input.input(type="text" placeholder="Item Price" value=post.fltItemPrice name="price")
         .field
             .control
-                input.input(type="text" placeholder="Item Description" value=post.txtItemDesc name="description")
+               textarea#form8.md-textarea(type="text" name="description", required)
+               label(for='form8') Description
         .field
             .control
                 input.input(type="password" placeholder="Old Order Password" name="oldpass")
@@ -67,6 +69,8 @@ block content
         .field
             .control
                 input.input(type="password" placeholder="Confirm Order Password" name="confirm")
-        input.button.is-primary.is-inverted.is-outlined(type="submit" value="Post")
-    hr(style='border: 0.5px solid #990000')
-    a.button.is-primary.is-inverted.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel
+        .field.is-grouped
+            .control
+                input.button.is-outlined(type="submit" value="Post")
+            .control
+                a.button.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel

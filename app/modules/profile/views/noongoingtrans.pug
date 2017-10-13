@@ -1,15 +1,16 @@
 extends ../../../templates/navbar.pug
 
 block content
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile_post.css")
   h2.title Ongoing Transactions
   hr(style='border: 0.5px solid #990000')
   .field.is-grouped
     p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
+      a.button.is-outlined(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
     p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
+      a.button.is-outlined(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
     p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
+      a.button.is-outlined(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
   hr(style='border: 0.5px solid #990000')
   p
     i No transactions were found

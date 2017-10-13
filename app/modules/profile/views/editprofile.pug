@@ -31,6 +31,8 @@ block content
         .field
             .control
                 input.input(type="text" placeholder="Contact Info (Optional)" value=user.txtContact name="contact")
-        input.button.is-primary.is-inverted.is-outlined(type="submit" value="Save")
-        hr(style='border: 0.5px solid #990000')
-        a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile") Back
+        .field.is-grouped
+            .control
+                input.button.is-danger.is-outlined(type="submit" value="Save")
+            .control
+                a.button.is-danger.is-outlined(class="button", href="/profile") Back

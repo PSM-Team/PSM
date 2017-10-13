@@ -5,11 +5,11 @@ block content
   hr(style='border: 0.5px solid #990000')
   .field.is-grouped
     p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
+      a.button.is-danger(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
     p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
+      a.button.is-danger(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
     p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
+      a.button.is-danger(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
   hr(style='border: 0.5px solid #990000')
   each trans in transtab
     if trans.page == trans.curpage
@@ -27,9 +27,9 @@ block content
           br
           .field.is-grouped
             p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
+              a.button.is-danger(class="button", href="/orderslip/" + trans.intTransID) Order Slip
             p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
+              a.button.is-danger(class="button", href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
         else
           h3.title ( Seller )
             a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
@@ -43,16 +43,16 @@ block content
           br
           .field.is-grouped
             p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
+              a.button.is-danger(class="button", href="/orderslip/" + trans.intTransID) Order Slip
             p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
+              a.button.is-danger(class="button", href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
       hr(style='border: 0.5px solid #990000')
   each curpage in curpagetab
     .field.is-grouped
       if curpage > 1
         each prevpage in prevpagetab
           p.control
-            a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/profile/-/transactions/'+ prevpage ) << Previous
+            a.button.is-danger.is-hovered(href='/profile/-/transactions/'+ prevpage ) << Previous
       each lastpage in lastpagetab
         each page in pagetab
           if page == curpage
@@ -61,8 +61,8 @@ block content
           else
             if page <= lastpage
               p.control
-                a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/'+ page ) #{page}
+                a.button.is-danger(href='/profile/-/transactions/'+ page ) #{page}
         each nextpage in nextpagetab
           if curpage < lastpage
             p.control
-              a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/profile/-/transactions/'+ nextpage ) Next >>
+              a.button.is-danger.is-hovered(href='/profile/-/transactions/'+ nextpage ) Next >>

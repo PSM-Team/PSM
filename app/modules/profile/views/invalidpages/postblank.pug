@@ -74,6 +74,6 @@ block content
                 input.input(type="password" placeholder="Confirm Order Password" name="confirm")
         .field.is-grouped
             .control
-                input(type="submit" value="Post")
+                input.button.is-danger.is-outlined(type="submit" value="Post")
             .control
-                a.button.is-primary.is-inverted.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel
+                a.button.is-danger.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel

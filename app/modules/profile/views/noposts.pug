@@ -2,7 +2,8 @@ extends ../../../templates/navbar.pug
 
 block content
   each user in usertab
-    h3.title #{user.strName}'s posts
+    div(align='center')
+      h3.title #{user.strName}'s posts
     hr(style='border: 0.5px solid #990000')
     p
       i No posts were found

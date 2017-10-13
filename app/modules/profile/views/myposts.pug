@@ -3,7 +3,7 @@ extends ../../../templates/navbar.pug
 block content
   each user in usertab
     h3.title #{user.strName}'s posts
-    hr
+    hr(style='border: 0.5px solid #990000')
   each post in myposttab
     if post.page == post.curpage
       h3.title
@@ -18,7 +18,7 @@ block content
           a.button.is-primary.is-inverted.is-outlined(class="button", href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/edit' ) Edit Post
         p.control
           a.button.is-primary.is-inverted.is-outlined(class="button", href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/delete') Delete Post
-      hr
+      hr(style='border: 0.5px solid #990000')
   each user in usertab
     each curpage in curpagetab
       .field.is-grouped

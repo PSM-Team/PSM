@@ -6,14 +6,14 @@ block content
   form(method="POST" action="/sell" enctype='multipart/form-data')
       .field
           .control
-              .select.is-primary
+              .select.is-danger
                   select(name="category")
                     option(value='') -- Category --
                     option(value='Books') Books
                     option(value='School Supplies') School Supplies
                     option(value='Food') Food
                     option(value='Misc.') Misc.
-      hr
+      hr(style='border: 0.5px solid #990000')
       p Upload atleat One(1) Picture of the Item to be posted
       br
       .field
@@ -32,7 +32,7 @@ block content
               input.file-input(type='file', name='pic3', accept='image/*')
       br
       br
-      hr
+      hr(style='border: 0.5px solid #990000')
       .field
           .control
               input.input(type="text" placeholder="Item Title" name="title", required)
@@ -47,6 +47,6 @@ block content
               input.input(type="password" placeholder="Order Password" name="orderpass", required)
       .field.is-grouped
           .control
-              input.button.is-primary.is-inverted.is-outlined(type="submit" value="Post")
+              input.button.is-danger.is-outlined(type="submit" value="Post")
           .control
-              a.button.is-primary.is-inverted.is-outlined(href='/profile') Cancel
+              a.button.is-danger.is-outlined(href='/profile') Cancel

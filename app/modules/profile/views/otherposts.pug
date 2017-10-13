@@ -3,7 +3,7 @@ extends ../../../templates/navbar.pug
 block content
   each user in usertab
     h3.title #{user.strName}'s posts
-    hr
+    hr(style='border: 0.5px solid #990000')
   each post in myposttab
     if post.page == post.curpage
       h3.title
@@ -12,7 +12,7 @@ block content
       p
         b Price: Php #{post.price}
       p Date: #{post.date}
-      hr
+      hr(style='border: 0.5px solid #990000')
   each user in usertab
     each curpage in curpagetab
       .field.is-grouped

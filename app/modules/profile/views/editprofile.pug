@@ -15,7 +15,7 @@ block content
                 label Profile Picture
                 br
                 input.file-input(type='file', name='profilepic', accept='image/*')
-        hr
+        hr(style='border: 0.5px solid #990000')
         .field
             .control
                 input.input(type="password" placeholder="Old Password" name="oldpass")
@@ -32,5 +32,5 @@ block content
             .control
                 input.input(type="text" placeholder="Contact Info (Optional)" value=user.txtContact name="contact")
         input.button.is-primary.is-inverted.is-outlined(type="submit" value="Save")
-        hr
+        hr(style='border: 0.5px solid #990000')
         a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile") Back

@@ -2,7 +2,7 @@ extends ../../../templates/navbar.pug
 
 block content
   h2.title Previous Transactions
-  hr
+  hr(style='border: 0.5px solid #990000')
   .field.is-grouped
     p.control
       a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
@@ -10,7 +10,7 @@ block content
       a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
     p.control
       a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
-  hr
+  hr(style='border: 0.5px solid #990000')
   each trans in transtab
     if trans.page == trans.curpage
       each viewer in viewertab
@@ -40,7 +40,7 @@ block content
               a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
           p Date Started: #{trans.date}
           p Date Finished: #{trans.fin}
-      hr
+      hr(style='border: 0.5px solid #990000')
   each curpage in curpagetab
     .field.is-grouped
       if curpage > 1

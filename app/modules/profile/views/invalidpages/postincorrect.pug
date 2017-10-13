@@ -4,7 +4,7 @@ block content
   each post in editposttab
     h3.title
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
-    hr
+    hr(style='border: 0.5px solid #990000')
     h3.title Edit Post:
     section.hero.is-danger.is-bold
       .hero-body
@@ -36,7 +36,7 @@ block content
                         option(value='1') Books
                         option(value='2') School Supplies
                         option(value='3') Food
-        hr
+        hr(style='border: 0.5px solid #990000')
         .field
             .control
               div(style='width: 33%; float: left')
@@ -53,7 +53,7 @@ block content
                 input.file-input(type='file', name='pic3', accept='image/*')
         br
         br
-        hr
+        hr(style='border: 0.5px solid #990000')
         .field
             .control
                 input.input(type="text" placeholder="Item Title" value=post.strItemTitle name="title")
@@ -73,5 +73,5 @@ block content
             .control
                 input.input(type="password" placeholder="Confirm Order Password" name="confirm")
         input(type="submit" value="Post")
-    hr
+    hr(style='border: 0.5px solid #990000')
     a.button.is-primary.is-inverted.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel

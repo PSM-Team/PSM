@@ -20,24 +20,29 @@ block content
     div(style='width: 10%; float: right')
       p
         b Post ID
-    div(style='width: 15%; float: right')
+    div(style='width: 14%; float: right')
       p
         b Category
+    div(style='width: 2%; float: right')
+      p &nbsp
   br
   hr(style='border: 0.5px solid #000105')
   each log in logtab
     if log.page == log.curpage
       div
-        div(style='width: 20%; float: left')
+        div#w74(style='width: 19%; float: left')
           p (#{log.strSNum}) -
           p #{log.strName}
-        div(style='width: 55%; float: right')
+        div#w74(style='width: 55%; float: right')
           p #{log.strItemTitle}
         div(style='width: 10%; float: right')
           p #{log.intItemID}
-        div(style='width: 15%; float: right')
+        div(style='width: 14%; float: right')
           p #{log.strCatName}
+        div(style='width: 2%; float: right')
+          p &nbsp
       p &nbsp
+      br
       hr(style='border: 0.5px solid #000105')
 
   each curpage in curpagetab

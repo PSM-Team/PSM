@@ -10,7 +10,7 @@ block content
     form(method="POST" action="/profile/-/edit" enctype='multipart/form-data')
         .field
             .control
-                input.input(type="text" placeholder="Full Name (John S. Doe)" value=user.strName name="studname")
+                input.input(type="text" placeholder="Full Name (John S. Doe)" maxlength="50" value=user.strName name="studname" required)
         .field
             .control
                 label Profile Picture
@@ -19,20 +19,24 @@ block content
         hr(style='border: 0.5px solid #990000')
         .field
             .control
-                input.input(type="password" placeholder="Old Password" name="oldpass")
+                input.input(type="password" placeholder="Old Password" minlength="8" maxlength="50" name="oldpass" required)
         .field
             .control
-                input.input(type="password" placeholder="New Password" name="newpass")
+                input.input(type="password" placeholder="New Password:  (minimum of 8 characters)" minlength="8" maxlength="50" name="newpass" required)
         .field
             .control
-                input.input(type="password" placeholder="Confirm Password" name="confirm")
+                input.input(type="password" placeholder="Confirm Password" minlength="8" maxlength="50" name="confirm" required)
         .field
             .control
-                input.input(type="email" placeholder="E-mail Address" value=user.strEmail name="email")
+                input.input(type="email" placeholder="E-mail Address" maxlength="45" value=user.strEmail name="email" required)
         .field
             .control
+<<<<<<< HEAD
                 textarea#form8.md-textarea(type="text" maxlength="250" name="contact") #{user.txtContact}
                 label Contact Inforamation (Optional, Maximum of 250 characters.)
+=======
+                input.input(type="text" placeholder="Contact Info (Optional)" maxlength="250" value=user.txtContact name="contact")
+>>>>>>> a8bf74b8d36434444e23111d1509d76d4f50a389
         .field.is-grouped
             .control
                 input.button(type="submit" value="Save")

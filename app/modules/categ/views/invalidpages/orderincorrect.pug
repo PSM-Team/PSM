@@ -28,6 +28,8 @@ block content
         .field
             .control
                 input.input(type="password" placeholder="Order Password" name="orderpass")
-        input(type="submit" value="Order")
-    hr(style='border: 0.5px solid #990000')
-    a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK
+        .field.is-grouped
+            .control
+                input(type="submit" value="ORDER")
+            .control
+                a.button(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK

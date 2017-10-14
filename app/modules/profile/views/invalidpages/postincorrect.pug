@@ -60,7 +60,7 @@ block content
                 input.input(type="text" placeholder="Item Title" maxlength="50" value=post.strItemTitle name="title" required)
         .field
             .control
-                input.input(type="number" placeholder="Item Price" value=post.fltItemPrice name="price" required)
+                input.input(type="number" step="any" placeholder="Item Price" max="9999999" min="0" value=post.fltItemPrice name="price" required)
         .field
             .control
                textarea#form8.md-textarea(type="text" placeholder="Item Description" maxlength="250" name="description" required) #{post.txtItemDesc}

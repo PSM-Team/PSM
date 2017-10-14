@@ -1,25 +1,14 @@
 extends ../../../templates/navbar.pug
 
 block content
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/category.css")
   div(align='center')
     h2.title CATEGORIES
     h2.subtitle &nbspSelect a Category to view posts in it
     hr(style='border: 0.5px solid #990000')
-    section.hero.is-info
-      .hero-body
-        #wrapper
-          each cat in cattab
-            br
-            h3.title
-            section.hero.is-warning
-                a.button.is-warning.is-large(class="button", href="/categories/"+ cat.strCatName +'/page/1') #{cat.strCatName}
-            //- .card.card-primary.mb-3.text-center
-            //-   .card-block
-            //-     blockquote.card-blockquote
-            //-       p
-            //-         a.button.is-info.is-warning.is-large(class="button", href="/categories/"+ cat.strCatName +'/page/1') #{cat.strCatName}
-                    //- footer
-                    //-   | Someone famous in 
-                    //-   cite(title='Source Title') Source Title
-
-            //- a(href='/categories/'+ cat.strCatName +'/page/1') #{cat.strCatName}
+    .hero-body
+        //- #wrapper
+        each cat in cattab
+          br
+          .card
+            a.big-btn.button.is-warning(class="button", href="/categories/"+ cat.strCatName +'/page/1') #{cat.strCatName}

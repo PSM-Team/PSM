@@ -39,7 +39,7 @@ block content
               input.input(type="text" placeholder="Item Title" maxlength="50" name="title", required)
       .field
           .control
-              input.input(type="number" placeholder="Item Price" name="price", required)
+              input.input(type="number" placeholder="Item Price" max="9999999" min="0" name="price", required)
       .field
           .control
                textarea#form8.md-textarea(type="text" maxlength="250" name="description", required)

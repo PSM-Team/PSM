@@ -2,11 +2,9 @@ body{
 	margin:0;
 	color: maroon;
 	background-image:url("/assets/images/upload_images/regi.jpg");
-	 background-size: 1260px; 
-    background-repeat: no-repeat;        
-    position: relative;               
-    margin-left: auto;      
-    margin-right: auto; 
+	background-size: 1260px;
+	background-position: center;
+	margin: auto;
 	font:600 16px/18px 'Open Sans',sans-serif;
 }
 *,:after,:before{box-sizing:border-box}
@@ -18,7 +16,7 @@ a{color:inherit;text-decoration:none}
 	width:100%;
 	margin:auto;
 	max-width:525px;
-	min-height:650;
+	min-height:700;
 	position:relative;
 	background-color: maroon; 
 	opacity: .9;
@@ -189,7 +187,7 @@ label1.tab{
     border-radius:10px
 }
 label7.tab{
-color: maroon;
+color: #FFF200;
 font-size: 10pt;
 font-style: italic;
 }

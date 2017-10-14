@@ -17,7 +17,10 @@ block content
               a.jet(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
           div(style='width: 50%; float: right', align= 'right')
             h2.site-title
-              a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/report') [ ! ] REPORT
+              if post.button == 'noreport'
+                a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/report') [ ! ] REPORT
+              else
+                a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/cancelreport') CANCEL REPORT
         main#content.main-content
           h2.title #{post.strItemTitle}
               link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/component.css")

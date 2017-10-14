@@ -13,7 +13,7 @@ block content
       .site
         header.masthead
           h2.site-title
-            a.jet(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
+            a(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
         main#content.main-content
           h2.title #{post.strItemTitle}
               link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/component.css")
@@ -51,14 +51,14 @@ block content
           ul
             li Contact Information:
             li
-              a.jet(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+              a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
             li Status: #{post.strStatus}
             li Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
             li Email : #{post.strEmail}
             li Contact Details : #{post.txtContact}
           hr
           h4 Item Description :
-          p #{post.txtItemDesc}
+            p #{post.txtItemDesc}
         aside.twin
           a.button.is-info.is-inverted.is-outlined(href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/edit') EDIT POST
         aside.twin

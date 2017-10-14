@@ -11,7 +11,7 @@ block content
   form(method="POST" action="/sell" enctype='multipart/form-data')
       .field
           .control
-              .select.is-danger
+              .select.is-primary
                   select(name="category")
                     option(value='') -- Category --
                     option(value='Books') Books
@@ -46,8 +46,7 @@ block content
               input.input(type="text" placeholder="Item Price" name="price", required)
       .field
           .control
-               textarea#form8.md-textarea(type="text" name="description", required)
-               label(for='form8') Description
+              input.input(type="text" placeholder="Item Description" name="description", required)
       .field
           .control
               input.input(type="password" placeholder="Order Password" name="orderpass", required)

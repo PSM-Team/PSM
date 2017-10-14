@@ -30,8 +30,13 @@ block content
                 input.input1(type="text" placeholder="E-mail Address: ex john@xyz.com" maxlength="45" name="email", required)
             br
             .group
-                input.input1(type="text" placeholder="Contact Inforamation: (Optional)" maxlength="250" name="contact")
+                 textarea#form8.md-textarea(type="text" maxlength="250" name="contact")
+                 label(for='form8') Contact Inforamation (Optional, Maximum of 250 characters.)
             br
             .group
             input.button.is-info.is-inverted.is-outlined(type='submit', value='Register')
             a.button.is-info.is-inverted.is-outlined(href="/login") Back
+
+
+               textarea#form8.md-textarea(type="text" maxlength="250" name="description", required)
+               label(for='form8') Description (Maximum of 250 characters.)

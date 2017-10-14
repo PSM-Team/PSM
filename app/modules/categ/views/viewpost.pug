@@ -14,7 +14,7 @@ block content
         header.masthead
           div(style='width: 50%; float: left')
             h2.site-title
-              a(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
+              a.jet(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
           div(style='width: 50%; float: right', align= 'right')
             h2.site-title
               a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID + '/report') [ ! ] REPORT
@@ -55,7 +55,7 @@ block content
           ul
             li Contact Information:
             li
-              a(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+              a.jet(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
             li Status: #{post.strStatus}
             li Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
             li Email : #{post.strEmail}

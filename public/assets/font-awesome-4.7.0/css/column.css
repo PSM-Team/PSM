@@ -111,6 +111,7 @@ General styles
 
 .sidebar {
 	background: #00695c;
+	color: white;
 
 }
 
@@ -181,3 +182,10 @@ CSS Grid layout for wider screens, when browser supports grid:
 		.twin:last-of-type {
 			grid-column: 5/8;
 		}
+.jet{
+	color: white;
+}
+h3,
+h4{
+	font-size: 20pt;
+}

@@ -1,7 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/sell.css")
   h3.title Sell an Item:
   h3.subtitle &nbspAll fields are required
   form(method="POST" action="/sell" enctype='multipart/form-data')
@@ -42,13 +41,12 @@ block content
               input.input(type="text" placeholder="Item Price" name="price", required)
       .field
           .control
-               textarea#form8.md-textarea(type="text" name="description", required)
-               label(for='form8') Description
+              input.input(type="text" placeholder="Item Description" name="description", required)
       .field
           .control
               input.input(type="password" placeholder="Order Password" name="orderpass", required)
       .field.is-grouped
           .control
-              input.button(type="submit" value="Post")
+              input.button.is-danger.is-outlined(type="submit" value="Post")
           .control
-              a.button(href='/profile') Cancel
+              a.button.is-danger.is-outlined(href='/profile') Cancel

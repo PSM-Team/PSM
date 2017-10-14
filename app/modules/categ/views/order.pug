@@ -1,7 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/order.css")
   each post in posttab
     h2.title
       |
@@ -24,8 +23,6 @@ block content
         .field
             .control
                 input.input(type="password" placeholder="Order Password" name="orderpass")
-        .field.is-grouped
-            .control
-                input.button.is-inverted(type="submit" value="ORDER")
-            .control
-                a.button.is-inverted(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK
+        input(type="submit" value="Order")
+    hr(style='border: 0.5px solid #990000')
+    a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK

@@ -1,7 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile_post.css")
   each post in editposttab
     h3.title
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
@@ -10,7 +9,7 @@ block content
     form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit" enctype='multipart/form-data')
         .field
             .control
-                .select.is-danger
+                .select.is-primary
                     select(name="category")
                       if post.intItemCat == 1
                         option(value='1') Books
@@ -58,8 +57,7 @@ block content
                 input.input(type="text" placeholder="Item Price" value=post.fltItemPrice name="price")
         .field
             .control
-               textarea#form8.md-textarea(type="text" name="description", required)
-               label(for='form8') Description
+                input.input(type="text" placeholder="Item Description" value=post.txtItemDesc name="description")
         .field
             .control
                 input.input(type="password" placeholder="Old Order Password" name="oldpass")
@@ -71,6 +69,6 @@ block content
                 input.input(type="password" placeholder="Confirm Order Password" name="confirm")
         .field.is-grouped
             .control
-                input.button(type="submit" value="Post")
+                input.button.is-danger.is-outlined(type="submit" value="Post")
             .control
-                a.button(href='/profile/'+post.strItemSNum+'/posts/1') Cancel
+                a.button.is-danger.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel

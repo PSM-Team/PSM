@@ -1,5 +1,5 @@
 /* NOTE:
- * Grid layout stuff starts at line 138. 
+ * Grid layout stuff starts at line 138.
  * The stuff before is just boring old CSS to make content look not crappy.
  */
 
@@ -137,6 +137,8 @@ General styles
 .colophon a:focus {
 	border-bottom: 1px solid white;
 }
+
+#w74 { word-wrap: break-word; }
 
 /*--------------------------------------------------------------
 If no grid support, limit width to 50em and center align

@@ -189,12 +189,12 @@ router.get('/:catname/:postid', flog, fpost, ftrans, postrender);
 router.get('/:catname/:postid/order', flog, fpost, ftrans, orderrender);
 router.get('/:catname/:postid/report', flog, fpost, freport, ftrans, reportrender);
 
-router.post('/:catname/:postid/order', fpost, (req, res) => {
+router.post('/:catname/:postid/order', fpost, ftrans, (req, res) => {
   var db = require('../../lib/database')();
   if( req.body.orderpass == ''){
     res.render('categ/views/invalidpages/orderblank',{ posttab: req.post });
   }
-  else{
+  else if (!req.trans[0]){
     db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ?",[req.params.postid], (err, results, fields) => {
         if (err) console.log(err);
         if(req.body.orderpass === results[0].strOrderPass ){
@@ -211,6 +211,9 @@ router.post('/:catname/:postid/order', fpost, (req, res) => {
           res.render('categ/views/invalidpages/orderincorrect',{ posttab: req.post });
         }
     });
+  }
+  else{
+    res.render('categ/views/invalidpages/alreadyordered');
   }
 });
 

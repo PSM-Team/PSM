@@ -35,17 +35,17 @@ block content
         if curpage > 1
           each prevpage in prevpagetab
             p.control
-              a.button.is-danger.is-outlined.is-hovered(href='/profile/'+ user.strSNum +'/posts/'+ prevpage ) << Previous
+              a.button.is-outlined.is-hovered(href='/profile/'+ user.strSNum +'/posts/'+ prevpage ) << Previous
         each lastpage in lastpagetab
           each page in pagetab
             if page == curpage
               p.control
-                a.button.is-danger.is-hovered() #{page}
+                a.jon.button.is-hovered() #{page}
             else
               if page <= lastpage
                 p.control
-                  a.button.is-danger.is-outlined(href='/profile/'+ user.strSNum +'/posts/'+ page ) #{page}
+                  a.button.is-outlined(href='/profile/'+ user.strSNum +'/posts/'+ page ) #{page}
           each nextpage in nextpagetab
             if curpage < lastpage
               p.control
-                a.button.is-danger.is-outlined.is-hovered(href='/profile/'+ user.strSNum +'/posts/'+ nextpage ) Next >>
+                a.button.is-outlined.is-hovered(href='/profile/'+ user.strSNum +'/posts/'+ nextpage ) Next >>

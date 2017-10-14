@@ -2,7 +2,9 @@ extends ../../../templates/navbar.pug
 
 block content
   each user in usertab
-    h3.title Welcome to PUP Student Market, #{user.strName}
+    div(align='center')
+      h3.title Welcome to PUP Student Market, #{user.strName}
     hr(style='border: 0.5px solid #990000')
-    p
-      i No posts were found
+    div(align='center')
+      p
+        i No posts were found

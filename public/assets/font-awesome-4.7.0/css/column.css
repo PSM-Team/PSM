@@ -112,7 +112,8 @@ General styles
 .sidebar {
 	background: #00695c;
 	color: white;
-
+	width: 550px;
+	word-wrap: break-word;
 }
 
 .twin {
@@ -174,6 +175,7 @@ CSS Grid layout for wider screens, when browser supports grid:
 
 		.sidebar {
 			grid-column: 5/8;
+			word-wrap: break-word;
 		}
 
 		.twin {

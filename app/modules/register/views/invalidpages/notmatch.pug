@@ -4,9 +4,6 @@ block content
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/register.css")
   .signup-wrap
     .signup-html
-        label Welcome
-        br
-        br
         label1.tab Create Account
             br
             br
@@ -30,11 +27,11 @@ block content
                 input.input1(type="text" placeholder="Full Name: ex. John S. Doe" maxlength="100" name="studname", required)
             br
             .group
-                input.input1(type="text" placeholder="E-mail Address: ex john@xyz.com" maxlength="45" name="email", required)
+                input.input1(type="text" placeholder="E-mail Address: ex. john@xyz.com" maxlength="45" name="email", required)
             br
             .group
-                textarea#form8.md-textarea(type="text" maxlength="250" name="contact")
-                label(for='form8') Contact Inforamation (Optional, Maximum of 250 characters.)
+                 textarea#form8.md-textarea(type="text" placeholder="Contact Information (Optional)" maxlength="250" name="contact")
+                 label(for='form8') Maximum of 250 characters
             br
             .group
             input.button.is-info.is-inverted.is-outlined(type='submit', value='Register')

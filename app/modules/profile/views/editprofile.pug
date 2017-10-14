@@ -31,7 +31,8 @@ block content
                 input.input(type="email" placeholder="E-mail Address" maxlength="45" value=user.strEmail name="email" required)
         .field
             .control
-                input.input(type="text" placeholder="Contact Info (Optional)" maxlength="250" value=user.txtContact name="contact")
+                textarea#form8.md-textarea(type="text" maxlength="250" name="contact") #{user.txtContact}
+                label(for='form8') Contact Inforamation (Optional, Maximum of 250 characters.)
         .field.is-grouped
             .control
                 input.button(type="submit" value="Save")

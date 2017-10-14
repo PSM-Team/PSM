@@ -10,7 +10,7 @@ function numberWithCommas(x) {
 
 function fregcount(req, res, next){
   var db = require('../../lib/database')();
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE 'admin' AND (strStatus= 'verified' OR strStatus= 'not verified')", function (err, results, fields) {
+  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'verified' OR strStatus= 'not verified'", function (err, results, fields) {
       if (err) return res.send(err);
       req.regcount = results;
       return next();

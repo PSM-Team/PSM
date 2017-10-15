@@ -15,7 +15,12 @@ block content
               h4.card-title
                 h9 &nbsp&nbsp &nbsp #{item.strItemTitle}
                 #image-container
-                  img(src='/images/uploaded_images/'+item.strFirstPic)
+                  if item.strFirstPic != 'blank.jpg'
+                    img(src='/images/uploaded_images/'+item.strFirstPic)
+                  else if item.strSecondPic != 'blank.jpg'
+                    img(src='/images/uploaded_images/'+item.strSecondPic)
+                  else
+                    img(src='/images/uploaded_images/'+item.strThirdPic)
                 p.card-text
                     ul1
                       b &nbsp&nbsp Price: Php #{item.price}

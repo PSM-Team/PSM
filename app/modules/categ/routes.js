@@ -146,8 +146,17 @@ function postrender(req,res){
     else
       res.render('categ/views/invalidpages/itemunavailable');
   }
-  else if(req.valid==2)
-    res.render('home/views/invalidpages/adminonly');
+  else if(req.valid==2){
+    if(!req.post[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else if(!req.trans[0]){
+      res.render('categ/views/adminviewpost',{ posttab: req.post });
+    }
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished')
+      res.render('categ/views/admintranspost',{ posttab: req.post });
+    else
+      res.render('categ/views/invalidpages/itemunavailable');
+  }
   else
     res.render('login/views/invalid');
 }

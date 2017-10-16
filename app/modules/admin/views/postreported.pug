@@ -25,12 +25,22 @@ block content
       br
       if post.strTransStatus == 'Ongoing'
         p Item has ongoing transaction
+        p
+          a.button.is-warning.is-inverted.is-outlined(class="button", href='/categories/'+post.strCatName+'/'+post.intItemID) View Post
       else if post.strTransStatus == 'SFinished'
         p Item has ongoing transaction
+        p
+          a.button.is-warning.is-inverted.is-outlined(class="button", href='/categories/'+post.strCatName+'/'+post.intItemID) View Post
       else if post.strTransStatus == 'BFinished'
         p Item has ongoing transaction
+        p
+          a.button.is-warning.is-inverted.is-outlined(class="button", href='/categories/'+post.strCatName+'/'+post.intItemID) View Post
       else
-        a.button.is-warning.is-inverted.is-outlined(class="button", href='/admin/post/remove/'+post.intItemID) Remove
+        .field.is-grouped
+          p.control
+            a.button.is-warning.is-inverted.is-outlined(class="button", href='/categories/'+post.strCatName+'/'+post.intItemID) View Post
+          p.control
+            a.button.is-warning.is-inverted.is-outlined(class="button", href='/admin/post/remove/'+post.intItemID) Remove
       hr(style='border: 0.5px solid #000105')
 
   each curpage in curpagetab

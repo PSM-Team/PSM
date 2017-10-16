@@ -124,6 +124,10 @@ General styles
 	background: #3F729B;
 }
 
+.whitetxt{
+	color: white;
+}
+
 .colophon {
 	padding: 2em;
 	background: #3E454C;

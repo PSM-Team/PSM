@@ -10,7 +10,7 @@ block content
     form(method="POST" action="/profile/-/edit" enctype='multipart/form-data')
         .field
             .control
-                input.input(type="text" placeholder="Full Name (John S. Doe)" maxlength="50" value=user.strName name="studname" required)
+                input.input(type="text" placeholder="Full Name (John S. Doe)" maxlength="50" value=user.strName name="studname" readonly)
         .field
             .control
                 label Profile Picture
@@ -32,7 +32,7 @@ block content
         .field
             .control
                 textarea#form8.md-textarea(type="text" maxlength="250" name="contact") #{user.txtContact}
-                label(for='form8') Contact Inforamation (Optional, Maximum of 250 characters.)
+                label(for='form8') Contact Information (Optional, Maximum of 250 characters.)
         .field.is-grouped
             .control
                 input.button(type="submit" value="Save")

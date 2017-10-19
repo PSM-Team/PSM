@@ -8,7 +8,11 @@ function numberWithCommas(x) {
     return parts.join(".");
 }
 
+<<<<<<< HEAD
 function fcat(req,res,next){
+=======
+function fcat(req, res, next){
+>>>>>>> API
   var db = require('../../lib/database')();
   db.query("SELECT * FROM tblcategories", (err, results, fields) => {
       if (err) console.log(err);
@@ -26,7 +30,11 @@ function fcatname(req, res, next){
 }
 function fitem(req, res, next){
   var db = require('../../lib/database')();
+<<<<<<< HEAD
   db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName= ? ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC",[req.params.catname], function (err, results, fields) {
+=======
+  db.query("SELECT * FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID WHERE strCatName= ? ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC",[req.params.catname], function (err, results, fields) {
+>>>>>>> API
       if (err) return res.send(err);
       var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
       if (!results[0])
@@ -34,7 +42,11 @@ function fitem(req, res, next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
+<<<<<<< HEAD
           results[count].price = numberWithCommas(results[count].fltItemPrice);
+=======
+          results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
+>>>>>>> API
           results[count].page = page;
           results[count].curpage = req.params.page;
           if((count+1)%5==0){
@@ -67,13 +79,45 @@ function fpost(req, res, next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
+<<<<<<< HEAD
           results[count].price = numberWithCommas(results[count].fltItemPrice);
+=======
+          results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
+>>>>>>> API
         }
       }
       req.post = results;
       return next();
     });
 }
+<<<<<<< HEAD
+=======
+function ftrans(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
+  if (err) console.log(err);
+      req.trans = results;
+      return next();
+    });
+}
+function freport(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblreport WHERE strReportSNum= ? AND intReportItemID= ?",[req.session.user, req.params.postid], (err, results, fields) => {
+      if (err) console.log(err);
+      req.report = results;
+      return next();
+    });
+}
+function fviewreport(req, res, next){
+  var db = require('../../lib/database')();
+  db.query("SELECT * FROM tblitem INNER JOIN tblreport ON intItemID= intReportItemID WHERE strReportSNum= ? AND intItemID= ?",[req.session.user, req.params.postid], (err, results, fields) => {
+      if (err) console.log(err);
+      console.log(results);
+      req.vreport = results;
+      return next();
+    });
+}
+>>>>>>> API
 
 function render(req,res){
   if(req.valid==1)
@@ -105,6 +149,7 @@ function catrender(req,res){
 }
 function postrender(req,res){
   if(req.valid==1){
+<<<<<<< HEAD
     var db = require('../../lib/database')();
     db.query("SELECT * FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[ req.params.postid], (err, results, fields) => {
     if (err) console.log(err);
@@ -122,18 +167,51 @@ function postrender(req,res){
   }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
+=======
+    if(!req.post[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else if(req.post[0].strItemSNum == req.session.user && !req.trans[0] )
+      res.render('categ/views/ownpost',{ posttab: req.post });
+    else if(!req.trans[0]){
+      if(!req.vreport[0])
+        req.post[0].button = 'noreport';
+      else
+        req.post[0].button = 'reported';
+      res.render('categ/views/post',{ posttab: req.post });
+    }
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished')
+      res.render('categ/views/viewpost',{ posttab: req.post });
+    else
+      res.render('categ/views/invalidpages/itemunavailable');
+  }
+  else if(req.valid==2){
+    if(!req.post[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else if(!req.trans[0]){
+      res.render('categ/views/adminviewpost',{ posttab: req.post });
+    }
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished')
+      res.render('categ/views/admintranspost',{ posttab: req.post });
+    else
+      res.render('categ/views/invalidpages/itemunavailable');
+  }
+>>>>>>> API
   else
     res.render('login/views/invalid');
 }
 function orderrender(req,res){
   if(req.valid==1){
+<<<<<<< HEAD
     var db = require('../../lib/database')();
     db.query("SELECT strTransStatus FROM tbltransaction WHERE intTransItemID = ? AND strTransStatus IS NOT NULL",[req.params.postid], (err, results, fields) => {
     if (err) console.log(err);
+=======
+>>>>>>> API
     if(!req.post[0])
       res.render('categ/views/invalidpages/orderunavailable');
     else if(req.post[0].strItemSNum == req.session.user)
       res.render('categ/views/invalidpages/selforder');
+<<<<<<< HEAD
     else if(!results[0])
       res.render('categ/views/order',{ posttab: req.post });
     else if(results[0].strTransStatus == 'Ongoing' || results[0].strTransStatus == 'SFinished' || results[0].strTransStatus == 'BFinished' )
@@ -141,6 +219,66 @@ function orderrender(req,res){
     else
       res.render('categ/views/invalidpages/itemunavailable');
     });
+=======
+    else if(!req.trans[0])
+      res.render('categ/views/order',{ posttab: req.post });
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished' )
+      res.render('categ/views/invalidpages/orderunavailable');
+    else
+      res.render('categ/views/invalidpages/itemunavailable');
+  }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
+  else
+    res.render('login/views/invalid');
+}
+function reportrender(req,res){
+  if(req.valid==1){
+    if(!req.post[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else if(!req.trans[0]){
+      if(req.session.user == req.post[0].strItemSNum)
+        res.render('profile/views/invalidpages/unauthorized');
+      else if(!req.report[0]){
+        var db = require('../../lib/database')();
+        db.query("INSERT INTO tblreport (intReportItemID, strReportSNum) VALUES (?,?)",[req.params.postid, req.session.user], (err, results, fields) => {
+          if (err) console.log(err);
+          res.redirect('/home/page/1');
+        });
+      }
+      else
+        res.render('categ/views/invalidpages/reportunavailable');
+    }
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished' )
+      res.render('profile/views/invalidpages/unauthorized');
+    else if(req.trans[0].strTransStatus == 'Finished')
+      res.render('categ/views/invalidpages/itemunavailable');
+  }
+  else if(req.valid==2)
+    res.render('home/views/invalidpages/adminonly');
+  else
+    res.render('login/views/invalid');
+}
+function cancelreportrender(req,res){
+  if(req.valid==1){
+    if(!req.post[0])
+      res.render('categ/views/invalidpages/itemunavailable');
+    else if(req.session.user == req.post[0].strItemSNum)
+      res.render('profile/views/invalidpages/unauthorized');
+    else if(!req.report[0])
+      res.render('categ/views/invalidpages/notreported');
+    else if(!req.trans[0]){
+      var db = require('../../lib/database')();
+      db.query("DELETE FROM tblreport WHERE intReportItemID= ? AND strReportSNum= ?",[req.params.postid, req.session.user], (err, results, fields) => {
+        if (err) console.log(err);
+        res.redirect('/home/page/1');
+      });
+    }
+    else if(req.trans[0].strTransStatus == 'Ongoing' || req.trans[0].strTransStatus == 'SFinished' || req.trans[0].strTransStatus == 'BFinished' )
+      res.render('profile/views/invalidpages/unauthorized');
+    else if(req.trans[0].strTransStatus == 'Finished')
+      res.render('categ/views/invalidpages/itemunavailable');
+>>>>>>> API
   }
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
@@ -150,15 +288,28 @@ function orderrender(req,res){
 
 router.get('/', flog, fcat, render);
 router.get('/:catname/page/:page', flog, fcatname, fitem, catrender);
+<<<<<<< HEAD
 router.get('/:catname/:postid', flog, fpost, postrender);
 router.get('/:catname/:postid/order', flog, fpost, orderrender);
 
 router.post('/:catname/:postid/order', fpost, (req, res) => {
+=======
+router.get('/:catname/:postid', flog, fpost, ftrans, fviewreport, postrender);
+router.get('/:catname/:postid/order', flog, fpost, ftrans, orderrender);
+router.get('/:catname/:postid/report', flog, fpost, freport, ftrans, reportrender);
+router.get('/:catname/:postid/cancelreport', flog, fpost, freport, ftrans, cancelreportrender);
+
+router.post('/:catname/:postid/order', fpost, ftrans, (req, res) => {
+>>>>>>> API
   var db = require('../../lib/database')();
   if( req.body.orderpass == ''){
     res.render('categ/views/invalidpages/orderblank',{ posttab: req.post });
   }
+<<<<<<< HEAD
   else{
+=======
+  else if (!req.trans[0]){
+>>>>>>> API
     db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ?",[req.params.postid], (err, results, fields) => {
         if (err) console.log(err);
         if(req.body.orderpass === results[0].strOrderPass ){
@@ -176,6 +327,12 @@ router.post('/:catname/:postid/order', fpost, (req, res) => {
         }
     });
   }
+<<<<<<< HEAD
+=======
+  else{
+    res.render('categ/views/invalidpages/alreadyordered');
+  }
+>>>>>>> API
 });
 
 exports.categories= router;

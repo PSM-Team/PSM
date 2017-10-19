@@ -1,4 +1,5 @@
 /*! bulma.io v0.4.2 | MIT License | github.com/jgthms/bulma */
+
 @-webkit-keyframes spinAround {
   from {
     -webkit-transform: rotate(0deg);
@@ -238,9 +239,45 @@ table th {
   display: block;
 }
 
+<<<<<<< HEAD
 #wrapper {
             min-height: 100%;
         }
+=======
+#w74 { word-wrap: break-word; }
+
+#wrapper {
+            min-height: 100%;
+        }
+
+#yourContainerblank {
+    width: 200px;
+    height: 170px;
+}
+
+#yourContainerblank img {
+    width: 100%;
+    height: 100%;
+}
+
+#yourContainer {
+    width: 300px;
+    height: 170px;
+}
+
+#yourContainer img {
+    width: 100%;
+    height: 100%;
+}
+
+#footer {
+   position:absolute;
+   bottom:10;
+   width:100%;
+   height:60px;   /* Height of the footer */
+}
+
+>>>>>>> API
 @media screen and (max-width: 768px) {
   .is-block-mobile {
     display: block !important;

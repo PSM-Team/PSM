@@ -1,14 +1,21 @@
 extends ../../../templates/navbar.pug
 
 block content
+<<<<<<< HEAD
   h2.title End of Transaction!
   hr
+=======
+  link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile_post.css")
+  h2.title End of Transaction!
+  hr(style='border: 0.5px solid #990000')
+>>>>>>> API
   each trans in transtab
     each user in usertab
       if trans.strBuyerSNum == user.strSNum
         h2.subtitle Seller: &nbsp
           u
             a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
+<<<<<<< HEAD
             br
         .field.is-grouped
           p.control
@@ -17,10 +24,13 @@ block content
             a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') REPORT SELLER
           p.control
             a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
+=======
+>>>>>>> API
       else
         h2.subtitle Buyer: &nbsp
           u
             a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
+<<<<<<< HEAD
         .field.is-grouped
           p.control
             a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') COMMEND BUYER
@@ -28,3 +38,6 @@ block content
             a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') REPORT BUYER
           p.control
             a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
+=======
+      a.button.is-outlined(href='/profile/-/transactions/1') BACK TO TRANSACTIONS
+>>>>>>> API

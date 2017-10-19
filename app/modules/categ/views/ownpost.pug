@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 extends ../../../templates/navbar.pug
+=======
+extends ../../../templates/navbarnofooter.pug
+>>>>>>> API
 
 block content
     meta(http-equiv='content-type', content='text/html; charset=UTF-8')
@@ -12,8 +16,13 @@ block content
     each post in posttab
       .site
         header.masthead
+<<<<<<< HEAD
           h2.site-title  
             a(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
+=======
+          h2.site-title
+            a.jet(href='/categories/' + post.strCatName +'/page/1') #{post.strCatName}
+>>>>>>> API
         main#content.main-content
           h2.title #{post.strItemTitle}
               link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/component.css")
@@ -45,6 +54,7 @@ block content
                     label(for='slide2')
                     label(for='slide3')
         aside.sidebar
+<<<<<<< HEAD
           h3 Other Details:
           ul
             li Contact Information:
@@ -63,3 +73,32 @@ block content
           a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName +'/page/1') BACK TO CATEGORY
         footer.colophon.grid
           aside
+=======
+          br
+          br
+          h3 Other Details:
+          ul
+            li Contact Information:
+            li
+              a.jet(href='/profile/'+ post.strItemSNum ) #{post.strName} ( #{post.strItemSNum} )
+            li Status: #{post.strStatus}
+            li Commends : #{post.intCommend} &nbsp|&nbsp Reports : #{post.intReport}
+            li Email : #{post.strEmail}
+            li Contact Details : #{post.txtContact}
+          hr
+          h4 Item Description :
+          p #{post.txtItemDesc}
+        aside.twin
+          a.button.is-info.is-inverted.is-outlined(href='/profile/'+ post.strItemSNum +'/posts/'+ post.intItemID +'/edit') EDIT POST
+        aside.twin
+          a.button.is-info.is-inverted.is-outlined(href='/categories/' + post.strCatName +'/page/1') BACK TO CATEGORY
+        footer.colophon.grid
+          aside
+            p(style='color:white;')
+              b PUP Student Market
+              | &nbspis a project made by&nbsp
+              b PSM Team
+            p(style='color:white;')
+              b Contact Us:
+              | &nbsppsm.sup.adm@gmail.com
+>>>>>>> API

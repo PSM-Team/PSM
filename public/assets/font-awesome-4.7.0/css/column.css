@@ -1,5 +1,9 @@
 /* NOTE:
+<<<<<<< HEAD
  * Grid layout stuff starts at line 138. 
+=======
+ * Grid layout stuff starts at line 138.
+>>>>>>> API
  * The stuff before is just boring old CSS to make content look not crappy.
  */
 
@@ -102,7 +106,11 @@ General styles
 }
 
 .main-content {
+<<<<<<< HEAD
 	background: white;
+=======
+	background: #FF7F66;
+>>>>>>> API
 }
 .masthead {
 	background: #2185C5;
@@ -110,6 +118,7 @@ General styles
 }
 
 .sidebar {
+<<<<<<< HEAD
 	background: #FF7F66;
 }
 
@@ -119,6 +128,24 @@ General styles
 
 .twin:last-of-type {
 	background: #7ECEFD;
+=======
+	background: #00695c;
+	color: white;
+	width: 550px;
+	word-wrap: break-word;
+}
+
+.twin {
+	background: #3F729B;
+}
+
+.twin:last-of-type {
+	background: #3F729B;
+}
+
+.whitetxt{
+	color: white;
+>>>>>>> API
 }
 
 .colophon {
@@ -136,6 +163,11 @@ General styles
 	border-bottom: 1px solid white;
 }
 
+<<<<<<< HEAD
+=======
+#w74 { word-wrap: break-word; }
+
+>>>>>>> API
 /*--------------------------------------------------------------
 If no grid support, limit width to 50em and center align
 --------------------------------------------------------------*/
@@ -165,11 +197,20 @@ CSS Grid layout for wider screens, when browser supports grid:
 		}
 
 		.main-content {
+<<<<<<< HEAD
 			grid-column: 2/6;
 		}
 
 		.sidebar {
 			grid-column: 6/8;
+=======
+			grid-column: 2/5;
+		}
+
+		.sidebar {
+			grid-column: 5/8;
+			word-wrap: break-word;
+>>>>>>> API
 		}
 
 		.twin {
@@ -180,6 +221,15 @@ CSS Grid layout for wider screens, when browser supports grid:
 		.twin:last-of-type {
 			grid-column: 5/8;
 		}
+<<<<<<< HEAD
 
 	}
+=======
+.jet{
+	color: white;
+}
+h3,
+h4{
+	font-size: 20pt;
+>>>>>>> API
 }

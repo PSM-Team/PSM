@@ -5,10 +5,17 @@ module.exports= (req,res,next)=>{
       if (err) console.log(err);
       if (!results[0])
         req.valid = 0;
+<<<<<<< HEAD
       else if (results[0].strType == 'normal')
         req.valid = 1;
       else
         req.valid = 2;
+=======
+      else if (results[0].strStatus == 'admin')
+        req.valid = 2;
+      else
+        req.valid = 1;
+>>>>>>> API
       req.user = results;
       return next();
   });

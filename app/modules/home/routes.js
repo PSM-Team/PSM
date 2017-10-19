@@ -10,7 +10,11 @@ function numberWithCommas(x) {
 
 function fitem(req, res, next){
   var db = require('../../lib/database')();
+<<<<<<< HEAD
   db.query("SELECT intItemID ,strName, strItemTitle, fltItemPrice, strItemSNum, datPostDate, intItemCat, strCatName FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC", function (err, results, fields) {
+=======
+  db.query("SELECT * FROM (SELECT * FROM (SELECT * FROM tblitem INNER JOIN tblcategories ON intItemCat= intCatID ) AS ITEM INNER JOIN tbluser ON strItemSNum= strSNum) AS SELL LEFT JOIN tbltransaction ON intItemID= intTransItemID WHERE strTransStatus IS NULL ORDER BY intItemID DESC", function (err, results, fields) {
+>>>>>>> API
       if (err) return res.send(err);
       var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
       if (!results[0])
@@ -18,7 +22,11 @@ function fitem(req, res, next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
+<<<<<<< HEAD
           results[count].price = numberWithCommas(results[count].fltItemPrice);
+=======
+          results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
+>>>>>>> API
           results[count].page = page;
           results[count].curpage = req.params.page;
           if((count+1)%5==0){
@@ -61,6 +69,7 @@ function render(req,res){
   else
     res.render('login/views/invalid');
 }
+<<<<<<< HEAD
 
 router.get('/page/:page', flog, fitem, render);
 
@@ -72,6 +81,11 @@ router.get('/contact_us', flog, (req, res) => {
     else
       res.render('login/views/invalid');
 });
+=======
+
+router.get('/page/:page', flog, fitem, render);
+
+>>>>>>> API
 router.get('/help', flog, (req, res) => {
     if(req.valid==1)
       res.render('home/views/help');

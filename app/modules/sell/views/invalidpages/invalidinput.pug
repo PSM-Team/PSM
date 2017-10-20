@@ -11,24 +11,15 @@ block content
   form(method="POST" action="/sell" enctype='multipart/form-data')
       .field
           .control
-<<<<<<< HEAD
-              .select.is-primary
-=======
               .select.is-danger
->>>>>>> API
                   select(name="category")
                     option(value='') -- Category --
                     option(value='Books') Books
                     option(value='School Supplies') School Supplies
                     option(value='Food') Food
                     option(value='Misc.') Misc.
-<<<<<<< HEAD
-      hr
-      p Upload atleat One(1) Picture of the Item to be posted
-=======
       hr(style='border: 0.5px solid #990000')
       p Upload atleast One(1) Picture of the Item to be posted
->>>>>>> API
       br
       .field
           .control
@@ -46,24 +37,6 @@ block content
               input.file-input(type='file', name='pic3', accept='image/*')
       br
       br
-<<<<<<< HEAD
-      hr
-      .field
-          .control
-              input.input(type="text" placeholder="Item Title" name="title")
-      .field
-          .control
-              input.input(type="text" placeholder="Item Price" name="price")
-      .field
-          .control
-              input.input(type="text" placeholder="Item Description" name="description")
-      .field
-          .control
-              input.input(type="password" placeholder="Order Password" name="orderpass")
-      input(type="submit" value="Post")
-      hr
-      a.button.is-primary.is-inverted.is-outlined(href='/home/page/1') Cancel
-=======
       hr(style='border: 0.5px solid #990000')
       .field
           .control
@@ -83,4 +56,3 @@ block content
               input.button.is-danger.is-outlined(type="submit" value="Post")
           .control
               a.button.is-danger.is-outlined(href='/home/page/1') Cancel
->>>>>>> API

@@ -1,18 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-<<<<<<< HEAD
-  h2.title Ongoing Transactions
-  hr
-  .field.is-grouped
-    p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/1") ONGOING TRANSACTION
-    p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/hold/1") ON HOLD TRANSACTIONS
-    p.control
-      a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/transactions/history/1") PREVIOUS TRANSACTIONS
-  hr
-=======
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/posts.css")
   div(align='center')
     h2.title Ongoing Transactions
@@ -26,45 +14,10 @@ block content
   br
   br
   br
->>>>>>> API
   each trans in transtab
     if trans.page == trans.curpage
       each viewer in viewertab
         if trans.strBuyerSNum == viewer.strSNum
-<<<<<<< HEAD
-          h3.title ( Buyer )
-            a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
-          h3.subtitle &nbsp#{trans.strCatName}
-          p
-            b Price: Php #{trans.price}
-          p Seller: &nbsp
-            u
-              a(href='/profile/'+ trans.strItemSNum ) #{trans.strName} ( #{trans.strItemSNum} )
-          p Date Started: #{trans.date}
-          br
-          .field.is-grouped
-            p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
-            p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
-        else
-          h3.title ( Seller )
-            a(href='/categories/'+ trans.strCatName + '/' + trans.intItemID ) &nbsp#{trans.strItemTitle}
-          h3.subtitle &nbsp#{trans.strCatName}
-          p
-            b Price: Php #{trans.price}
-          p Buyer: &nbsp
-            u
-              a(href='/profile/'+ trans.strBuyerSNum ) #{trans.strName} ( #{trans.strBuyerSNum} )
-          p Date Started: #{trans.date}
-          br
-          .field.is-grouped
-            p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/orderslip/" + trans.intTransID) Order Slip
-            p.control
-              a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile/-/finishtrans/" + trans.intTransID) End Transaction
-      hr
-=======
           .card
             h3.card-header
               h3.subtitle &nbsp#{trans.strCatName}
@@ -128,32 +81,16 @@ block content
                     a.btn.btn-primary(href="/profile/-/confirmtrans/" + trans.intTransID) End Transaction
           br
   br
->>>>>>> API
   each curpage in curpagetab
     .field.is-grouped
       if curpage > 1
         each prevpage in prevpagetab
           p.control
-<<<<<<< HEAD
-            a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/profile/-/transactions/'+ prevpage ) << Previous
-=======
             a.button.is-hovered(href='/profile/-/transactions/'+ prevpage ) << Previous
->>>>>>> API
       each lastpage in lastpagetab
         each page in pagetab
           if page == curpage
             p.control
-<<<<<<< HEAD
-              a.button.is-primary.is-inverted.is-hovered() #{page}
-          else
-            if page <= lastpage
-              p.control
-                a.button.is-primary.is-inverted.is-outlined(href='/profile/-/transactions/'+ page ) #{page}
-        each nextpage in nextpagetab
-          if curpage < lastpage
-            p.control
-              a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/profile/-/transactions/'+ nextpage ) Next >>
-=======
               a.jon.button.is-hovered() #{page}
           else
             if page <= lastpage
@@ -163,4 +100,3 @@ block content
           if curpage < lastpage
             p.control
               a.button.is-hovered(href='/profile/-/transactions/'+ nextpage ) Next >>
->>>>>>> API

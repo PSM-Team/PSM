@@ -5,11 +5,7 @@ block content
     h2.title
       |
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
-<<<<<<< HEAD
-    hr
-=======
     hr(style='border: 0.5px solid #990000')
->>>>>>> API
     section.hero.is-danger.is-bold
       .hero-body
         h2.title Order Submission Failed
@@ -27,23 +23,13 @@ block content
     p Contact Information:
     p - Email : #{post.strEmail}
     p - #{post.txtContact}
-<<<<<<< HEAD
-    hr
-=======
     hr(style='border: 0.5px solid #990000')
->>>>>>> API
     form(method="POST" action='/categories/' + post.strCatName + '/' + post.intItemID + '/order')
         .field
             .control
                 input.input(type="password" placeholder="Order Password" name="orderpass")
-<<<<<<< HEAD
-        input(type="submit" value="Order")
-    hr
-    a.button.is-primary.is-inverted.is-outlined(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK
-=======
         .field.is-grouped
             .control
                 input(type="submit" value="ORDER")
             .control
                 a.button(href='/categories/' + post.strCatName + '/' + post.intItemID ) BACK
->>>>>>> API

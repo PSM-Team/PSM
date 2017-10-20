@@ -43,11 +43,7 @@ function ftrans(req,res,next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
-<<<<<<< HEAD
-          results[count].price = numberWithCommas(results[count].fltItemPrice);
-=======
           results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
->>>>>>> API
           results[count].page = page;
           results[count].curpage = req.params.page;
           if((count+1)%5==0){
@@ -74,11 +70,7 @@ function ftrans(req,res,next){
 function fholdtrans(req,res,next){
   var db = require('../../lib/database')();
   var page = 1, pagearr = [1], curpage = [req.params.page], prevpage = [req.params.page - 1], nextpage = [parseInt(req.params.page)+1], lastpage = [];
-<<<<<<< HEAD
-  var sqltrans2 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!='Ongoing' AND strTransStatus!='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
-=======
   var sqltrans2 = "SELECT B.*, strName, strStatus FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!='Ongoing' AND strTransStatus!='Finished') AS B INNER JOIN tbluser WHERE (strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?) ORDER BY intTransID DESC";
->>>>>>> API
   db.query(sqltrans2,[req.session.user,req.session.user,req.session.user,req.session.user],(err, results, fields) => {
       if (err) console.log(err);
       if (!results[0])
@@ -86,11 +78,7 @@ function fholdtrans(req,res,next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
-<<<<<<< HEAD
-          results[count].price = numberWithCommas(results[count].fltItemPrice);
-=======
           results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
->>>>>>> API
           results[count].page = page;
           results[count].curpage = req.params.page;
           if((count+1)%5==0){
@@ -126,11 +114,7 @@ function ftranshistory(req,res,next){
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datDateStarted.toDateString("en-US").slice(4, 15);
           results[count].fin= results[count].datDateFinished.toDateString("en-US").slice(4, 15);
-<<<<<<< HEAD
-          results[count].price = numberWithCommas(results[count].fltItemPrice);
-=======
           results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
->>>>>>> API
           results[count].page = page;
           results[count].curpage = req.params.page;
           if((count+1)%5==0){
@@ -159,21 +143,14 @@ function ftransfin(req, res, next){
   var sqltrans3 = "SELECT B.*, strName FROM(SELECT * FROM (SELECT * FROM tbltransaction INNER JOIN tblitem ON intItemID= intTransItemID WHERE strItemSNum= ? OR strBuyerSNum= ?) AS TRANS INNER JOIN tblcategories ON intItemCat= intCatID WHERE strTransStatus!= 'Finished') AS B INNER JOIN tbluser WHERE ((strBuyerSNum = strSNum AND strSNum!= ?) OR (strItemSNum = strSNum AND strSNum!= ?)) AND intTransID= ? ORDER BY intTransID DESC";
   db.query(sqltrans3,[req.session.user,req.session.user,req.session.user,req.session.user,req.params.transid], (err, results, fields) => {
       if (err) console.log(err);
-<<<<<<< HEAD
-=======
       console.log('TRANSFIN: '+ results);
->>>>>>> API
       req.transfin= results;
       return next();
   });
 }
 function ftransid(req, res, next){
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  db.query("SELECT * FROM tbltransaction WHERE  intTransID= ?",[req.params.transid], (err, results, fields) => {
-=======
   db.query("SELECT * FROM tbltransaction WHERE intTransID= ?",[req.params.transid], (err, results, fields) => {
->>>>>>> API
       if (err) console.log(err);
       req.transid= results;
       return next();
@@ -189,11 +166,7 @@ function fmypost(req, res, next){
       else{
         for(count=0;count<results.length;count++){
           results[count].date= results[count].datPostDate.toDateString("en-US").slice(4, 15);
-<<<<<<< HEAD
-          results[count].price = numberWithCommas(results[count].fltItemPrice);
-=======
           results[count].price = numberWithCommas(results[count].fltItemPrice.toFixed(2));
->>>>>>> API
           results[count].page = page;
           results[count].curpage = req.params.page;
           if((count+1)%5==0){
@@ -259,11 +232,7 @@ function transrender(req,res){
   if(req.valid==1){
     if(!req.trans[0]){
       if(req.params.page == 1)
-<<<<<<< HEAD
-        res.render('profile/views/notrans');
-=======
         res.render('profile/views/noongoingtrans');
->>>>>>> API
       else
         res.render('login/views/noroute');
     }
@@ -281,11 +250,7 @@ function transholdrender(req,res){
   if(req.valid==1){
     if(!req.hold[0]){
       if(req.params.page == 1)
-<<<<<<< HEAD
-        res.render('profile/views/notrans');
-=======
         res.render('profile/views/noonholdtrans');
->>>>>>> API
       else
         res.render('login/views/noroute');
     }
@@ -303,11 +268,7 @@ function transhistrender(req,res){
   if(req.valid==1){
     if(!req.history[0]){
       if(req.params.page == 1)
-<<<<<<< HEAD
-        res.render('profile/views/notrans');
-=======
         res.render('profile/views/noprevtrans');
->>>>>>> API
       else
         res.render('login/views/noroute');
     }
@@ -321,8 +282,6 @@ function transhistrender(req,res){
   else
     res.render('login/views/invalid');
 }
-<<<<<<< HEAD
-=======
 function transconfirmrender(req,res){
   if(req.valid==1){
     if (!req.transfin[0])
@@ -467,7 +426,6 @@ function reportrender(req,res){
     }
   }
 }
->>>>>>> API
 function transfinrender(req,res){
   if(req.valid==1){
     if (!req.transfin[0])
@@ -506,10 +464,6 @@ function transfinrender(req,res){
         else
           res.render('profile/views/invalidpages/unauthorized');
       }
-<<<<<<< HEAD
-
-=======
->>>>>>> API
     }
   }
   else if(req.valid==2)
@@ -560,17 +514,12 @@ function deletepostrender(req,res){
     else{
       if (req.session.user == req.editpost[0].strItemSNum){
         var db = require('../../lib/database')();
-<<<<<<< HEAD
-        db.query("DELETE FROM tblitem WHERE strItemSNum= ? AND intItemID= ?",[req.params.userid, req.params.postid], (err, results, fields) => {
-          res.redirect('/profile/'+ req.params.userid +'/posts/1');
-=======
         db.query("DELETE FROM tblreport WHERE intReportItemID= ?",[req.params.postid], (err, results, fields) => {
           if (err) console.log(err);
           db.query("DELETE FROM tblitem WHERE strItemSNum= ? AND intItemID= ?",[req.params.userid, req.params.postid], (err, results, fields) => {
             if (err) console.log(err);
             res.redirect('/profile/'+ req.params.userid +'/posts/1');
           });
->>>>>>> API
         });
       }
       else
@@ -592,12 +541,9 @@ router.get('/-/edit', flog, fedituser, editprofilerender);
 router.get('/-/transactions/:page', flog, ftrans, fedituser, transrender);
 router.get('/-/transactions/hold/:page', flog, fholdtrans, fedituser, transholdrender);
 router.get('/-/transactions/history/:page', flog, ftranshistory, fedituser, transhistrender);
-<<<<<<< HEAD
-=======
 router.get('/-/confirmtrans/:transid', flog, ftransfin, fedituser, ftransid, transconfirmrender);
 router.get('/-/commend/:transid', flog, ftransfin, ftransid, commendrender);
 router.get('/-/report/:transid', flog, ftransfin, ftransid, reportrender);
->>>>>>> API
 router.get('/-/finishtrans/:transid', flog, ftransfin, fedituser, ftransid, transfinrender);
 router.get('/:userid/posts/:page', flog, fuser, fmypost, mypostrender);
 router.get('/:userid/posts/:postid/edit', flog, feditpost, editpostrender);
@@ -605,23 +551,6 @@ router.get('/:userid/posts/:postid/delete', flog, feditpost, deletepostrender);
 
 router.post('/-/edit', fedituser, (req, res) => {
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  if(req.body.studname=='' || req.body.oldpass=='' || req.body.newpass=='' || req.body.confirm=='' || req.body.email=='' || req.body.contact=='' ){
-    res.render('profile/views/invalidpages/blank',{usertab: req.user});
-  }
-  else if( req.body.newpass === req.body.confirm ){
-    db.query("SELECT strPassword FROM tbluser WHERE strSNum= ? ",[req.session.user], (err, results, fields) => {
-        if (err) console.log(err);
-        if(req.body.oldpass === results[0].strPassword){
-          db.query("UPDATE tbluser SET strName= ?, strPassword= ?, strEmail= ?, txtContact= ? WHERE strSNum= ? ",[req.body.studname, req.body.newpass, req.body.email, req.body.contact, req.session.user], (err, results1, fields) => {
-              if (err) console.log(err);
-              res.redirect('/profile');
-          });
-        }
-        else
-          res.render('profile/views/invalidpages/incorrect',{usertab: req.user});
-      });
-=======
   if(req.body.studname=='' || req.body.oldpass=='' || req.body.newpass=='' || req.body.confirm=='' || req.body.email=='' ){
     res.render('profile/views/invalidpages/blank',{usertab: req.user});
   }
@@ -648,7 +577,6 @@ router.post('/-/edit', fedituser, (req, res) => {
     }
     else
       res.render('profile/views/invalidpages/incorrect',{usertab: req.user});
->>>>>>> API
   }
   else
     res.render('profile/views/invalidpages/notmatch',{usertab: req.user});

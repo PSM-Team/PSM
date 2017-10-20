@@ -4,14 +4,9 @@ block content
   each post in editposttab
     h3.title
       a(href='/categories/' + post.strCatName + '/' + post.intItemID) #{post.strItemTitle}
-<<<<<<< HEAD
-    hr
-    h3.title Edit Post:
-=======
     hr(style='border: 0.5px solid #990000')
     h3.title Edit Post:
     h3.subtitle Note: You can use your old order password as your new order password.
->>>>>>> API
     section.hero.is-danger.is-bold
       .hero-body
         h1.title Submission Failed
@@ -20,11 +15,7 @@ block content
     form(method="POST" action="/profile/"+post.strItemSNum+"/posts/"+post.intItemID+"/edit" enctype='multipart/form-data')
         .field
             .control
-<<<<<<< HEAD
-                .select.is-primary
-=======
                 .select.is-danger
->>>>>>> API
                     select(name="category")
                       if post.intItemCat == 1
                         option(value='1') Books
@@ -46,11 +37,7 @@ block content
                         option(value='1') Books
                         option(value='2') School Supplies
                         option(value='3') Food
-<<<<<<< HEAD
-        hr
-=======
         hr(style='border: 0.5px solid #990000')
->>>>>>> API
         .field
             .control
               div(style='width: 33%; float: left')
@@ -67,30 +54,6 @@ block content
                 input.file-input(type='file', name='pic3', accept='image/*')
         br
         br
-<<<<<<< HEAD
-        hr
-        .field
-            .control
-                input.input(type="text" placeholder="Item Title" value=post.strItemTitle name="title")
-        .field
-            .control
-                input.input(type="text" placeholder="Item Price" value=post.fltItemPrice name="price")
-        .field
-            .control
-                input.input(type="text" placeholder="Item Description" value=post.txtItemDesc name="description")
-        .field
-            .control
-                input.input(type="password" placeholder="Old Order Password" name="oldpass")
-        .field
-            .control
-                input.input(type="password" placeholder="New Order Password" name="newpass")
-        .field
-            .control
-                input.input(type="password" placeholder="Confirm Order Password" name="confirm")
-        input(type="submit" value="Post")
-    hr
-    a.button.is-primary.is-inverted.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel
-=======
         hr(style='border: 0.5px solid #990000')
         .field
             .control
@@ -116,4 +79,3 @@ block content
                 input.button.is-danger.is-outlined(type="submit" value="Post")
             .control
                 a.button.is-danger.is-outlined(href='/profile/'+post.strItemSNum+'/posts/1') Cancel
->>>>>>> API

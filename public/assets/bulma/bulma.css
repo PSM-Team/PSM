@@ -239,11 +239,6 @@ table th {
   display: block;
 }
 
-<<<<<<< HEAD
-#wrapper {
-            min-height: 100%;
-        }
-=======
 #w74 { word-wrap: break-word; }
 
 #wrapper {
@@ -277,7 +272,6 @@ table th {
    height:60px;   /* Height of the footer */
 }
 
->>>>>>> API
 @media screen and (max-width: 768px) {
   .is-block-mobile {
     display: block !important;

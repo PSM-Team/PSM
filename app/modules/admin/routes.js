@@ -10,11 +10,7 @@ function numberWithCommas(x) {
 
 function fregcount(req, res, next){
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND (strStatus= 'verified' OR strStatus= 'not verified')", function (err, results, fields) {
-=======
   db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'verified' OR strStatus= 'not verified'", function (err, results, fields) {
->>>>>>> API
       if (err) return res.send(err);
       req.regcount = results;
       return next();
@@ -22,11 +18,7 @@ function fregcount(req, res, next){
 }
 function fvercount(req, res, next){
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'verified'", function (err, results, fields) {
-=======
   db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'verified'", function (err, results, fields) {
->>>>>>> API
       if (err) return res.send(err);
       req.vercount = results;
       return next();
@@ -34,11 +26,7 @@ function fvercount(req, res, next){
 }
 function fnvercount(req, res, next){
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'not verified'", function (err, results, fields) {
-=======
   db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'not verified'", function (err, results, fields) {
->>>>>>> API
       if (err) return res.send(err);
       req.nvercount = results;
       return next();
@@ -46,11 +34,7 @@ function fnvercount(req, res, next){
 }
 function funregcount(req, res, next){
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'unregistered'", function (err, results, fields) {
-=======
   db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'unregistered'", function (err, results, fields) {
->>>>>>> API
       if (err) return res.send(err);
       req.unregcount = results;
       return next();
@@ -58,18 +42,12 @@ function funregcount(req, res, next){
 }
 function frejcount(req, res, next){
   var db = require('../../lib/database')();
-<<<<<<< HEAD
-  db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strType!= 'admin' AND strStatus= 'rejected'", function (err, results, fields) {
-=======
   db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'rejected'", function (err, results, fields) {
->>>>>>> API
       if (err) return res.send(err);
       req.rejcount = results;
       return next();
   });
 }
-<<<<<<< HEAD
-=======
 function fbancount(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT COUNT(strSNum) AS CNT FROM dbpsm.tbluser WHERE strStatus= 'banned'", function (err, results, fields) {
@@ -78,7 +56,6 @@ function fbancount(req, res, next){
       return next();
   });
 }
->>>>>>> API
 
 function fstudunreg(req, res, next){
   var db = require('../../lib/database')();
@@ -159,12 +136,6 @@ function freguser(req, res, next){
       return next();
   });
 }
-<<<<<<< HEAD
-
-function render(req,res){
-  if(req.valid==2)
-    res.render('admin/views/index',{usertab: req.user, regtab: req.regcount, vertab: req.vercount, nvertab: req.nvercount, unregtab: req.unregcount, rejtab: req.rejcount});
-=======
 function fverified(req, res, next){
   var db = require('../../lib/database')();
   db.query("SELECT * FROM tbluser WHERE strStatus= 'verified' ORDER BY intReport DESC", function (err, results, fields) {
@@ -353,7 +324,6 @@ function ftranscheck(req, res, next){
 function render(req,res){
   if(req.valid==2)
     res.render('admin/views/index',{usertab: req.user, regtab: req.regcount, vertab: req.vercount, nvertab: req.nvercount, unregtab: req.unregcount, rejtab: req.rejcount, bantab: req.bancount});
->>>>>>> API
   else if(req.valid==1)
     res.render('admin/views/invalidpages/normalonly');
   else
@@ -440,10 +410,6 @@ function revertrender(req,res){
   else
     res.render('login/views/invalid');
 }
-<<<<<<< HEAD
-
-router.get('/', flog, fregcount, fvercount, fnvercount, funregcount, frejcount, render);
-=======
 function verifiedrender(req,res){
   if(req.valid==2){
     if(!req.stud[0]){
@@ -655,14 +621,11 @@ function removepostrender(req,res){
 }
 
 router.get('/', flog, fregcount, fvercount, fnvercount, funregcount, frejcount, fbancount, render);
->>>>>>> API
 router.get('/registration-unregistered/:page', flog, fstudunreg, studunregrender);
 router.get('/registration-rejected/:page', flog, fstudreject, studrejrender);
 router.get('/registration/approve/:userid', flog, freguser, approverender);
 router.get('/registration/reject/:userid', flog, rejectrender);
 router.get('/registration/revert/:userid', flog, revertrender);
-<<<<<<< HEAD
-=======
 router.get('/account-verified/:page', flog, fverified, verifiedrender);
 router.get('/account-notverified/:page', flog, fnotverified, notverifiedrender);
 router.get('/account-banned/:page', flog, fbanned, bannedrender);
@@ -672,6 +635,5 @@ router.get('/account/reinstate/:userid', flog, freguser, reinstaterender);
 router.get('/post-reported/:page', flog, fpostreport, postreportrender);
 router.get('/post-reportlog/:page', flog, freportlog, postreplogrender);
 router.get('/post/remove/:postid', flog, fremove, removepostrender);
->>>>>>> API
 
 exports.admin= router;

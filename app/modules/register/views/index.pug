@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-extends ../../../templates/masterinfo.pug
-
-block content
-  section.hero.is-dark.is-bold
-    .hero-body
-      h1.title PUP Student Market
-  hr
-  h3.title Register:
-  p All fields are required in order to successfully register, unless stated optional
-  form(method="POST" action="/register")
-      .field
-          .control
-              input.input(type="text" placeholder="Student Number" name="studnum")
-      .field
-          .control
-              input.input(type="password" placeholder="Password" name="password")
-      .field
-          .control
-              input.input(type="password" placeholder="Confirm Password" name="confirm")
-      .field
-          .control
-              input.input(type="text" placeholder="Full Name (John S. Doe) " name="studname")
-      .field
-          .control
-              input.input(type="text" placeholder="E-mail Address" name="email")
-      .field
-          .control
-              input.input(type="text" placeholder="Contact Info (Optional)" name="contact")
-
-      input(type="submit" value="Register")
-      hr
-      a.button.is-info.is-inverted.is-outlined(href="/login") SIGN-IN
-=======
 extends ../../../templates/master.pug
 
 block content
@@ -67,4 +33,3 @@ block content
             .group
             input.button.is-info.is-inverted.is-outlined(type='submit', value='Register')
             a.button.is-info.is-inverted.is-outlined(href="/login") Back
->>>>>>> API

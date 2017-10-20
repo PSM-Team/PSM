@@ -1,25 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-<<<<<<< HEAD
-  each catname in catnametab
-    h2.title #{catname.strCatName}
-    h2.subtitle &nbspClick an Item Title to view it's Details
-  hr
-  each item in itemtab
-    if item.page == item.curpage
-      h3.title
-        |
-        a(href='/categories/' + item.strCatName + '/' + item.intItemID) #{item.strItemTitle}
-      p
-        |
-        b Price: Php #{item.price}
-      p Seller: &nbsp
-        u
-          a(href='/profile/'+ item.strItemSNum ) #{item.strName} ( #{item.strItemSNum} )
-      p Date: #{item.date}
-      hr
-=======
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/posts.css")
   each catname in catnametab
     div(align='center')
@@ -55,33 +36,17 @@ block content
            a.btn.btn-primary(href='/categories/' + item.strCatName + '/' + item.intItemID) View Details
       br
   br
->>>>>>> API
   each catname in catnametab
     each curpage in curpagetab
       .field.is-grouped
         if curpage > 1
           each prevpage in prevpagetab
             p.control
-<<<<<<< HEAD
-              a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/categories/'+ catname.strCatName +'/page/'+ prevpage ) << Previous
-=======
               a.button.is-inverted.is-hovered(href='/categories/'+ catname.strCatName +'/page/'+ prevpage ) << Previous
->>>>>>> API
         each lastpage in lastpagetab
           each page in pagetab
             if page == curpage
               p.control
-<<<<<<< HEAD
-                a.button.is-primary.is-inverted.is-hovered() #{page}
-            else
-              if page <= lastpage
-                p.control
-                  a.button.is-primary.is-inverted.is-outlined(href='/categories/'+ catname.strCatName +'/page/'+ page ) #{page}
-          each nextpage in nextpagetab
-            if curpage < lastpage
-              p.control
-                a.button.is-primary.is-inverted.is-outlined.is-hovered(href='/categories/'+ catname.strCatName +'/page/'+ nextpage ) Next >>
-=======
                 a.jon.button.is-hovered() #{page}
             else
               if page <= lastpage
@@ -91,4 +56,3 @@ block content
             if curpage < lastpage
               p.control
                 a.button.is-inverted.is-hovered(href='/categories/'+ catname.strCatName +'/page/'+ nextpage ) Next >>
->>>>>>> API

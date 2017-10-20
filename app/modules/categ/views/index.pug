@@ -1,15 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-<<<<<<< HEAD
-  h2.title CATEGORIES
-  h2.subtitle &nbspSelect a Category to view posts in it
-  hr
-  each cat in cattab
-    br
-    h3.title
-      a(href='/categories/'+ cat.strCatName +'/page/1') #{cat.strCatName}
-=======
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/category.css")
   div(align='center')
     h2.title CATEGORIES
@@ -47,4 +38,3 @@ block content
         //-   .card
         //-     a.big-btn.button.is-warning(class="button", href="/categories/"+ cat.strCatName +'/page/1') #{cat.strCatName}
         //- ^^old patch.
->>>>>>> API

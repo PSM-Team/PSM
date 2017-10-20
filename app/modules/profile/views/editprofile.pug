@@ -1,32 +1,6 @@
 extends ../../../templates/navbar.pug
 
 block content
-<<<<<<< HEAD
-  h3.title Update your information:
-  each user in usertab
-    form(method="POST" action="/profile/-/edit")
-        .field
-            .control
-                input.input(type="text" placeholder="Full Name (John S. Doe)" value=user.strName name="studname")
-        .field
-            .control
-                input.input(type="password" placeholder="Old Password" name="oldpass")
-        .field
-            .control
-                input.input(type="password" placeholder="New Password" name="newpass")
-        .field
-            .control
-                input.input(type="password" placeholder="Confirm Password" name="confirm")
-        .field
-            .control
-                input.input(type="email" placeholder="E-mail Address" value=user.strEmail name="email")
-        .field
-            .control
-                input.input(type="text" placeholder="Contact Info (Optional)" value=user.txtContact name="contact")
-        input(type="submit" value="Save")
-        hr
-        a.button.is-primary.is-inverted.is-outlined(class="button", href="/profile") Back
-=======
   link(rel="stylesheet" href="/assets/font-awesome-4.7.0/css/profile_post.css")
   h3.title Update your information:
   section.hero.is-info.is-bold
@@ -64,4 +38,3 @@ block content
                 input.button(type="submit" value="Save")
             .control
                 a.button(class="button", href="/profile") Back
->>>>>>> API

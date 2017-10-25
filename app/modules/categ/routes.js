@@ -101,7 +101,10 @@ function fviewreport(req, res, next){
 }
 
 function render(req,res){
-  if(req.valid==1)
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1)
     res.render('categ/views/index', { cattab: req.cat });
   else if(req.valid==2)
     res.render('home/views/invalidpages/adminonly');
@@ -109,7 +112,10 @@ function render(req,res){
     res.render('login/views/invalid');
 }
 function catrender(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.catname[0])
       res.render('categ/views/invalidpages/nocateg');
     else if(!req.item[0]){
@@ -129,7 +135,10 @@ function catrender(req,res){
     res.render('login/views/invalid');
 }
 function postrender(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.post[0])
       res.render('categ/views/invalidpages/itemunavailable');
     else if(req.post[0].strItemSNum == req.session.user && !req.trans[0] )
@@ -161,7 +170,10 @@ function postrender(req,res){
     res.render('login/views/invalid');
 }
 function orderrender(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.post[0])
       res.render('categ/views/invalidpages/orderunavailable');
     else if(req.post[0].strItemSNum == req.session.user)
@@ -179,7 +191,10 @@ function orderrender(req,res){
     res.render('login/views/invalid');
 }
 function reportrender(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.post[0])
       res.render('categ/views/invalidpages/itemunavailable');
     else if(!req.trans[0]){
@@ -206,7 +221,10 @@ function reportrender(req,res){
     res.render('login/views/invalid');
 }
 function cancelreportrender(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.post[0])
       res.render('categ/views/invalidpages/itemunavailable');
     else if(req.session.user == req.post[0].strItemSNum)
@@ -238,31 +256,36 @@ router.get('/:catname/:postid/order', flog, fpost, ftrans, orderrender);
 router.get('/:catname/:postid/report', flog, fpost, freport, ftrans, reportrender);
 router.get('/:catname/:postid/cancelreport', flog, fpost, freport, ftrans, cancelreportrender);
 
-router.post('/:catname/:postid/order', fpost, ftrans, (req, res) => {
-  var db = require('../../lib/database')();
-  if( req.body.orderpass == ''){
-    res.render('categ/views/invalidpages/orderblank',{ posttab: req.post });
-  }
-  else if (!req.trans[0]){
-    db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ?",[req.params.postid], (err, results, fields) => {
-        if (err) console.log(err);
-        if(req.body.orderpass === results[0].strOrderPass ){
-          db.query("INSERT INTO tbltransaction ( intTransItemID, strBuyerSNum, datDateStarted, strTransStatus ) VALUES ( ?, ?, (SELECT curdate() AS CD) , 'Ongoing' )",[req.params.postid, req.session.user], (err, results, fields) => {
-            if (err) console.log(err);
-            db.query("SELECT * FROM tblitem INNER JOIN tbltransaction ON intItemID= intTransItemID WHERE intItemID= ? AND strTransStatus!= 'Finished'",[req.params.postid], (err, results, fields) => {
-                if (err) console.log(err);
-                console.log(results);
-                res.render('categ/views/ordersuccess',{ posttab: req.post , transposttab: results});
-              });
-          });
-        }
-        else{
-          res.render('categ/views/invalidpages/orderincorrect',{ posttab: req.post });
-        }
-    });
+router.post('/:catname/:postid/order', flog, fpost, ftrans, (req, res) => {
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
   }
   else{
-    res.render('categ/views/invalidpages/alreadyordered');
+    var db = require('../../lib/database')();
+    if( req.body.orderpass == ''){
+      res.render('categ/views/invalidpages/orderblank',{ posttab: req.post });
+    }
+    else if (!req.trans[0]){
+      db.query("SELECT strOrderPass FROM tblitem WHERE intItemID= ?",[req.params.postid], (err, results, fields) => {
+          if (err) console.log(err);
+          if(req.body.orderpass === results[0].strOrderPass ){
+            db.query("INSERT INTO tbltransaction ( intTransItemID, strBuyerSNum, datDateStarted, strTransStatus ) VALUES ( ?, ?, (SELECT curdate() AS CD) , 'Ongoing' )",[req.params.postid, req.session.user], (err, results, fields) => {
+              if (err) console.log(err);
+              db.query("SELECT * FROM tblitem INNER JOIN tbltransaction ON intItemID= intTransItemID WHERE intItemID= ? AND strTransStatus!= 'Finished'",[req.params.postid], (err, results, fields) => {
+                  if (err) console.log(err);
+                  console.log(results);
+                  res.render('categ/views/ordersuccess',{ posttab: req.post , transposttab: results});
+                });
+            });
+          }
+          else{
+            res.render('categ/views/invalidpages/orderincorrect',{ posttab: req.post });
+          }
+      });
+    }
+    else{
+      res.render('categ/views/invalidpages/alreadyordered');
+    }
   }
 });
 

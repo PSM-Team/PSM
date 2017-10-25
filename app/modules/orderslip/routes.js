@@ -30,7 +30,10 @@ function finvoice(req, res, next){
 }
 
 function render(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.invoice[0])
       res.render('login/views/noroute');
     else if(req.session.user == req.invoice[0].Seller || req.session.user == req.invoice[0].Buyer ){

@@ -7,6 +7,8 @@ module.exports= (req,res,next)=>{
         req.valid = 0;
       else if (results[0].strStatus == 'admin')
         req.valid = 2;
+      else if (results[0].strStatus == 'banned')
+        req.valid = 3;
       else
         req.valid = 1;
       req.user = results;

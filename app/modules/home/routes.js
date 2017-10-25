@@ -44,7 +44,10 @@ function fitem(req, res, next){
 }
 
 function render(req,res){
-  if(req.valid==1){
+  if(req.valid==3){
+    res.render('login/views/invalidpages/banned');
+  }
+  else if(req.valid==1){
     if(!req.item[0]){
       if(req.params.page == 1)
         res.render('home/views/noposts', { usertab: req.user});
@@ -65,7 +68,10 @@ function render(req,res){
 router.get('/page/:page', flog, fitem, render);
 
 router.get('/help', flog, (req, res) => {
-    if(req.valid==1)
+    if(req.valid==3){
+      res.render('login/views/invalidpages/banned');
+    }
+    else if(req.valid==1)
       res.render('home/views/help');
     else if(req.valid==2)
       res.render('home/views/invalidpages/adminonly');
@@ -73,7 +79,10 @@ router.get('/help', flog, (req, res) => {
       res.render('login/views/invalid');
 });
 router.get('/rules', flog, (req, res) => {
-    if(req.valid==1)
+    if(req.valid==3){
+      res.render('login/views/invalidpages/banned');
+    }
+    else if(req.valid==1)
       res.render('home/views/rules');
     else if(req.valid==2)
       res.render('home/views/invalidpages/adminonly');
